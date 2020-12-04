@@ -68,8 +68,8 @@ $polo = $user->polo;
 					@if($is_super_admin)
 						<a class="dropdown-item" href="/admin/permissoes">Permissões</a>
 					@endif
-					<a class="dropdown-item @if(!hasPermissionTo('viewlist-roles')) disabled @endif" href="/admin/grupos-de-acesso">Grupos de Acesso</a>
-					<a class="dropdown-item @if(!hasPermissionTo('edit-users')) disabled @endif" href="/admin/usuarios/{{ $user->code }}/edit">
+					<a class="dropdown-item @if(!$user->hasRole(["super-admin", "admin"])) disabled @endif" href="/admin/grupos-de-acesso">Grupos de Acesso</a>
+					<a class="dropdown-item @if(!$user->hasRole(["super-admin", "admin"])) disabled @endif" href="/admin/usuarios/{{ $user->code }}/edit">
 						<div class="d-flex justify-content-between">
 							<span>Conta</span>
 							<span class="badge badge-default ml-5 pt-1 px-2">ID.: {{ $user->code }}</span>

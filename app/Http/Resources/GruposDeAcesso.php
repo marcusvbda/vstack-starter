@@ -49,17 +49,17 @@ class GruposDeAcesso extends Resource
 
 	public function canCreate()
 	{
-		return Auth::user()->hasRoles(["super-admin", "admin"]);
+		return Auth::user()->hasRole(["super-admin", "admin"]);
 	}
 
 	public function canUpdate()
 	{
-		return Auth::user()->hasRoles(["super-admin", "admin"]);
+		return Auth::user()->hasRole(["super-admin", "admin"]);
 	}
 
 	public function canDelete()
 	{
-		return Auth::user()->hasRoles(["super-admin", "admin"]);
+		return Auth::user()->hasRole(["super-admin", "admin"]);
 	}
 
 	public function canImport()
@@ -74,7 +74,7 @@ class GruposDeAcesso extends Resource
 
 	public function canViewList()
 	{
-		return Auth::user()->hasRoles(["super-admin", "admin"]);
+		return Auth::user()->hasRole(["super-admin", "admin"]);
 	}
 
 	public function canView()

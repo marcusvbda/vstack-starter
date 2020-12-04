@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Models\Role;
 use Illuminate\Http\Request;
 use marcusvbda\vstack\Services\Messages;
 use ResourcesHelpers;
-use App\Http\Models\{UserInvite, Tenant};
+use App\Http\Models\{Role, UserInvite, Tenant};
 use marcusvbda\vstack\Services\SendMail;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
@@ -21,9 +20,9 @@ class UsersController extends Controller
 	{
 		$resource = ResourcesHelpers::find("usuarios");
 		if (!$resource->canCreate()) abort(401);
-		$roles = DB::table("roles");
+		$roles = Role::where("id", ">", 0);
 		$user = Auth::user();
-		if (!$user->hasRole(["super-admin"])) $roles = $roles->where("tenant_id", Auth::user()->tenant_id);
+		if (!$user->hasRole(["super-admin"])) $roles = $roles->where("name", "super-admin");
 		$roles = $roles->get();
 		return view("admin.users.create", compact("resource", "roles"));
 	}
