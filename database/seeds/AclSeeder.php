@@ -31,11 +31,6 @@ class AclSeeder extends Seeder
 		Permission::create(["group" => "Polos", "name" => "viewlist-polos", "description" => "Ver Listagem de Polos"]);
 		Permission::create(["group" => "Polos", "name" => "edit-polos", "description" => "Editar Polos"]);
 		Permission::create(["group" => "Polos", "name" => "destroy-polos", "description" => "Excluir Polos"]);
-
-		Permission::create(["group" => "Grupos de Acesso", "name" => "viewlist-roles", "description" => "Ver Listagem de Grupos de Acesso"]);
-		Permission::create(["group" => "Grupos de Acesso", "name" => "edit-roles", "description" => "Editar Grupos de Acesso"]);
-		Permission::create(["group" => "Grupos de Acesso", "name" => "destroy-roles", "description" => "Excluir Grupos de Acesso"]);
-		Permission::create(["group" => "Grupos de Acesso", "name" => "create-roles", "description" => "Cadastrar Grupos de Acesso"]);
 	}
 
 	private function createRoles()

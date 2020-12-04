@@ -13731,3 +13731,11 @@ otifications.php(8): Illuminate\\Support\\Facades\\Facade::__callStatic('group',
 #33 D:\\wamp64\\www\\vstack-starter\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
 #34 {main}
 "} 
+[2020-12-04 19:17:35] homologation.ERROR: Cannot redeclare completeFormatedDate() (previously declared in D:\wamp64\www\vstack-starter\app\helpers.php:5) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 64): Cannot redeclare completeFormatedDate() (previously declared in D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:5) at D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:21)
+[stacktrace]
+#0 {main}
+"} 
+[2020-12-04 19:18:14] homologation.ERROR: Cannot redeclare completeFormatedDate() (previously declared in D:\wamp64\www\vstack-starter\app\helpers.php:5) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 64): Cannot redeclare completeFormatedDate() (previously declared in D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:5) at D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:21)
+[stacktrace]
+#0 {main}
+"} 
