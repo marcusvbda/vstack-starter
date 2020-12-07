@@ -143,6 +143,8 @@ class UsersController extends Controller
 		$user->name = $data["name"];
 		if (@$data["change_password"]) $user->password = $data["password"];
 		$user->save();
+		$user->syncRoles(Role::findOrFail($data["role_id"])->name);
+		$user->polos()->sync($data["polos"]);
 		Messages::send("success", "Usuário editado com sucesso");
 		return ["success" => true];
 	}

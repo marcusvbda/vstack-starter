@@ -20,7 +20,7 @@ class User extends Authenticatable implements MustVerifyEmail
 {
 	use SoftDeletes, Notifiable, hasCode, HasRoles;
 	public $guarded = ['created_at'];
-	protected $appends = ['code'];
+	protected $appends = ['code', 'role_id'];
 	protected $hashPassword = false;
 	public  $casts = [
 		"data" => "json",
@@ -93,5 +93,10 @@ class User extends Authenticatable implements MustVerifyEmail
 	public function getQyNewNotifications()
 	{
 		return $this->userNotifications()->isNew()->count();
+	}
+
+	public function getRoleIdAttribute()
+	{
+		return @$this->roles()->first()->id;
 	}
 }

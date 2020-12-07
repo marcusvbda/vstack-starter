@@ -15,6 +15,45 @@
                                             <table class="table table-striped mb-0">
                                                 <tbody>
                                                     <v-input label="Nome *" v-model="form.name" :errors="errors.name ? errors.name : false" />
+                                                    <template v-if="is_admin">
+                                                        <tr>
+                                                            <td>Selecionar os Polos *</td>
+                                                            <td>
+                                                                <div class="d-flex flex-column">
+                                                                    <div class="input-group">
+                                                                        <el-select
+                                                                            v-model="form.polos"
+                                                                            filterable
+                                                                            required
+                                                                            class="w-100"
+                                                                            multiple
+                                                                            placeholder="Selecione os polos que este usuário possui"
+                                                                        >
+                                                                            <el-option v-for="(t, i) in polos" :key="i" :label="t.name" :value="t.id" />
+                                                                        </el-select>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Grupo de Acesso *</td>
+                                                            <td>
+                                                                <div class="d-flex flex-column">
+                                                                    <div class="input-group">
+                                                                        <el-select
+                                                                            v-model="form.role_id"
+                                                                            filterable
+                                                                            required
+                                                                            class="w-100"
+                                                                            placeholder="Selecione o grupo de acesso que este usuário deve ter"
+                                                                        >
+                                                                            <el-option v-for="(r, i) in roles" :key="i" :label="r.description" :value="r.id" />
+                                                                        </el-select>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </template>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -70,13 +109,15 @@
 </template>
 <script>
 export default {
-    props: ['user', 'logged'],
+    props: ['user', 'logged', 'roles', 'polos', 'polos_ids'],
     data() {
         return {
             loading: false,
             form: {
                 id: this.user.id,
                 name: this.user.name,
+                polos: this.polos_ids,
+                role_id: this.user.role_id,
                 change_password: false,
                 password: null,
                 password_confirm: null,
@@ -91,6 +132,9 @@ export default {
         },
         show_password() {
             return this.logged.id == this.user.id
+        },
+        is_admin() {
+            return this.polos.length > 0 && this.roles.length > 0
         },
     },
     methods: {

@@ -27,9 +27,24 @@
         </div>
     </div>
 </div>
+<?php
+$logged_user = Auth::user();
+$roles = [];
+$polos = [];
+$polos_ids = [];
+if($logged_user->hasRole(["super-admin","admin"]))
+{
+	$roles = \App\Http\Models\Role::get();
+	$polos = \App\Http\Models\Polo::get();
+	$polos_ids = $user->polos()->pluck("id");
+}
+?>
 <user-profile 
 	:user='@json($user)'
-	:logged='@json(Auth::user())'
+	:logged='@json($logged_user)'
+	:roles='@json($roles)'
+	:polos='@json($polos)'
+	:polos_ids='@json($polos_ids)'
 >
 </user-profile >
 @endsection
