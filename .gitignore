@@ -13,3 +13,4 @@ yarn-error.log
 storage/debugbar/*
 .idea/*
 phpunit.xml
+storage/logs/laravel.log

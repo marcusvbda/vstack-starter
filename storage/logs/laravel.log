@@ -16232,3 +16232,7 @@ avbar.blade.php) at D:\\wamp64\\www\\vstack-starter\esources\\views/templates/n
 [stacktrace]
 #0 {main}
 "} 
+[2020-12-07 14:09:36] homologation.ERROR: Cannot redeclare completeFormatedDate() (previously declared in D:\wamp64\www\vstack-starter\app\helpers.php:5) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 64): Cannot redeclare completeFormatedDate() (previously declared in D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:5) at D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:21)
+[stacktrace]
+#0 {main}
+"} 
