@@ -139,8 +139,8 @@
 	<center style="width: 100%; background-color: #ffffff;">
         <table align="center" role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="margin: 0 auto;" class="email-container">
             <tr>
-                <td style="padding: 18px 0; text-align: center; background:#ff6b01;">
-                    <img src="{{asset('assets/images/white_logo.png')}}" width="150" height="39" alt="Payt - Venda Online e Conversão" border="0" style="height: auto; font-family: 'Roboto', sans-serif; font-size: 15px; line-height: 15px; color: #000000;">
+                <td style="padding: 18px 0; text-align: center; background:#0074d9;">
+                    <b style="color : white">{{ config('app.name') }}</b>
                 </td>
             </tr>
             @yield("content")
@@ -149,14 +149,14 @@
                     <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
                         <tr>
                             <td style="font-weight: 400; text-align: left; font-size: 10px; color: #313131;line-height: 20px;">
-                                <p style="">A Payt respeita sua privacidade. Você está recebendo esse e-mail pois comprou algum produto em um dos nossos canais.</p>
+                                <p style="">A {{ config('app.name') }} respeita sua privacidade. Você está recebendo esse e-mail exclusivamente.</p>
                             </td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <td style="font-weight: 400; text-align: left; font-size: 10px; color: #313131; line-height: 20px;">
                                 <p style="color: #313131;"><a href="#" style="text-decoration: underline; color: #313131;">FAQ</a> <span style="font-size: 14px;">|</span> <a href="#" style="text-decoration: underline; color: #313131;">Politica de privacidade</a></p>
                             </td>
-                        </tr>
+                        </tr> --}}
                     </table>
                 </td>
             </tr>

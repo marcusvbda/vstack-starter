@@ -16236,3 +16236,39 @@ avbar.blade.php) at D:\\wamp64\\www\\vstack-starter\esources\\views/templates/n
 [stacktrace]
 #0 {main}
 "} 
+[2020-12-07 14:10:36] homologation.ERROR: Cannot redeclare completeFormatedDate() (previously declared in D:\wamp64\www\vstack-starter\app\helpers.php:5) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 64): Cannot redeclare completeFormatedDate() (previously declared in D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:5) at D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:21)
+[stacktrace]
+#0 {main}
+"} 
+[2020-12-07 14:13:07] homologation.ERROR: Cannot redeclare completeFormatedDate() (previously declared in D:\wamp64\www\vstack-starter\app\helpers.php:5) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 64): Cannot redeclare completeFormatedDate() (previously declared in D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:5) at D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:21)
+[stacktrace]
+#0 {main}
+"} 
+[2020-12-07 14:14:06] homologation.ERROR: Cannot redeclare completeFormatedDate() (previously declared in D:\wamp64\www\vstack-starter\app\helpers.php:5) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 64): Cannot redeclare completeFormatedDate() (previously declared in D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:5) at D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:21)
+[stacktrace]
+#0 {main}
+"} 
+[2020-12-07 14:15:06] homologation.ERROR: Cannot redeclare completeFormatedDate() (previously declared in D:\wamp64\www\vstack-starter\app\helpers.php:5) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 64): Cannot redeclare completeFormatedDate() (previously declared in D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:5) at D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:21)
+[stacktrace]
+#0 {main}
+"} 
+[2020-12-07 14:16:06] homologation.ERROR: Cannot redeclare completeFormatedDate() (previously declared in D:\wamp64\www\vstack-starter\app\helpers.php:5) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 64): Cannot redeclare completeFormatedDate() (previously declared in D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:5) at D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:21)
+[stacktrace]
+#0 {main}
+"} 
+[2020-12-07 14:17:06] homologation.ERROR: Cannot redeclare completeFormatedDate() (previously declared in D:\wamp64\www\vstack-starter\app\helpers.php:5) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 64): Cannot redeclare completeFormatedDate() (previously declared in D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:5) at D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:21)
+[stacktrace]
+#0 {main}
+"} 
+[2020-12-07 14:18:06] homologation.ERROR: Cannot redeclare completeFormatedDate() (previously declared in D:\wamp64\www\vstack-starter\app\helpers.php:5) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 64): Cannot redeclare completeFormatedDate() (previously declared in D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:5) at D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:21)
+[stacktrace]
+#0 {main}
+"} 
+[2020-12-07 14:19:06] homologation.ERROR: Cannot redeclare completeFormatedDate() (previously declared in D:\wamp64\www\vstack-starter\app\helpers.php:5) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 64): Cannot redeclare completeFormatedDate() (previously declared in D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:5) at D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:21)
+[stacktrace]
+#0 {main}
+"} 
+[2020-12-07 14:20:06] homologation.ERROR: Cannot redeclare completeFormatedDate() (previously declared in D:\wamp64\www\vstack-starter\app\helpers.php:5) {"exception":"[object] (Symfony\\Component\\Debug\\Exception\\FatalErrorException(code: 64): Cannot redeclare completeFormatedDate() (previously declared in D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:5) at D:\\wamp64\\www\\vstack-starter\\app\\helpers.php:21)
+[stacktrace]
+#0 {main}
+"} 
