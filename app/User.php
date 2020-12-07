@@ -5,21 +5,21 @@ namespace App;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use marcusvbda\vstack\Models\Traits\hasCode;
 use Spatie\Permission\Traits\HasRoles;
 use Auth;
 use App\Http\Models\Tenant;
 use marcusvbda\vstack\Models\Scopes\TenantScope;
 use marcusvbda\vstack\Models\Observers\TenantObserver;
-use App\Http\Models\Scopes\OrderByScope;
-use App\Http\Models\Pivots\UserPolo;
+use App\Http\Models\Pivots\{UserPolo};
 use App\Http\Models\{UserNotification, Polo};
+use App\Http\Models\Scopes\{OrderByScope};
 
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable
 {
 	use SoftDeletes, Notifiable, hasCode, HasRoles;
 	public $guarded = ['created_at'];
+	protected $dates = ['deleted_at'];
 	protected $appends = ['code', 'role_id'];
 	protected $hashPassword = false;
 	public  $casts = [
@@ -29,6 +29,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
 	public function __construct($hashPassword = true)
 	{
+		parent::boot();
 		$this->hashPassword = $hashPassword;
 	}
 
