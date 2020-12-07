@@ -24,6 +24,6 @@ class NotificationsController extends Controller
 	public function paginated(Request $request)
 	{
 		$user = Auth::user();
-		return $user->userNotifications()->paginate(15);
+		return $user->userNotifications()->orderBy("id", "desc")->paginate(15);
 	}
 }

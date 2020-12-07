@@ -29,7 +29,7 @@
             </div>
             <div class="col-md-9 col-sm-12">
                 <div class="card" style="height: 100%; overflow: auto">
-                    <div class="card-body">
+                    <div class="card-body p-0">
                         <div class="infinite-list-wrapper">
                             <table class="table table-striped table-hover">
                                 <tbody v-infinite-scroll="load" infinite-scroll-disabled="disabled">
@@ -160,7 +160,7 @@ html {
     }
 
     .infinite-list-wrapper {
-        height: 1000%;
+        height: 700px;
         text-align: center;
         .list {
             padding: 0;
