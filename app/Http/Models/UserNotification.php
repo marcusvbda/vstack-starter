@@ -13,6 +13,7 @@ class UserNotification extends Model
 	use SoftDeletes;
 	protected $table = "user_notifications";
 	public $guarded = ["created_at"];
+	public $appends = ["f_created_at"];
 
 	public static function boot()
 	{
@@ -52,5 +53,10 @@ class UserNotification extends Model
 	public function scopeIsNew($query)
 	{
 		return $query->where('new', true);
+	}
+
+	public function getFCreatedAtAttribute()
+	{
+		return formatDate($this->created_at);
 	}
 }

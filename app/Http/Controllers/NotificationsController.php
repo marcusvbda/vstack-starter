@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Auth;
 
 class NotificationsController extends Controller
@@ -18,5 +19,11 @@ class NotificationsController extends Controller
 	{
 		$user = Auth::user();
 		return ['qty' => $user->getQyNewNotifications()];
+	}
+
+	public function paginated(Request $request)
+	{
+		$user = Auth::user();
+		return $user->userNotifications()->paginate(15);
 	}
 }
