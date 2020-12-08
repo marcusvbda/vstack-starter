@@ -55,27 +55,22 @@ class Usuarios extends Resource
 
 	public function canCreate()
 	{
-		return hasPermissionTo("create-users");
+		return Auth::user()->hasRole(["super-admin", "admin"]);
 	}
 
 	public function canUpdate()
 	{
-		return hasPermissionTo("edit-users");;
+		return Auth::user()->hasRole(["super-admin", "admin"]);
 	}
 
 	public function canViewList()
 	{
-		return hasPermissionTo("viewlist-users");
+		return Auth::user()->hasRole(["super-admin", "admin"]);
 	}
 
 	public function canDelete()
 	{
-		return hasPermissionTo("destroy-users");
-	}
-
-	public function canCustomizeMetrics()
-	{
-		return false;
+		return Auth::user()->hasRole(["super-admin", "admin"]);
 	}
 
 	public function canImport()

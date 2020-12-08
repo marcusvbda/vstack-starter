@@ -23,14 +23,11 @@ class AclSeeder extends Seeder
 		DB::table("permissions")->truncate();
 		Cache::flush('spatie.permission.cache');
 
-		Permission::create(["group" => "Usuários", "name" => "viewlist-users", "description" => "Ver Listagem de Usuários"]);
-		Permission::create(["group" => "Usuários", "name" => "edit-users", "description" => "Editar Usuários"]);
-		Permission::create(["group" => "Usuários", "name" => "invite-users", "description" => "Convidar Usuários"]);
-		Permission::create(["group" => "Usuários", "name" => "destroy-users", "description" => "Excluir Usuários"]);
-
-		Permission::create(["group" => "Polos", "name" => "viewlist-polos", "description" => "Ver Listagem de Polos"]);
-		Permission::create(["group" => "Polos", "name" => "edit-polos", "description" => "Editar Polos"]);
-		Permission::create(["group" => "Polos", "name" => "destroy-polos", "description" => "Excluir Polos"]);
+		Permission::create(["group" => "Campanhas", "name" => "viewlist-campaign", "description" => "Ver Listagem de Campanhas"]);
+		Permission::create(["group" => "Campanhas", "name" => "view-campaign", "description" => "Visualizar Campanhas"]);
+		Permission::create(["group" => "Campanhas", "name" => "edit-campaign", "description" => "Editar Campanhas"]);
+		Permission::create(["group" => "Campanhas", "name" => "destroy-campaign", "description" => "Excluir Campanhas"]);
+		Permission::create(["group" => "Campanhas", "name" => "view-campaign-report", "description" => "Ver Relatório de Campanhas"]);
 	}
 
 	private function createRoles()

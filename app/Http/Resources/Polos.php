@@ -44,23 +44,23 @@ class Polos extends Resource
 		$columns = [];
 		$columns["name"] = ["label" => "Nome"];
 		$columns["city"] = ["label" => "Cidade"];
-		$columns["f_head"] = ["label" => "Sede"];
+		$columns["data->f_head"] = ["label" => "Sede"];
 		return $columns;
 	}
 
 	public function canCreate()
 	{
-		return hasPermissionTo("create-polos");
+		return Auth::user()->hasRole(["super-admin", "admin"]);
 	}
 
 	public function canUpdate()
 	{
-		return hasPermissionTo("edit-polos");
+		return Auth::user()->hasRole(["super-admin", "admin"]);
 	}
 
 	public function canDelete()
 	{
-		return hasPermissionTo("destroy-polos");
+		return Auth::user()->hasRole(["super-admin", "admin"]);
 	}
 
 	public function canImport()
@@ -75,7 +75,7 @@ class Polos extends Resource
 
 	public function canViewList()
 	{
-		return  hasPermissionTo("viewlist-polos");
+		return Auth::user()->hasRole(["super-admin", "admin"]);
 	}
 
 	public function canView()

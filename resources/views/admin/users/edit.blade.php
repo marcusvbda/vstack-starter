@@ -34,7 +34,7 @@ $polos = [];
 $polos_ids = [];
 if($logged_user->hasRole(["super-admin","admin"]))
 {
-	$roles = \App\Http\Models\Role::get();
+	$roles = DB::table("roles")->where("tenant_id",$logged_user->tenant_id)->where("name","!=","super-admin")->get();
 	$polos = \App\Http\Models\Polo::get();
 	$polos_ids = $user->polos()->pluck("id");
 }

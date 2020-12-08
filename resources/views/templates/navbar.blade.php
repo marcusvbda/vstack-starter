@@ -19,6 +19,8 @@ function currentClass($routes)
 }
 $user = Auth::user();
 $is_super_admin = $user->isSuperAdmin();
+$is_admin = $user->hasRole(["admin"]);
+$is_admin_or_super_admin = $user->hasRole(["admin","super-admin"]);
 $polo = $user->polo;
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
@@ -68,15 +70,15 @@ $polo = $user->polo;
 					@if($is_super_admin)
 						<a class="dropdown-item" href="/admin/permissoes">Permissões</a>
 					@endif
-					<a class="dropdown-item @if(!$user->hasRole(["super-admin", "admin"])) disabled @endif" href="/admin/grupos-de-acesso">Grupos de Acesso</a>
-					<a class="dropdown-item @if(!$user->hasRole(["super-admin", "admin"])) disabled @endif" href="/admin/usuarios/{{ $user->code }}/edit">
+					<a class="dropdown-item @if(!$is_admin_or_super_admin) disabled @endif" href="/admin/grupos-de-acesso">Grupos de Acesso</a>
+					<a class="dropdown-item" href="/admin/usuarios/{{ $user->code }}/edit">
 						<div class="d-flex justify-content-between">
 							<span>Conta</span>
 							<span class="badge badge-default ml-5 pt-1 px-2">ID.: {{ $user->code }}</span>
 						</div>
 					</a>
-					<a class="dropdown-item @if(!hasPermissionTo('viewlist-users')) disabled @endif" href="/admin/usuarios">Usuários</a>
-					<a class="dropdown-item @if(!hasPermissionTo('viewlist-polos')) disabled @endif" href="/admin/polos">Polos</a>
+					<a class="dropdown-item @if(!$is_admin_or_super_admin) disabled @endif" href="/admin/usuarios">Usuários</a>
+					<a class="dropdown-item @if(!$is_admin_or_super_admin) disabled @endif" href="/admin/polos">Polos</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="/login">Sair</a>
 				</div>

@@ -33,7 +33,7 @@ class Polo extends DefaultModel
 		return $this->hasMany(User::class);
 	}
 
-	public function teanant()
+	public function tenant()
 	{
 		return $this->belongsTo(Tenant::class);
 	}

@@ -118,18 +118,32 @@ class UsersController extends Controller
 		UserInvite::where("email", $email)->delete();
 	}
 
+	private function validationOwnEditing($resource, $id)
+	{
+		$logged = Auth::user();
+		if ($logged->id != $id) {
+			if (!$resource->canUpdate()) abort(401);
+		}
+		return User::findOrFail($id);
+	}
+
 	public function edit($id)
 	{
 		$resource = ResourcesHelpers::find("usuarios");
-		if (!hasPermissionTo("edit-users")) abort(401);
+		$user = $this->validationOwnEditing($resource, $id);
+		$logged = Auth::user();
+		if ($user->id != $id) {
+			$resource = ResourcesHelpers::find("usuarios");
+			if (!$resource->canUpdate()) abort(401);
+		}
 		$user = User::findOrFail($id);
 		return view("admin.users.edit", compact("resource", "user"));
 	}
 
 	public function profileEdit(Request $request)
 	{
-		if (!hasPermissionTo("edit-users")) abort(401);
-		$user =  User::findOrFail($request["id"]);
+		$resource = ResourcesHelpers::find("usuarios");
+		$user = $this->validationOwnEditing($resource, $request["id"]);
 		$data = $request->all();
 		$this->validate($request, [
 			'name' => 'required',
@@ -143,8 +157,10 @@ class UsersController extends Controller
 		$user->name = $data["name"];
 		if (@$data["change_password"]) $user->password = $data["password"];
 		$user->save();
-		$user->syncRoles(Role::findOrFail($data["role_id"])->name);
-		$user->polos()->sync($data["polos"]);
+		if (Auth::user()->hasRole(['admin', 'super-admin'])) {
+			$user->syncRoles(Role::findOrFail($data["role_id"])->name);
+			$user->polos()->sync($data["polos"]);
+		}
 		Messages::send("success", "Usuário editado com sucesso");
 		return ["success" => true];
 	}
