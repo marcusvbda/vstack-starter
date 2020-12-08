@@ -11340,3 +11340,15 @@ ol.breadcrumb {
   margin-bottom: 0;
 }
 
+.pointer-hover {
+  cursor: pointer;
+  opacity: 0.7;
+  transition: 0.5s;
+  transform: scale(0.98);
+}
+
+.pointer-hover:hover {
+  transform: scale(1);
+  opacity: 1;
+}
+

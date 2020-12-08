@@ -112,3 +112,14 @@ ol {
 .el-radio-button.el-radio-button--small {
     margin-bottom: 0;
 }
+
+.pointer-hover {
+    cursor: pointer;
+    opacity: 0.7;
+    transition: 0.5s;
+    transform: scale(0.98);
+    &:hover {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

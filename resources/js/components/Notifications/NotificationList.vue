@@ -28,29 +28,32 @@
                 </div>
             </div>
             <div class="col-md-9 col-sm-12">
-                <div class="card" style="height: 100%; overflow: auto">
-                    <div class="card-body p-0">
-                        <div class="infinite-list-wrapper">
-                            <table class="table table-striped table-hover">
-                                <tbody v-infinite-scroll="load" infinite-scroll-disabled="disabled">
-                                    <tr v-for="(note, i) in notifications" :key="i">
-                                        <td @click="goTo(note.data.route)" width="1%" class="pointer">
-                                            <b><span :class="`${note.data.icon} mr-4`" style="font-size: 30px" /></b>
-                                        </td>
-                                        <td @click="goTo(note.data.route)" class="pointer">
-                                            <span v-html="note.data.message" />
-                                        </td>
-                                        <td @click="goTo(note.data.route)" width="15%" class="pointer">
-                                            <small v-html="note.f_created_at" class="ml-auto" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="3" class="text-center" v-if="loading">Carregando...</td>
-                                        <td colspan="3" class="text-center" v-if="noMore">Sem mais notificações...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                <div class="row" v-for="(note, i) in notifications" :key="i">
+                    <div class="col-12">
+                        <div class="card mb-1 pointer-hover" @click="goTo(note.url)">
+                            <div class="card-body row">
+                                <div class="col-sm-12 col-md-1 d-flex align-items-center justify-content-center">
+                                    <b><span :class="`${note.data.icon} mr-4`" style="font-size: 30px" /></b>
+                                </div>
+                                <div class="col-sm-12 col-md-9 d-flex align-items-center justify-content-center">
+                                    <span v-html="note.data.message" />
+                                </div>
+                                <div class="col-sm-12 col-md-2 d-flex align-items-center justify-content-end">
+                                    <small v-html="note.f_created_at" class="ml-auto" />
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="col-12 align-items-center justify-content-center d-flex flex-column">
+                        <span class="text-muted" v-if="loading"> <span class="el-icon-loading mr-3" />Carregando </span>
+                        <template v-else>
+                            <b v-if="canShowMore">
+                                <a href="#" @click.prevent="load">Carregar mais... <span class="el-icon-caret-bottom ml-3" /> </a>
+                            </b>
+                            <b v-else class="text-muted">Sem mais notificações antigas</b>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -76,8 +79,8 @@ export default {
         noMore() {
             return this.last_page == this.current_page
         },
-        disabled() {
-            return this.loading || this.noMore
+        canShowMore() {
+            return !this.noMore
         },
     },
     created() {
@@ -140,13 +143,7 @@ export default {
     },
 }
 </script>
-<style lang="scss" >
-html {
-    overflow: hidden !important;
-}
-.pointer {
-    cursor: pointer;
-}
+<style lang="scss" scoped >
 #notification-view {
     .new-notifications {
         margin-bottom: 20px;
@@ -156,30 +153,6 @@ html {
         cursor: pointer;
         &:hover {
             opacity: 1;
-        }
-    }
-
-    .infinite-list-wrapper {
-        height: 700px;
-        text-align: center;
-        .list {
-            padding: 0;
-            margin: 0;
-            list-style: none;
-            .list-item {
-                opacity: 0.6;
-                transition: 0.5s;
-                cursor: pointer;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 50px;
-                background: #f5f5f5;
-                margin-top: 10px;
-                &:hover {
-                    opacity: 1;
-                }
-            }
         }
     }
 }
