@@ -85,7 +85,7 @@ function formatId($value, $prefix = "#")
 	return $prefix . str_pad($value, 8, "0", STR_PAD_LEFT);
 }
 
-function formatDate($date)
+function formatDate($date, $format = "d/m/Y - H:i:s")
 {
-	return $date->format("d/m/Y - H:i:s");
+	return $date->format($format);
 }

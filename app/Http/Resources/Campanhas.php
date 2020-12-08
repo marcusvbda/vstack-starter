@@ -4,10 +4,17 @@ namespace App\Http\Resources;
 
 use marcusvbda\vstack\Resource;
 use Auth;
+use marcusvbda\vstack\Fields\{
+	Card,
+	Text,
+	BelongsTo,
+};
+use App\Http\Statuses\CampaignStatus;
+use App\Http\Models\Campaign;
 
 class Campanhas extends Resource
 {
-	public $model = \App\Http\Models\Campaign::class;
+	public $model = Campaign::class;
 
 	public function label()
 	{
@@ -26,35 +33,41 @@ class Campanhas extends Resource
 
 	public function search()
 	{
-		return ["name", "description"];
+		return ["name"];
 	}
 
-	// public function table()
-	// {
-	// 	$user = Auth::user();
-	// 	$columns = [];
-	// 	$columns["code"] = ["label" => "Código", "sortable_index" => "id"];
-	// 	$columns["description"] = ["label" => "Nome"];
-	// 	$columns["name"] = ["label" => "Valor"];
-	// 	if ($user->hasRole(["super-admin"])) $columns["tenant->name"] = ["label" => "Tenant", "sortable_index" => "tenant_id"];
-	// 	$columns["f_access_level"] = ["label" => "Nível de Acesso", "sortable" => false];
-	// 	$columns["f_created_at_for_humans"] = ["label" => "", "sortable_index" => "created_at"];
-	// 	return $columns;
-	// }
+	public function table()
+	{
+		$columns = [];
+		$columns["code"] = ["label" => "Código", "sortable_index" => "id"];
+		$columns["name"] = ["label" => "Nome"];
+		$columns["period"] = ["label" => "Periodo", "sortable_index" => "starts_at"];
+		return $columns;
+	}
 
 	public function canCreate()
 	{
-		return Auth::user()->hasRole(["super-admin", "admin"]);
+		return hasPermissionTo("create-campaign");
 	}
 
 	public function canUpdate()
 	{
-		return Auth::user()->hasRole(["super-admin", "admin"]);
+		return hasPermissionTo("edit-campaign");
 	}
 
 	public function canDelete()
 	{
-		return Auth::user()->hasRole(["super-admin", "admin"]);
+		return hasPermissionTo("destroy-campaign");
+	}
+
+	public function canViewList()
+	{
+		return hasPermissionTo("viewlist-campaign");
+	}
+
+	public function canView()
+	{
+		return hasPermissionTo("view-campaign");
 	}
 
 	public function canImport()
@@ -67,13 +80,42 @@ class Campanhas extends Resource
 		return false;
 	}
 
-	public function canViewList()
+	public function fields()
 	{
-		return Auth::user()->hasRole(["super-admin", "admin"]);
+		return [
+			new Card("Informações Básicas", [
+				new Text([
+					"label" => "Nome",
+					"field" => "name",
+					"rules" => ['required', 'max:255'],
+					"description" => "Identificação da campanha que você está criando"
+				]),
+				new Text([
+					"label" => "Data de Início",
+					"field" => "starts_at",
+					"description" => "Data de início da campanha",
+					"type" => "date"
+				]),
+				new Text([
+					"label" => "Data de Fim",
+					"field" => "ends_at",
+					"description" => "Data de finalização da campanha",
+					"type" => "date"
+				]),
+				new BelongsTo([
+					"label" => "Status",
+					"field" => "status",
+					"rules" => ['required', 'max:255'],
+					"description" => "Status da campanha que você está criando",
+					"options" => CampaignStatus::options()
+				]),
+			])
+		];
 	}
 
-	public function canView()
+	public function afterViewSlot()
 	{
-		return false;
+		$campaign = Campaign::findOrFail(request('code'));
+		return view("admin.campaign.funnel_creator", compact('campaign'))->render();
 	}
 }

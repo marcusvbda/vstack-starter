@@ -5,6 +5,7 @@ namespace App\Http\Models;
 use marcusvbda\vstack\Models\DefaultModel;
 use App\User;
 use App\Http\Models\Scopes\OrderByScope;
+use App\Http\Statuses\CampaignStatus;
 
 class Campaign extends DefaultModel
 {
@@ -12,6 +13,7 @@ class Campaign extends DefaultModel
 	// public $cascadeDeletes = [];
 	// public $restrictDeletes = [""];
 
+	public $dates = ["starts_at", "ends_at"];
 	public $casts = [
 		"data" => "object",
 	];
@@ -30,5 +32,21 @@ class Campaign extends DefaultModel
 	public function tenant()
 	{
 		return $this->belongsTo(Tenant::class);
+	}
+
+	public function setStatusAttribute($value)
+	{
+		$this->attributes["status"] = CampaignStatus::getIndex($value);
+	}
+
+	public function getStatusAttribute($value)
+	{
+		return CampaignStatus::getValue($value);
+	}
+
+	public function getPeriodAttribute()
+	{
+		if (!@$this->starts_at && !@$this->ends_at) return "Campanha permanente";
+		return formatDate($this->starts_at, "d/m/Y") . " - " . formatDate($this->ends_at, "d/m/Y");
 	}
 }
