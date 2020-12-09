@@ -14,13 +14,11 @@ export default {
     data() {
         return {
             visible: false,
-            attempts: 0,
         }
     },
     methods: {
         showPolosList() {
             let loading = this.$loading({ text: 'Carregando Polos ...' })
-            this.attempts++
             this.$http
                 .post('/admin/polos', { user_id: this.user_id })
                 .then(({ data }) => {
@@ -28,13 +26,9 @@ export default {
                     select_polo.options = data.map((x) => ({ key: x.id, label: x.name }))
                     select_polo.open()
                     loading.close()
-                    this.attempts = 0
                 })
                 .catch((err) => {
-                    if (this.attempts <= 3) return this.showPolosList()
-                    loading.close()
                     console.log(err)
-                    this.attempts = 0
                 })
         },
         selectPolo(polo) {

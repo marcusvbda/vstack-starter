@@ -22,7 +22,6 @@ export default {
     props: ['description', 'title', 'action'],
     data() {
         return {
-            attempts: 0,
             loading: true,
             data: {
                 percentage: 0,
@@ -92,7 +91,6 @@ export default {
     methods: {
         getData() {
             this.loading = true
-            this.attempts++
             this.$http
                 .post(`/admin/dashboard/get-data/${this.action}`, this.filter)
                 .then(({ data }) => {
@@ -100,7 +98,6 @@ export default {
                     this.loading = false
                 })
                 .catch((er) => {
-                    if (this.attempts <= 3) return this.getData()
                     console.log(er)
                 })
         },

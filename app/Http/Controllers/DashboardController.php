@@ -11,6 +11,11 @@ class DashboardController extends Controller
 {
 	private $divisor = 5;
 
+	public function __construct()
+	{
+		// dd(request("timezone"));
+	}
+
 	public function index()
 	{
 		return view('admin.index');

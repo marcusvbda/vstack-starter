@@ -9,7 +9,7 @@ class DebugController extends Controller
 {
 	public function testUserNotification()
 	{
-		$user = User::find(1);
+		$user = User::orderBy('id', 'desc')->first();
 		UserNotification::create([
 			"user_id" => $user->id,
 			"data" => [

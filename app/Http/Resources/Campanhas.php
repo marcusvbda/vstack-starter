@@ -27,7 +27,7 @@ class Campanhas extends Resource
 
 	public function icon()
 	{
-		return "el-icon-magic-stick";
+		return "el-icon-attract";
 	}
 
 	public function search()

@@ -35,9 +35,17 @@ $polo = $user->polo;
 			<li class="nav-item {{ currentClass(['/admin']) }}">
 				<a class="nav-link" href="/admin"><i class="el-icon-data-line mr-2"></i>CRM Dashboard <span class="sr-only">(current)</span></a>
 			</li>
+			<li class="nav-item dropdown {{ currentClass(['/admin/converter/*']) }}">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="el-icon-magic-stick mr-2"></i>Converter
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item @if(!hasPermissionTo('convertion-funnel')) disabled @endif" href="/admin/converter/selecionar-campanha" data-label="Esteira de Produção">Funil de Conversão</a>
+				</div>
+			</li>
 			<li class="nav-item dropdown {{ currentClass(['/admin/campanhas/*','/admin/leads/*']) }}">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<i class="el-icon-magic-stick mr-2"></i>Oportunidades
+					<i class="el-icon-attract mr-2"></i>Oportunidades
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item @if(!hasPermissionTo('viewlist-campaign')) disabled @endif" href="/admin/campanhas" data-label="Campanhas de Conversão">Campanhas</a>

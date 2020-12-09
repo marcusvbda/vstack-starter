@@ -1,7 +1,12 @@
-// import api from "../../config/libs/axios"
+// import api from 'axios'
+// const axiosRetry = require('axios-retry')
+// axiosRetry(api, {
+// 	retries: 3,
+// 	shouldResetTimeout: true,
+// 	retryCondition: (_error) => true
+// })
 // import Message from 'element-ui/lib/message'
 
-// var attempts = 0
 // export function showError({ state }, error = "") {
 // 	Message.error({
 // 		showClose: true,
@@ -15,25 +20,18 @@
 // 	attempts++
 // 	return api.post(`${window.location.pathname}/polos`, { user_id }).then(({ data }) => {
 // 		commit("setPolos", data)
-// 		attempts = 0
 // 	}).catch(er => {
-// 		if (attempts <= 3) return dispatch('getPolos')
 // 		console.log(er)
-// 		attempts = 0
 // 	})
 // }
 
 
 // export function getDateRanges({ state, commit, dispatch }) {
-// 	attempts++
 // 	return api.post(`${window.location.pathname}/dates/get-ranges`).then(({ data }) => {
 // 		commit("setDateRanges", data)
 // 		commit('setDateRange', data[state.predefined_filter])
-// 		attempts = 0
 // 	}).catch(er => {
-// 		if (attempts <= 3) return dispatch('getDateRanges')
 // 		console.log(er)
-// 		attempts = 0
 // 	})
 // }
 

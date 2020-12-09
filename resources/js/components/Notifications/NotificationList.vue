@@ -52,7 +52,10 @@
                             <b v-if="canShowMore">
                                 <a href="#" @click.prevent="load">Carregar mais... <span class="el-icon-caret-bottom ml-3" /> </a>
                             </b>
-                            <b v-else class="text-muted">Sem mais notificações antigas</b>
+                            <b v-else class="text-muted">
+								<template v-if="notifications.length <=0 ">Sem Notificações</template>
+								<template v-else>Sem mais notificações antigas</template>
+							</b>
                         </template>
                     </div>
                 </div>
@@ -65,8 +68,6 @@ export default {
     props: ['user'],
     data() {
         return {
-            attempts: 0,
-            attempts_qty: 0,
             qty: 0,
             has_new: false,
             notifications: [],
@@ -108,21 +109,16 @@ export default {
             }
         },
         getNotificationQty() {
-            this.attempts_qty++
             this.$http
                 .post(`/admin/notificacoes/get-qty`)
                 .then(({ data }) => {
                     this.qty = data.qty
-                    this.attempts_qty = 0
                 })
                 .catch((er) => {
-                    if (this.attempts_qty <= 3) return this.getNotificationQty()
                     console.log(er)
-                    this.attempts_qty = 0
                 })
         },
         getPaginatedNotifications() {
-            this.attempts++
             this.loading = true
             this.$http
                 .post(`/admin/notificacoes/paginated`, { page: ++this.current_page })
@@ -130,13 +126,10 @@ export default {
                     this.current_page = data.current_page
                     this.last_page = data.last_page
                     this.notifications = _.concat(this.notifications, data.data)
-                    this.attempts = 0
                     this.loading = false
                 })
                 .catch((er) => {
-                    if (this.attempts <= 3) return this.getPaginatedNotifications()
                     console.log(er)
-                    this.attempts = 0
                     this.loading = false
                 })
         },

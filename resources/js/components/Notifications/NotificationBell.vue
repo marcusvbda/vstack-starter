@@ -15,7 +15,6 @@ export default {
     props: ['polo_id', 'active'],
     data() {
         return {
-            attempts: 0,
             qty: 0,
         }
     },
@@ -32,17 +31,13 @@ export default {
             }
         },
         getNotificationQty() {
-            this.attempts++
             this.$http
                 .post(`/admin/notificacoes/get-qty`)
                 .then(({ data }) => {
                     this.qty = data.qty
-                    this.attempts = 0
                 })
                 .catch((er) => {
-                    if (this.attempts <= 3) return this.getNotificationQty()
                     console.log(er)
-                    this.attempts = 0
                 })
         },
     },

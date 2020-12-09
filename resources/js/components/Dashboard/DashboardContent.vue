@@ -17,7 +17,7 @@
     </div>
 </template>
 <script>
-import dashStore from '../../stores/dashboard'
+import dashStore from '~/stores/dashboard'
 export default {
     props: ['title', 'selected_polo_ids', 'user_id', 'default_filter', 'is_head'],
     store: dashStore,
