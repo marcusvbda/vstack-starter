@@ -24,6 +24,6 @@ export default {
     components: {
         'dash-filters': require('./-dash-filters.vue').default,
         'dash-trend': require('./-dash-trend.vue').default,
-    },
+	},
 }
 </script>

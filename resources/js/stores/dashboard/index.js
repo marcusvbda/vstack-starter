@@ -8,12 +8,10 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 export default function () {
-	const Store = new Vuex.Store({
+	return new Vuex.Store({
 		getters,
 		mutations,
 		actions,
 		state
 	})
-
-	return Store
 }

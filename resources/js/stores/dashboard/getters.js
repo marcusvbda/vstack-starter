@@ -1,3 +1,3 @@
-// export function getPredefinedRangeDate(state, getters) {
-// 	return state.predefined_filter
-// }
+export function getPredefinedRangeDate(state, getters) {
+	return state.predefined_filter
+}

@@ -5,7 +5,7 @@ namespace App\Http\Models;
 use marcusvbda\vstack\Models\DefaultModel;
 use App\User;
 use App\Http\Models\Scopes\OrderByScope;
-use App\Http\Statuses\CampaignStatus;
+use App\Http\Constants\Statuses\CampaignStatus;
 
 class Campaign extends DefaultModel
 {

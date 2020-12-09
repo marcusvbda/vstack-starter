@@ -3,13 +3,12 @@
 namespace App\Http\Resources;
 
 use marcusvbda\vstack\Resource;
-use Auth;
 use marcusvbda\vstack\Fields\{
 	Card,
 	Text,
 	BelongsTo,
 };
-use App\Http\Statuses\CampaignStatus;
+use App\Http\Constants\Statuses\CampaignStatus;
 use App\Http\Models\Campaign;
 
 class Campanhas extends Resource
