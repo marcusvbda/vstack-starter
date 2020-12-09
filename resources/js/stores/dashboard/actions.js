@@ -1,10 +1,4 @@
-import api from 'axios'
-const axiosRetry = require('axios-retry')
-axiosRetry(api, {
-	retries: 3,
-	shouldResetTimeout: true,
-	retryCondition: (_error) => true
-})
+import api from '~/config/libs/axios'
 import Message from 'element-ui/lib/message'
 
 export function showError({ state }, error = "") {
