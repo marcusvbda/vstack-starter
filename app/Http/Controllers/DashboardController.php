@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
-use App\Http\Models\Polo;
+use App\Http\Models\{Polo, Campaign};
 use Auth;
 
 class DashboardController extends Controller
@@ -43,6 +43,42 @@ class DashboardController extends Controller
 		for ($i = 1; $i <= $this->divisor; $i++) {
 			$dates[1] = $dates[1]->subDays($i * $qty_divides);
 			$new_qty =  Polo::whereDate("created_at", ">=", $dates[0])->whereDate("created_at", "<=", $dates[1])->count();
+			$data["rows"]["Até " . $dates[1]->format("d/m/Y")] = $new_qty;
+			$trend = $this->getTrend($qty, $new_qty);
+			$qty = $new_qty;
+		}
+		$data["rows"] = array_reverse($data["rows"]);
+		return $data;
+	}
+
+
+	public function active_campaign(Request $request)
+	{
+		$qty_divides = $this->getDotDivide($request);
+		$dates = array_map(function ($date) {
+			return Carbon::create($date);
+		}, $request["date_range"]);
+		$total =  Campaign::where(function ($q) use ($dates) {
+			$q->whereDate("starts_at", ">=", $dates[0])->whereDate("ends_at", "<=", $dates[1])
+				->orWhere(function ($qq) {
+					$qq->whereNull("starts_at")->whereNull("ends_at");
+				});
+		})->count();
+		$qty =  0;
+		$trend = "keep";
+		$data = [
+			"qty" => $total,
+			"trend" => $trend,
+			"rows" => ["Até " . $dates[1]->format("d/m/Y") => $total]
+		];
+		for ($i = 1; $i <= $this->divisor; $i++) {
+			$dates[1] = $dates[1]->subDays($i * $qty_divides);
+			$new_qty =  Campaign::where(function ($q) use ($dates) {
+				$q->whereDate("starts_at", ">=", $dates[0])->whereDate("ends_at", "<=", $dates[1])
+					->orWhere(function ($qq) {
+						$qq->whereNull("starts_at")->whereNull("ends_at");
+					});
+			})->count();
 			$data["rows"]["Até " . $dates[1]->format("d/m/Y")] = $new_qty;
 			$trend = $this->getTrend($qty, $new_qty);
 			$qty = $new_qty;

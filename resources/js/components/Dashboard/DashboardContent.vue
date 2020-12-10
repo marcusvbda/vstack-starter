@@ -11,6 +11,7 @@
         <div class="card-body pt-0">
             <div class="row mt-3 d-flex flex-wrap">
                 <dash-trend v-if="is_head" title="Novos Polos" description="Tendência no periôdo selecionado" action="new_polos"></dash-trend>
+                <dash-trend title="Campanhas Ativas" description="Tendência no periôdo selecionado" action="active_campaign"></dash-trend>
                 <dash-trend title="Novos Leads" description="Tendência no periôdo selecionado" action="new_leads"></dash-trend>
             </div>
         </div>
@@ -24,6 +25,6 @@ export default {
     components: {
         'dash-filters': require('./-dash-filters.vue').default,
         'dash-trend': require('./-dash-trend.vue').default,
-	},
+    },
 }
 </script>

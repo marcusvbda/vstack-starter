@@ -1,0 +1,71 @@
+.funnel-row {
+    display: flex;
+    flex-direction: row;
+    overflow-y: auto;
+    padding: 30px 0;
+    .funnel-col {
+        min-width: 300px;
+        width: 300px;
+        margin: 5px;
+        min-height: 50px;
+        .funnel-card {
+            width: 100%;
+            background-color: #ebecf0;
+            border-radius: 5px;
+            border: 1px solid #d2d2d2;
+            display: flex;
+            flex-direction: column;
+            .funnel-card-header {
+                padding: 0px 5px;
+                min-height: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: row;
+                .funnel-card-header-input {
+                    width: 100%;
+                }
+                .funnel-card-header-title {
+                    cursor: default;
+                    padding: 0px 5px;
+                    font-weight: 500;
+                    color: #4b575b;
+                }
+            }
+
+            .funnel-card-body {
+                padding: 0px 5px;
+                min-height: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: row;
+            }
+        }
+        &.new {
+            .funnel-card {
+                border-style: dashed;
+                background-color: #ebecf021;
+                transition: 0.5s;
+                .funnel-card-header {
+                    cursor: pointer;
+                    color: #ababab;
+                }
+                &:hover {
+                    background-color: #ebecf064;
+                }
+            }
+        }
+    }
+
+    &.editing {
+        .funnel-col {
+            cursor: all-scroll;
+            .funnel-card-header {
+                .funnel-card-header-title {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
