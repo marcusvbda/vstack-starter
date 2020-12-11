@@ -19,6 +19,7 @@ class CreatePolos extends Migration
 			$table->engine = 'InnoDB';
 			$table->bigIncrements('id');
 			$table->string('name');
+			$table->string("timezone")->default("America/Sao_Paulo");
 			$table->jsonb('data')->nullable();
 			$table->unsignedBigInteger('tenant_id');
 			$table->foreign('tenant_id')

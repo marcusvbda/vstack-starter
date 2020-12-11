@@ -18,9 +18,8 @@ class setTimezone
 	public function handle($request, Closure $next)
 	{
 		$user = Auth::user();
-		if ($tenant = @$user->tenant) {
-			$timezone =  @$tenant->timezone ? $tenant->timezone : "UTC";
-			DB::disconnect('mysql');
+		if ($polo = @$user->polo) {
+			$timezone =  @$polo->timezone ? $polo->timezone : config("app.timezone");
 			config(['app.timezone' => $timezone]);
 			date_default_timezone_set($timezone);
 		}
