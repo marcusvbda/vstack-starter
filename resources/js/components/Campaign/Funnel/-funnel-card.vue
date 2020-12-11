@@ -22,7 +22,7 @@
 </template>
 <script>
 export default {
-    props: ['title', 'new', 'index', 'sorting'],
+    props: ['title', 'new', 'index', 'seq'],
     data() {
         return {
             form: {
@@ -33,7 +33,7 @@ export default {
     },
     computed: {
         _title() {
-            return !this.is_new ? this.title : '<span class="el-icon-plus mr-1"></span> Adicionar nova sessão'
+            return !this.is_new ? `${this.seq} ${this.title}` : '<span class="el-icon-plus mr-1"></span> Adicionar nova sessão'
         },
         is_new() {
             return this.new != undefined
@@ -66,15 +66,3 @@ export default {
     },
 }
 </script>
-<style scoped lang="scss">
-.funnel-col {
-    &.dragging {
-        visibility: hidden;
-    }
-    &.sortable-chosen {
-        .funnel-card {
-            border: 1px dashed rgb(76, 76, 174);
-        }
-    }
-}
-</style>

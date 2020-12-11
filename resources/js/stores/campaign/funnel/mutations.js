@@ -1,3 +1,3 @@
-export function setEditing(state, payload) {
-	state.editing = payload
+export function setSections(state, payload) {
+	state.sections = payload
 }

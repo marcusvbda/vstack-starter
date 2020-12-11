@@ -7,8 +7,8 @@
                 </div>
                 <div class="card-body">
                     <div class="funnel-row editing">
-                        <draggable v-model="sections" ghost-class="dragging" @start="sorting = true" @end="sorting = false" class="d-flex flex-row">
-                            <funnel-card v-for="(s, i) in sections" :key="i" :title="s.title" :index="i" @edit-section="editSection" :sorting="sorting" />
+                        <draggable v-model="sections" class="d-flex flex-row">
+                            <funnel-card v-for="(s, i) in sections" :key="i" :title="s.title" :index="i" @edit-section="editSection" :seq="getSeq(s, i)" />
                         </draggable>
                         <funnel-card new @new-section="newSection" />
                     </div>
@@ -20,30 +20,29 @@
 <script>
 import funnelStore from '~/stores/campaign/funnel'
 import draggable from 'vuedraggable'
+
 export default {
     props: ['campaign'],
     store: funnelStore,
-    data() {
-        return {
-            sorting: false,
-            sections: [{ title: 'teste a' }, { title: 'teste b' }],
-        }
+    computed: {
+        sections: {
+            set(val) {
+                return this.$store.commit('setSections', val)
+            },
+            get() {
+                return this.$store.state.sections
+            },
+        },
     },
     components: {
         'funnel-card': require('./-funnel-card.vue').default,
         draggable,
     },
-    computed: {
-        // editing: {
-        //     get() {
-        //         return this.$store.state.editing
-        //     },
-        //     set(val) {
-        //         this.$store.commit('setEditing', val)
-        //     },
-        // },
-    },
     methods: {
+        getSeq(s, index) {
+            s.seq = index
+            return index
+        },
         toggleEditing(val) {
             this.editing = val
         },
