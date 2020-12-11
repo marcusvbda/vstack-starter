@@ -14,8 +14,8 @@ class CreateUsers extends Migration
 	public function up()
 	{
 		Schema::create('users', function (Blueprint $table) {
-			$table->charset = 'utf8';
-			$table->collation = 'utf8_unicode_ci';
+			$table->charset = 'utf8mb4';
+			$table->collation = 'utf8mb4_unicode_ci';
 			$table->engine = 'InnoDB';
 			$table->bigIncrements('id');
 			$table->string('name');
