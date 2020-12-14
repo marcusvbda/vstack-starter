@@ -49,4 +49,9 @@ class Campaign extends DefaultModel
 		if (!@$this->starts_at && !@$this->ends_at) return "Campanha permanente";
 		return formatDate($this->starts_at, "d/m/Y") . " - " . formatDate($this->ends_at, "d/m/Y");
 	}
+
+	public function sections()
+	{
+		return $this->hasMany(CampaignSection::class);
+	}
 }

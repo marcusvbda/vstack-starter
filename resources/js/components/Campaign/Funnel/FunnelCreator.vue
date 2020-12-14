@@ -7,9 +7,9 @@
                 </div>
                 <div class="card-body">
                     <div class="funnel-row editing">
-                        <draggable v-model="sections" class="d-flex flex-row">
+                        <v-draggable v-model="sections" class="d-flex flex-row">
                             <funnel-card v-for="(s, i) in sections" :key="i" :title="s.title" :index="i" @edit-section="editSection" :seq="getSeq(s, i)" />
-                        </draggable>
+                        </v-draggable>
                         <funnel-card new @new-section="newSection" />
                     </div>
                 </div>
@@ -27,16 +27,27 @@ export default {
     computed: {
         sections: {
             set(val) {
-                return this.$store.commit('setSections', val)
+                this.$store.commit('setSections', val)
             },
             get() {
-                return this.$store.state.sections
+                return this.$store.state.campaign.data.sections
             },
         },
     },
+    created() {
+        this.$store.commit('setCampaign', this.campaign)
+    },
     components: {
         'funnel-card': require('./-funnel-card.vue').default,
-        draggable,
+        'v-draggable': draggable,
+    },
+    watch: {
+        sections: {
+            handler(val) {
+                this.$store.dispatch('updateSections', val)
+            },
+            deep: true,
+        },
     },
     methods: {
         getSeq(s, index) {
