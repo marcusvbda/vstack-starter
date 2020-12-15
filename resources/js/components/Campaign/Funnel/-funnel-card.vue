@@ -15,6 +15,7 @@
             <template v-else>
                 <div class="funnel-card-header">
                     <b class="funnel-card-header-title" v-html="_title" @click="clickEvent" />
+                    <button class="drop-button" @click.prevent="destroy" v-if="!is_new"><span class="icon el-icon-error" /></button>
                 </div>
             </template>
         </div>
@@ -43,6 +44,11 @@ export default {
         },
     },
     methods: {
+        destroy() {
+            this.$confirm('Deseja excluir esta sessão ?', 'Confirmação').then(() => {
+                this.$emit('destroy-section', this.index)
+            })
+        },
         confirm() {
             if (this.is_new) {
                 this.$emit('new-section', this.form.title)

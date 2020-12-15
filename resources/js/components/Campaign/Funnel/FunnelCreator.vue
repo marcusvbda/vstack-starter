@@ -8,7 +8,15 @@
                 <div class="card-body">
                     <div class="funnel-row editing">
                         <v-draggable v-model="sections" class="d-flex flex-row">
-                            <funnel-card v-for="(s, i) in sections" :key="i" :title="s.title" :index="i" @edit-section="editSection" :seq="getSeq(s, i)" />
+                            <funnel-card
+                                v-for="(s, i) in sections"
+                                :key="i"
+                                :title="s.title"
+                                :index="i"
+                                @edit-section="editSection"
+                                @destroy-section="destroy"
+                                :seq="getSeq(s, i)"
+                            />
                         </v-draggable>
                         <funnel-card new @new-section="newSection" />
                     </div>
@@ -62,6 +70,9 @@ export default {
         },
         editSection(title, index) {
             this.sections[index].title = title
+        },
+        destroy(index) {
+            this.sections = this.sections.filter((x, y) => y != index)
         },
     },
 }

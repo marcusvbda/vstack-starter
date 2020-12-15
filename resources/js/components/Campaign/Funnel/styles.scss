@@ -22,6 +22,28 @@
                 justify-content: center;
                 align-items: center;
                 flex-direction: row;
+                position: relative;
+                .drop-button {
+                    position: absolute;
+                    top: -12px;
+                    right: -3px;
+                    border-radius: 100%;
+                    padding: 0;
+                    border: unset;
+                    z-index: 999;
+                    border: 5px solid white;
+                    .icon {
+                        font-size: 25px;
+                        color: #d16161;
+                    }
+                    &:hover {
+                        .icon {
+                            transition: 0.5s;
+                            font-size: 25px;
+                            color: #b32c2c;
+                        }
+                    }
+                }
                 .funnel-card-header-input {
                     width: 100%;
                 }
