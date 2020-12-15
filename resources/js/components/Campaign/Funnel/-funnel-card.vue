@@ -17,15 +17,28 @@
                     <b class="funnel-card-header-title" v-html="_title" @click="clickEvent" />
                     <button class="drop-button" @click.prevent="destroy" v-if="!is_new"><span class="icon el-icon-error" /></button>
                 </div>
+                <div class="funnel-card-body d-flex flex-column m-2" v-if="!is_new">
+                    <div class="d-flex flex-row">
+                        <a class="f-12" href="#" @click.prevent="behavior_dialog = true">Adicionar Comportamento</a>
+                    </div>
+                </div>
             </template>
         </div>
+        <el-dialog title="Adicionar Comportamento" :visible.sync="behavior_dialog" width="30%">
+            <span>lorem ipsum</span>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="behavior_dialog = false">Cancel</el-button>
+                <el-button type="primary" @click="behavior_dialog = false">Confirm</el-button>
+            </span>
+        </el-dialog>
     </div>
 </template>
 <script>
 export default {
-    props: ['title', 'new', 'index', 'seq'],
+    props: ['section', 'new', 'index', 'seq'],
     data() {
         return {
+            behavior_dialog: false,
             form: {
                 editing: false,
                 title: null,
@@ -34,7 +47,7 @@ export default {
     },
     computed: {
         _title() {
-            return !this.is_new ? `${this.seq} ${this.title}` : '<span class="el-icon-plus mr-1"></span> Adicionar nova sessão'
+            return !this.is_new ? `${this.section.title}` : '<span class="el-icon-plus mr-1"></span> Adicionar nova sessão'
         },
         is_new() {
             return this.new != undefined

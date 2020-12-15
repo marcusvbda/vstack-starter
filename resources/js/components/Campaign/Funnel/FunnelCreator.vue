@@ -11,7 +11,7 @@
                             <funnel-card
                                 v-for="(s, i) in sections"
                                 :key="i"
-                                :title="s.title"
+                                :section="s"
                                 :index="i"
                                 @edit-section="editSection"
                                 @destroy-section="destroy"
@@ -28,7 +28,6 @@
 <script>
 import funnelStore from '~/stores/campaign/funnel'
 import draggable from 'vuedraggable'
-
 export default {
     props: ['campaign'],
     store: funnelStore,
