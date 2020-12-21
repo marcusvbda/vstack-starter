@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use marcusvbda\vstack\Resource;
 use Auth;
-use App\Http\Filters\User\UserByTenant;
+use App\Http\Filters\User\UsersByTenant;
 use ResourcesHelpers;
 
 class Usuarios extends Resource
@@ -92,7 +92,7 @@ class Usuarios extends Resource
 	{
 		$user = Auth::user();
 		$filters = [];
-		if ($user->hasRole(["super-admin"])) $filters[] = new UserByTenant();
+		if ($user->hasRole(["super-admin"])) $filters[] = new UsersByTenant();
 		return $filters;
 	}
 

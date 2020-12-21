@@ -48,7 +48,6 @@ $polo = $user->polo;
 					<i class="el-icon-attract mr-2"></i>Oportunidades
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item @if(!hasPermissionTo('viewlist-campaign')) disabled @endif" href="/admin/campanhas" data-label="Campanhas de Conversão">Campanhas</a>
 					<a class="dropdown-item @if(!hasPermissionTo('viewlist-leads')) disabled @endif" href="/admin/leads" data-label="Base de Leads">Leads</a>
 				</div>
 			</li>
@@ -57,9 +56,7 @@ $polo = $user->polo;
 					<i class="el-icon-data-analysis mr-2"></i>Análise e Relatórios
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item @if(!hasPermissionTo('conversion-report')) disabled @endif" href="/admin/leads" data-label="Análise desempenho de Polo">Polos</a>
-					<a class="dropdown-item @if(!hasPermissionTo('conversion-report')) disabled @endif" href="/admin/leads" data-label="Relatório de Leads">Leads</a>
-					<a class="dropdown-item @if(!hasPermissionTo('conversion-report')) disabled @endif" href="/admin/leads" data-label="Conversão em Campanha">Campanhas</a>
+					<a class="dropdown-item @if(!hasPermissionTo('conversion-report')) disabled @endif" href="/admin/relatorios/leads" data-label="Relatório de Leads">Leads</a>
 				</div>
 			</li>
 		</ul>

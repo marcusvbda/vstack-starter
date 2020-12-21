@@ -42,7 +42,8 @@ class UsersSeeder extends Seeder
 					"city" => $old_tenant->cidade,
 					"surrounding" => $old_tenant->arredores,
 					"old_tenant_id" => $old_tenant->id
-				]
+				],
+				"created_at" => $old_tenant->created_at
 			]);
 		}
 	}

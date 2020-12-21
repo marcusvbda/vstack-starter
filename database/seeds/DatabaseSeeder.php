@@ -12,7 +12,10 @@ class DatabaseSeeder extends Seeder
 	public function run()
 	{
 		Auth::logout();
+		DB::statement('SET AUTOCOMMIT=0;');
 		$this->call($this->getAllSeeder());
+		DB::statement('COMMIT;');
+		DB::statement('SET AUTOCOMMIT=1;');
 	}
 
 	private function getAllSeeder()

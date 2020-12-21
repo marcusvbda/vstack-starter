@@ -6,7 +6,6 @@ use marcusvbda\vstack\Resource;
 use Auth;
 
 use marcusvbda\vstack\Fields\{Text, Card};
-use App\Http\Actions\Permissions\TestAction;
 
 class Permissoes extends Resource
 {
@@ -114,11 +113,4 @@ class Permissoes extends Resource
 	{
 		return Auth::user()->hasRole(["super-admin"]);
 	}
-
-	// public function actions()
-	// {
-	// 	return [
-	// 		new TestAction()
-	// 	];
-	// }
 }
