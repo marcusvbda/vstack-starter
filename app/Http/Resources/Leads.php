@@ -6,6 +6,11 @@ use marcusvbda\vstack\Resource;
 use App\Http\Models\Lead;
 use App\Http\Filters\Leads\{LeadsByName};
 use App\Http\Actions\Leads\TestAction;
+use marcusvbda\vstack\Fields\{
+	Card,
+	Text,
+	// Check,
+};
 
 class Leads extends Resource
 {
@@ -70,7 +75,7 @@ class Leads extends Resource
 
 	public function canView()
 	{
-		return hasPermissionTo("view-leads");
+		return false;
 	}
 
 	public function canViewReport()

@@ -14,7 +14,7 @@ Route::group(['middleware' => ['auth']], function () {
 		require "partials/roles.php";
 		require "partials/polos.php";
 		require "partials/dates.php";
-		require "partials/campaigns.php";
+		require "partials/leads.php";
 		require "partials/notifications.php";
 	});
 });

@@ -22,9 +22,7 @@ class AclSeeder extends Seeder
 	{
 		DB::table("permissions")->truncate();
 		Cache::flush('spatie.permission.cache');
-
 		Permission::create(["group" => "Campanhas", "name" => "viewlist-leads", "description" => "Ver Listagem de Leads"]);
-		Permission::create(["group" => "Campanhas", "name" => "view-leads", "description" => "Visualizar Leads"]);
 		Permission::create(["group" => "Campanhas", "name" => "edit-leads", "description" => "Editar Leads"]);
 		Permission::create(["group" => "Campanhas", "name" => "destroy-leads", "description" => "Excluir Leads"]);
 		Permission::create(["group" => "Campanhas", "name" => "view-leads-report", "description" => "Ver Relatório de Leads"]);
