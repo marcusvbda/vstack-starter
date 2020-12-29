@@ -9,8 +9,8 @@ use Auth;
 
 class RoleClientScope implements Scope
 {
-    public function apply(Builder $builder, Model $model)
-    {
-        if (Auth::check()) @$builder->where("name", "!=", "super-admin")->where("id", "!=", Auth::user()->roles[0]->id);
-    }
+	public function apply(Builder $builder, Model $model)
+	{
+		if (Auth::check()) @$builder->where("name", "!=", "super-admin")->where("id", "!=", Auth::user()->roles[0]->id);
+	}
 }

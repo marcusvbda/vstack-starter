@@ -4,7 +4,7 @@ namespace App\Http\Models;
 
 use marcusvbda\vstack\Models\DefaultModel;
 use App\User;
-use App\Http\Models\Scopes\OrderByScope;
+use App\Http\Models\Scopes\{OrderByScope, PoloScope};
 use App\Http\Constants\Statuses\LeadStatus;
 use Auth;
 
@@ -22,11 +22,15 @@ class Lead extends DefaultModel
 	public static function boot()
 	{
 		parent::boot();
+		static::addGlobalScope(new PoloScope(with(new static)->getTable()));
 		static::addGlobalScope(new OrderByScope(with(new static)->getTable()));
-		static::saving(function ($model) {
-			if (!@$model->user_id) {
-				if (Auth::check()) $model->user_id = Auth::user()->id;
+		static::creating(function ($model) {
+			if (Auth::check()) {
+				$user = Auth::user();
+				if (!@$model->user_id) $model->user_id = $user->id;
+				if (!@$model->polo_id && $user->polo_id) $model->polo_id = $user->polo_id;
 			}
+			$model->conversions = [];
 		});
 	}
 

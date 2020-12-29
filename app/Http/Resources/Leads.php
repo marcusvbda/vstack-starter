@@ -127,16 +127,6 @@ class Leads extends Resource
 		];
 	}
 
-	// {
-	// 	"city": "",
-	// 	"name": "RAISSA DE PAULA PIMENTA",
-	// 	"email": "raissapimenta@live.com",
-	// 	"phones": [
-	// 		"(14)99125-8225"
-	// 	],
-	// 	"interest": "PEDAGOGIA"
-	// }
-
 	public function fields()
 	{
 		return [

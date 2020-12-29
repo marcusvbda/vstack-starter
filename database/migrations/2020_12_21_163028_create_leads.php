@@ -33,6 +33,10 @@ class CreateLeads extends Migration
 			$table->foreign('tenant_id')
 				->references('id')
 				->on('tenants');
+			$table->unsignedBigInteger('polo_id')->nullable();
+			$table->foreign('polo_id')
+				->references('id')
+				->on('polos');
 			$table->softDeletes();
 			$table->timestamps();
 		});

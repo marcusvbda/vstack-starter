@@ -40,12 +40,12 @@ class Polo extends DefaultModel
 
 	public function getHeadAttribute()
 	{
-		return $this->data->head;
+		return @$this->data->head ? true : false;
 	}
 
 	public function getFHeadAttribute()
 	{
-		return $this->data->head ? "Polo Sede" : "Polo Comum";
+		return $this->head ? "Polo Sede" : "Polo Comum";
 	}
 
 	public function getCityAttribute()
