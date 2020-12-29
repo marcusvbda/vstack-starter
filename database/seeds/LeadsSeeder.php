@@ -65,8 +65,8 @@ class LeadsSeeder extends Seeder
 	private function getPhones($row)
 	{
 		$result = [];
-		if (@$row->telefone) $result[] = @$row->telefone;
-		if (@$row->telefone_2) $result[] = @$row->telefone_2;
+		$result[] = @$row->telefone ?? "";
+		$result[] = @$row->telefone_2 ?? "";
 		return $result;
 	}
 

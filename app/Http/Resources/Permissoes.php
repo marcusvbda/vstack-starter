@@ -43,13 +43,11 @@ class Permissoes extends Resource
 				new Text([
 					"label" => "Agrupamento da Permissão",
 					"field" => "group",
-					"placeholder" => "Digite o grupo em que a permissão deverá ser agrupada ...",
 				]),
 				new Text([
 					"label" => "Nome",
 					"field" => "name",
 					"required" => true,
-					"placeholder" => "Digite o nome aqui ...",
 					"description" => "De preferência a letras minúsculas sem espaço",
 					"rules" => "max:255"
 				]),
@@ -57,7 +55,6 @@ class Permissoes extends Resource
 					"label" => "Descrição",
 					"field" => "description",
 					"required" => true,
-					"placeholder" => "Digite o descrição aqui ...",
 					"rules" => "max:255"
 				]),
 			])
