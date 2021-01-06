@@ -93,15 +93,18 @@ class Lead extends DefaultModel
 
 	public function getEmailUrlAttribute()
 	{
-		return "<email-url value='{$this->data->email}'>{$this->data->email}</email-url>";
+		return "<email-url type='email' value='{$this->data->email}'>{$this->data->email}</email-url>";
 	}
 
 	public function getPhonesUrlAttribute()
 	{
 		$html = [];
-		foreach ($this->data->phones as $phone)  $html[] = "<email-url value='{$phone}'>{$phone}</email-url>";
+		$cell = $this->cellphone_number;
+		$phone = $this->phone_number;
+		if (@$phone) $html[] = "<span>{$phone}</span>";
+		if (@$cell) $html[] = "<email-url type='wpp'  value='{$cell}'>{$cell}</email-url>";
 		$html = implode('  ', $html);
-		return "<div class='d-flex flex-column'>{$html}</div>";
+		return "<div class='d-flex flex-column text-center'>{$html}</div>";
 	}
 
 	public function getFCreatedAttribute()
