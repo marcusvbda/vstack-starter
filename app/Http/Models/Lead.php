@@ -7,6 +7,7 @@ use App\User;
 use App\Http\Models\Scopes\{OrderByScope, PoloScope};
 use App\Http\Constants\Statuses\LeadStatus;
 use Auth;
+use Illuminate\Support\Arr;
 
 class Lead extends DefaultModel
 {
@@ -42,6 +43,32 @@ class Lead extends DefaultModel
 	public function tenant()
 	{
 		return $this->belongsTo(Tenant::class);
+	}
+
+	public function getLastConversionAttribute()
+	{
+		return current($this->conversions ?? []);
+	}
+
+	public function getFLastConversionDateAttribute()
+	{
+		$last_conversion = $this->last_conversion;
+		if (!$last_conversion) return "Nunca Convertido";
+		return "Última Conversão : " . formatDate(Arr::get($last_conversion, 'created_at'));
+	}
+
+	public function getBtnConversionAttribute()
+	{
+		$code = $this->code;
+		$status = $this->status;
+		$f_last_conversion_date = $this->f_last_conversion_date;
+		return "
+			<div class='d-flex flex-column align-items-center justify-content-center'>
+				<small class='status-color {$status}'>{$status}</small>
+				<a href='/admin/converter/{$code}' class='el-button el-button--default el-button--small is-round my-2'>Converter</a>
+				<small>{$f_last_conversion_date}</small>
+			</div>
+		";
 	}
 
 	public function setStatusAttribute($value)
@@ -87,6 +114,11 @@ class Lead extends DefaultModel
 			<b>{$formated}</b>
 			<small>{$diff}</small>
 		</div>";
+	}
+
+	public function polo()
+	{
+		return $this->belongsTo(Polo::class);
 	}
 
 	public function getOriginAttribute()

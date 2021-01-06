@@ -4,15 +4,17 @@ namespace App\Http\Resources;
 
 use marcusvbda\vstack\Resource;
 use App\Http\Models\Lead;
-use App\Http\Filters\Leads\{LeadsByName};
-use App\Http\Actions\Leads\TestAction;
+use App\Http\Filters\Leads\{
+	LeadsByName
+};
+use App\Http\Actions\Leads\{
+	LeadTransfer
+};
 use marcusvbda\vstack\Fields\{
 	Card,
 	Text,
 	TextArea,
-	// Check,
 };
-
 
 class Leads extends Resource
 {
@@ -47,6 +49,7 @@ class Leads extends Resource
 	{
 		$columns = [];
 		$columns["code"] = ["label" => "Código", "sortable_index" => "id", "size" => "100px"];
+		$columns["btn_conversion"] = ["label" => "", "sortable" => false];
 		$columns["name"] = ["label" => "Nome", "sortable_index" => "data->name"];
 		$columns["profession"] = ["label" => "Profissão", "sortable_index" => "data->profession"];
 		$columns["email_url"] = ["label" => "Email", "sortable_index" => "data->email"];
@@ -102,6 +105,7 @@ class Leads extends Resource
 		return [
 			"code" => ["label" => "Código"],
 			"name" => ["label" => "Nome"],
+			"status" => ["label" => "Status"],
 			"profession" => ["label" => "Profissão"],
 			"email" => ["label" => "Email"],
 			"phones" => ["label" => "Telefones", "handler" => function ($row) {
@@ -123,7 +127,7 @@ class Leads extends Resource
 	public function actions()
 	{
 		return [
-			new TestAction()
+			new LeadTransfer()
 		];
 	}
 

@@ -138,3 +138,26 @@ label {
     color: #848484;
     font-weight: 500;
 }
+
+a {
+    &.el-button {
+        &:hover {
+            text-decoration: unset;
+        }
+    }
+}
+
+.status-color {
+    &.Oportunidade {
+        color: rgb(199, 201, 57);
+    }
+    &.Não.Qualificado {
+        color: #d3561b;
+    }
+    &.Qualificado {
+        color: #43a228;
+    }
+    &.Cliente.Convertido {
+        color: #233396;
+    }
+}
