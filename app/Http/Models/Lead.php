@@ -65,7 +65,7 @@ class Lead extends DefaultModel
 		return "
 			<div class='d-flex flex-column align-items-center justify-content-center'>
 				<small class='status-color {$status}'>{$status}</small>
-				<a href='/admin/converter/{$code}' class='el-button el-button--default el-button--small is-round my-2'>Converter</a>
+				<a href='/admin/funil-de-conversao/{$code}' class='el-button el-button--default el-button--small is-round my-2'>Converter</a>
 				<small>{$f_last_conversion_date}</small>
 			</div>
 		";
