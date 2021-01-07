@@ -1,0 +1,34 @@
+.funnel-section {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    overflow-x: auto;
+
+    .no-border {
+        border-radius: 0;
+    }
+
+    .col {
+        &.col-status {
+            min-width: 250px;
+            padding: 0;
+            margin-bottom: 30px;
+
+            &.hidding {
+                max-width: 100px;
+                opacity: 0.5;
+            }
+
+            .card-header {
+                cursor: pointer;
+            }
+
+            .list-content {
+                min-height: 650px;
+                max-height: 650px;
+                overflow-y: auto;
+            }
+        }
+    }
+}

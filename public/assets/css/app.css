@@ -11383,7 +11383,69 @@ a.el-button:hover {
   color: #43a228;
 }
 
-.status-color.Cliente.Convertido {
+.status-color.Convertido {
   color: #233396;
+}
+
+.status-color.Aguardando {
+  color: #c12d7c;
+}
+
+.status-color.Provavel.Qualificação {
+  color: #6a0082;
+}
+
+.status-color-bgtop.Oportunidade {
+  border-top: 4px solid #c7c939;
+}
+
+.status-color-bgtop.Não.Qualificado {
+  border-top: 4px solid #d3561b;
+}
+
+.status-color-bgtop.Aguardando {
+  border-top: 4px solid #c12d7c;
+}
+
+.status-color-bgtop.Provavel.Qualificação {
+  border-top: 4px solid #6a0082;
+}
+
+.status-color-bgtop.Qualificado {
+  border-top: 4px solid #43a228;
+}
+
+.status-color-bgtop.Convertido {
+  border-top: 4px solid #233396;
+}
+
+.modern-scroll::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+.modern-scroll::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #555;
+}
+
+.modern-scroll::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.slide-enter-active {
+  transition: all 0.2s ease;
+}
+
+.slide-leave-active {
+  transition: all 0.2s;
+  transform: translateY(20px);
+}
+
+.slide-enter,
+.slide-leave-to {
+  transform: translateY(20px);
+  opacity: 0;
 }
 
