@@ -12,22 +12,37 @@
     .col {
         &.col-status {
             min-width: 250px;
+            max-width: 350px;
             padding: 0;
-            margin-bottom: 30px;
+            margin-top: 10px;
+            margin-bottom: 10px;
 
             &.hidding {
                 max-width: 100px;
                 opacity: 0.5;
+                font-size: 12px;
             }
 
-            .card-header {
-                cursor: pointer;
+            .col-header {
+                .title {
+                    cursor: pointer;
+                    transform: scale(0.95);
+                    transition: 0.3s;
+                    &:hover {
+                        transform: scale(1);
+                    }
+                }
             }
 
             .list-content {
-                min-height: 650px;
-                max-height: 650px;
+                min-height: 550px;
+                max-height: 550px;
                 overflow-y: auto;
+
+                .lead-card {
+                    padding: 10px;
+                    font-size: 12px;
+                }
             }
         }
     }

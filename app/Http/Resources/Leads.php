@@ -5,7 +5,8 @@ namespace App\Http\Resources;
 use marcusvbda\vstack\Resource;
 use App\Http\Models\Lead;
 use App\Http\Filters\Leads\{
-	LeadsByName
+	LeadsByName,
+	LeadsByCreatedDate
 };
 use App\Http\Actions\Leads\{
 	LeadTransfer
@@ -121,6 +122,7 @@ class Leads extends Resource
 	public function filters()
 	{
 		$filters[] = new LeadsByName();
+		$filters[] = new LeadsByCreatedDate();
 		return $filters;
 	}
 

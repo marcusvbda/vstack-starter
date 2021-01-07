@@ -6,7 +6,7 @@
 		<ol class="breadcrumb">
 		  <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
 		  <li class="breadcrumb-item">Converter</li>
-		  <li class="breadcrumb-item active" aria-current="page"><a href="/admin/leads/funil-de-conversao">Funil de Conversão de Leads</a></li>
+		  <li class="breadcrumb-item active" aria-current="page"><a href="/admin/funil-de-conversao">Funil de Conversão de Leads</a></li>
 		</ol>
 	</nav>
 @endsection

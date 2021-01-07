@@ -89,3 +89,8 @@ function formatDate($date, $format = "d/m/Y - H:i:s")
 {
 	return $date->format($format);
 }
+
+function queryBetweenDates($column, $dates)
+{
+	return "DATE($column) >= DATE('$dates[0]') and DATE($column) <= DATE('$dates[1]')";
+}

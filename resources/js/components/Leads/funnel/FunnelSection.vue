@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-3">
+    <div class="d-flex flex-column">
         <el-switch v-model="show_finished" active-text="Também mostrar os leads finalizados" />
         <div class="funnel-section modern-scroll">
             <funnel-status-col :col="col" v-for="(col, i) in filtered_status" :key="i" />
