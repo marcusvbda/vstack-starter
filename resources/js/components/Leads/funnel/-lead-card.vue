@@ -11,9 +11,11 @@
             </el-dropdown>
         </div>
         <small class="text-muted"> <span class="el-icon-alarm-clock mr-2" /> Última conversão : 07/01/2021 </small>
-        <div class="mt-2"><email-url type="email" value="bassalobre.vinicius@gmail.com">bassalobre.vinicius@gmail.com</email-url></div>
-        <div class="d-flex flex-row justify-content-between align-items-center">
-            <div>(14) 3425-4246</div>
+        <div class="mt-2">
+            <email-url type="email" value="bassalobre.vinicius@gmail.com">bassalobre.vinicius@gmail.com</email-url>
+        </div>
+        <div class="d-flex flex-row justify-content-between align-items-center mt-1">
+            <div class="text-muted">(14) 3425-4246</div>
             <div><email-url type="wpp" value="(14) 996766177">(14) 99676-6177</email-url></div>
         </div>
         <div class="d-flex flex-row mt-2 align-items-center">
