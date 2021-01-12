@@ -20,9 +20,9 @@ class setTimezone
 		$user = Auth::user();
 		if ($polo = @$user->polo) {
 			$timezone =  @$polo->timezone ? $polo->timezone : config("app.timezone");
-			config(['app.timezone' => $timezone]);
-			date_default_timezone_set($timezone);
+			config(['vstack.timezone' => $timezone]);
 		}
+		DB::statement("SET time_zone = '+00:00'");
 		return $next($request);
 	}
 }
