@@ -11,6 +11,7 @@ class UsersByTenant extends Filter
 	public $component   = "select-filter";
 	public $label       = "Tenant";
 	public $index = "tenant_id";
+	public $multiple = true;
 
 	public function __construct()
 	{
@@ -20,6 +21,7 @@ class UsersByTenant extends Filter
 
 	public function apply($query, $value)
 	{
-		return $query->where("tenant_id", $value);
+		$ids = explode($value, ",");
+		return $query->whereIn("tenant_id", $ids);
 	}
 }
