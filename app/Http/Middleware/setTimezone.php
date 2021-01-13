@@ -22,7 +22,6 @@ class setTimezone
 			$timezone =  @$polo->timezone ? $polo->timezone : config("app.timezone");
 			config(['vstack.timezone' => $timezone]);
 		}
-		DB::statement("SET time_zone = '+00:00'");
 		return $next($request);
 	}
 }
