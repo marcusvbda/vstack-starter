@@ -16,16 +16,19 @@ class C_LeadsSeeder extends Seeder
 		"AGENDAMENTO_A" => "Qualificado",
 		"AGENDAMENTO_C" => "Não Qualificado",
 		"AGENDAMENTO_F" => "Não Qualificado",
-		"AGENDAMENTO_V" => "Cliente Convertido",
+		"AGENDAMENTO_V" => "Convertido",
 	];
 
 	public function run()
 	{
+		DB::statement('SET AUTOCOMMIT=0;');
 		DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 		$this->polos = Polo::pluck("id", "name")->toArray();
 		$this->createUserApi();
 		$this->createleads();
 		DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+		DB::statement('SET AUTOCOMMIT=1;');
+		DB::statement('COMMIT;');
 	}
 
 	private function createUserApi()

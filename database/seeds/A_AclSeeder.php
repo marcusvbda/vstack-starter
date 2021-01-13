@@ -12,10 +12,13 @@ class A_AclSeeder extends Seeder
 	 */
 	public function run()
 	{
+		DB::statement('SET AUTOCOMMIT=0;');
 		DB::statement('SET FOREIGN_KEY_CHECKS=0;');
 		$this->createPermissions();
 		$this->createRoles();
+		DB::statement('SET AUTOCOMMIT=1;');
 		DB::statement('SET FOREIGN_KEY_CHECKS=1;');
+		DB::statement('COMMIT;');
 	}
 
 	private function createPermissions()
