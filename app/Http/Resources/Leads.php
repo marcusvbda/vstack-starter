@@ -97,7 +97,7 @@ class Leads extends Resource
 
 	public function canExport()
 	{
-		return false;
+		return hasPermissionTo("view-report-leads");
 	}
 
 
