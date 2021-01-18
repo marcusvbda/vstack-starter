@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Constants\Statuses;
+namespace App\Http\Constants\Leads;
 
 use marcusvbda\vstack\Constants;
 
-class LeadStatus extends Constants
+class Statuses extends Constants
 {
 	const _UNQUALIFIED_ = 'Não Qualificado';
 	const _OPPORTUNITY_ = 'Oportunidade';

@@ -5,7 +5,7 @@ namespace App\Http\Models;
 use marcusvbda\vstack\Models\DefaultModel;
 use App\User;
 use App\Http\Models\Scopes\{OrderByScope, PoloScope};
-use App\Http\Constants\Statuses\LeadStatus;
+use App\Http\Constants\Leads\Statuses;
 use Auth;
 use Illuminate\Support\Arr;
 
@@ -73,12 +73,12 @@ class Lead extends DefaultModel
 
 	public function setStatusAttribute($value)
 	{
-		$this->attributes["status"] = LeadStatus::getIndex($value);
+		$this->attributes["status"] = Statuses::getIndex($value);
 	}
 
 	public function getStatusAttribute($value)
 	{
-		return LeadStatus::getValue($value);
+		return Statuses::getValue($value);
 	}
 
 	public function apiUser()
