@@ -71,7 +71,6 @@ $polo = $user->polo;
 					</div>
 				</a>
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-					<div class="dropdown-item"><b>Meu Perfil</b></div>
 					@if($is_super_admin)
 						<a class="dropdown-item" href="/admin/permissoes">Permissões</a>
 					@endif
