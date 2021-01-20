@@ -60,7 +60,7 @@ class Lead extends DefaultModel
 	public function getBtnConversionAttribute()
 	{
 		$code = $this->code;
-		$status = $this->status;
+		$status = $this->f_status;
 		$f_last_conversion_date = $this->f_last_conversion_date;
 		return "
 			<div class='d-flex flex-column align-items-center justify-content-center'>
@@ -76,9 +76,9 @@ class Lead extends DefaultModel
 		$this->attributes["status"] = Statuses::getIndex($value);
 	}
 
-	public function getStatusAttribute($value)
+	public function getFStatusAttribute()
 	{
-		return Statuses::getValue($value);
+		return Statuses::getValue($this->status);
 	}
 
 	public function apiUser()
