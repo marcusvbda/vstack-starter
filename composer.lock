@@ -200,12 +200,12 @@
             "version": "v1.4.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/clue/php-stream-filter.git",
+                "url": "https://github.com/clue/stream-filter.git",
                 "reference": "5a58cc30a8bd6a4eb8f856adf61dd3e013f53f71"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/clue/php-stream-filter/zipball/5a58cc30a8bd6a4eb8f856adf61dd3e013f53f71",
+                "url": "https://api.github.com/repos/clue/stream-filter/zipball/5a58cc30a8bd6a4eb8f856adf61dd3e013f53f71",
                 "reference": "5a58cc30a8bd6a4eb8f856adf61dd3e013f53f71",
                 "shasum": ""
             },
@@ -2284,7 +2284,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/marcusvbda/vstack.git",
-                "reference": "e3c1c4ea1668cdfd758d1999a5a649d99c5611db"
+                "reference": "4c6597fc3db8d450ae4518a75c0ee54bdecbf90c"
             },
             "require": {
                 "spatie/laravel-permission": "^3.3",
@@ -2309,7 +2309,7 @@
                     "email": "bassalobre.vinicius@gmail.com"
                 }
             ],
-            "time": "2021-01-14T19:03:56+00:00"
+            "time": "2021-01-20T13:37:59+00:00"
         },
         {
             "name": "markbaker/complex",
