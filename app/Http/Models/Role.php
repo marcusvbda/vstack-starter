@@ -46,7 +46,7 @@ class Role extends RootRoleModel
 	public function setDescriptionAttribute($description)
 	{
 		$this->attributes["description"] = $description;
-		$this->attributes["name"] = $this->makeRoleName($description);
+		$this->attributes["name"] = $this->makeRoleName(@$this->attributes["name"] ? $this->attributes["name"] : $description);
 	}
 
 	public function getRules()
