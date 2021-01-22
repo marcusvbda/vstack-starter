@@ -31,7 +31,7 @@ class RolesController extends Controller
 		$this->validate($request, $role->getRules());
 		$data = [
 			"Description" => $request["description"],
-			"name" => strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', $request["description"]))
+			"name" => $role->makeRoleName($request["description"])
 		];
 		$role->fill($data);
 		$role->save();

@@ -13,7 +13,7 @@ class Role extends RootRoleModel
 {
 	use hasCode;
 	protected $table = "roles";
-
+	public static $protected_roles = ["admin", "super-admin", "manager"];
 	public $appends = ["code", "f_created_at_for_humans", "processed_permissions", "f_access_level", "access_level"];
 
 
@@ -23,7 +23,7 @@ class Role extends RootRoleModel
 		static::addGlobalScope(new OrderByScope(with(new static)->getTable()));
 		static::observe(new TenantObserver());
 		static::addGlobalScope(new TenantScope());
-		static::addGlobalScope(new RoleClientScope());
+		static::addGlobalScope(new RoleClientScope(static::$protected_roles));
 	}
 
 	public function getCodeAttribute()
@@ -37,13 +37,20 @@ class Role extends RootRoleModel
 		return $this->created_at->diffForHumans();
 	}
 
+	public function makeRoleName($description)
+	{
+		return strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', $description));
+	}
+
 	public function getRules()
 	{
 		$id = @$this->id ? $this->id : null;
 		return [
 			'permissions' => 'required',
 			'description' => ['required', function ($attribute, $value, $fail) use ($id) {
-				if (Role::where("name", $value)->where("id", "!=", $id)->count() > 0) $fail('Este Grupo de acesso já existe');
+				$name = $this->makeRoleName($value);
+				if (Role::where("name", $name)->where("id", "!=", $id)->count() > 0) $fail('Este Grupo de acesso já existe');
+				if (in_array($name, static::$protected_roles)) return $fail("Não é possível cadastrar um grupo com este nome.");
 			}],
 		];
 	}
@@ -82,7 +89,7 @@ class Role extends RootRoleModel
 		if ($percentage <= 11)
 			$type = "danger";
 		if (($percentage > 11) && ($percentage <= 50))
-			$type = "primary";
+			$type = "default";
 		if (($percentage > 51) && ($percentage <= 99))
 			$type = "warning";
 		if ($percentage == 100)

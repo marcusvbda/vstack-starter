@@ -9,8 +9,14 @@ use Auth;
 
 class RoleClientScope implements Scope
 {
+	private $protected_roles = [];
+	public function __construct($roles)
+	{
+		$this->protected_roles = $roles;
+	}
+
 	public function apply(Builder $builder, Model $model)
 	{
-		if (Auth::check()) @$builder->where("name", "!=", "super-admin")->where("id", "!=", Auth::user()->roles[0]->id);
+		if (Auth::check()) @$builder->whereNotIn("name", $this->protected_roles)->where("id", "!=", Auth::user()->roles[0]->id);
 	}
 }
