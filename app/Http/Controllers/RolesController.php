@@ -29,11 +29,7 @@ class RolesController extends Controller
 	{
 		$role = @$request["id"] ? Role::findOrFail($request["id"]) : new Role();
 		$this->validate($request, $role->getRules());
-		$data = [
-			"Description" => $request["description"],
-			"name" => $role->makeRoleName($request["description"])
-		];
-		$role->fill($data);
+		$role->description  = $request["description"];
 		$role->save();
 		$role->syncPermissions(); //remove all old permissions
 		foreach ($request["permissions"] as $permission => $value) {

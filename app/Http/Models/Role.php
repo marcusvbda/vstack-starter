@@ -13,7 +13,7 @@ class Role extends RootRoleModel
 {
 	use hasCode;
 	protected $table = "roles";
-	public static $protected_roles = ["admin", "super-admin", "manager"];
+	public static $protected_roles = ["admin", "super-admin"];
 	public $appends = ["code", "f_created_at_for_humans", "processed_permissions", "f_access_level", "access_level"];
 
 
@@ -37,9 +37,16 @@ class Role extends RootRoleModel
 		return $this->created_at->diffForHumans();
 	}
 
-	public function makeRoleName($description)
+
+	private function makeRoleName($description)
 	{
-		return strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', $description));
+		return preg_replace('/\s+/', "", strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', $description)));
+	}
+
+	public function setDescriptionAttribute($description)
+	{
+		$this->attributes["description"] = $description;
+		$this->attributes["name"] = $this->makeRoleName($description);
 	}
 
 	public function getRules()
