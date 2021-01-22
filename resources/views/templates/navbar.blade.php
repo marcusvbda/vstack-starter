@@ -67,7 +67,7 @@ $polo = $user->polo;
 				<a class="nav-link dropdown-toggle py-0 d-flex flex-row align-items-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<div class="d-flex flex-column mr-2">
 						<b>{{ $user->name }}</b>
-						<small class="f-12">{{ $user->email }}<span class="badge badge-primary ml-2 pb-1">{{ $user->roleName }}</span></small>
+						<small class="f-12">{{ $user->email }}<span class="badge badge-primary ml-2 pb-1">{{ $user->role_description }}</span></small>
 					</div>
 				</a>
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

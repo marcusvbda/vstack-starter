@@ -76,6 +76,11 @@ class User extends Authenticatable
 		return $this->belongsTo(Polo::class);
 	}
 
+	public function getRoleDescriptionAttribute()
+	{
+		return @$this->roles()->first()->description;
+	}
+
 	public function getRoleNameAttribute()
 	{
 		return @$this->roles()->first()->name;
