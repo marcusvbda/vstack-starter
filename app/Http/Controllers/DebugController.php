@@ -14,7 +14,8 @@ class DebugController extends Controller
 			"user_id" => $user->id,
 			"data" => [
 				"message" => "Lorem ipsum dolor sit amet, <b>consectetur adipiscing elit</b>. Morbi nisi elit, condimentum et velit eget, <b>finibus condimentum eros</b>. Proin viverra aliquet purus, id sodales erat facilisis varius. Donec quis tortor in augue mattis malesuada quis nec augue. Lorem ipsum dolor sit amet, consectetur adipiscing eli",
-				"icon" => "el-icon-picture-outline-round"
+				"icon" => "el-icon-picture-outline-round",
+				"url" => "www.google.com"
 			]
 		]);
 		return ['success' => true];
@@ -30,7 +31,7 @@ class DebugController extends Controller
 					"data" => [
 						"message" => "Lorem ipsum dolor sit amet, <b>consectetur adipiscing elit</b>. Morbi nisi elit, condimentum et velit eget, <b>finibus condimentum eros</b>",
 						"icon" => "el-icon-s-ticket",
-						"route" => "wwww.google.com"
+						"url" => "wwww.google.com"
 					]
 				]);
 			}

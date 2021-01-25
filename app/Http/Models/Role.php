@@ -8,6 +8,7 @@ use marcusvbda\vstack\Models\Observers\TenantObserver;
 use App\Http\Models\Scopes\RoleClientScope;
 use marcusvbda\vstack\Models\Traits\hasCode;
 use App\Http\Models\Scopes\OrderByScope;
+use Auth;
 
 class Role extends RootRoleModel
 {
@@ -15,7 +16,6 @@ class Role extends RootRoleModel
 	protected $table = "roles";
 	public static $protected_roles = ["admin", "super-admin"];
 	public $appends = ["code", "f_created_at_for_humans", "processed_permissions", "f_access_level", "access_level"];
-
 
 	public static function boot()
 	{
@@ -37,7 +37,6 @@ class Role extends RootRoleModel
 		return $this->created_at->diffForHumans();
 	}
 
-
 	private function makeRoleName($description)
 	{
 		return preg_replace('/\s+/', "", strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', $description)));
@@ -46,7 +45,10 @@ class Role extends RootRoleModel
 	public function setDescriptionAttribute($description)
 	{
 		$this->attributes["description"] = $description;
-		$this->attributes["name"] = $this->makeRoleName(@$this->attributes["name"] ? $this->attributes["name"] : $description);
+		if (!@$this->attributes["name"]) {
+			$tenant_code = @Auth::user()->tenant->code;
+			$this->attributes["name"] = $tenant_code . "_" . $this->makeRoleName(@$this->attributes["name"] ? $this->attributes["name"] : $description);
+		}
 	}
 
 	public function getRules()
@@ -56,11 +58,12 @@ class Role extends RootRoleModel
 			'permissions' => 'required',
 			'description' => ['required', function ($attribute, $value, $fail) use ($id) {
 				$name = $this->makeRoleName($value);
-				if (Role::where("name", $name)->where("id", "!=", $id)->count() > 0) $fail('Este Grupo de acesso já existe');
-				if (in_array($name, static::$protected_roles)) return $fail("Não é possível cadastrar um grupo com este nome.");
+				$tenant_code = @Auth::user()->tenant->code;
+				if (Role::where("name", $tenant_code . "_" . $name)->where("id", "!=", $id)->count() > 0) $fail('Este Grupo de acesso já existe');
 			}],
 		];
 	}
+
 
 	public function getProcessedPermissionsAttribute()
 	{

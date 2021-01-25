@@ -39,8 +39,8 @@ class GruposDeAcesso extends Resource
 		$user = Auth::user();
 		$columns = [];
 		$columns["code"] = ["label" => "Código", "sortable_index" => "id"];
-		$columns["description"] = ["label" => "Nome"];
-		$columns["name"] = ["label" => "Valor"];
+		$columns["description"] = ["label" => "Descrição"];
+		// $columns["name"] = ["label" => "Nome"];
 		if ($user->hasRole(["super-admin"])) $columns["tenant->name"] = ["label" => "Tenant", "sortable_index" => "tenant_id"];
 		$columns["f_access_level"] = ["label" => "Nível de Acesso", "sortable" => false];
 		$columns["f_created_at_for_humans"] = ["label" => "", "sortable_index" => "created_at"];

@@ -30,7 +30,7 @@
             <div class="col-md-9 col-sm-12">
                 <div class="row" v-for="(note, i) in notifications" :key="i">
                     <div class="col-12">
-                        <div class="card mb-1 pointer-hover" @click="goTo(note.url)">
+                        <div class="card mb-1 pointer-hover" @click="goTo(note.data.url)">
                             <div class="card-body row">
                                 <div class="col-sm-12 col-md-1 d-flex align-items-center justify-content-center">
                                     <b><span :class="`${note.data.icon} mr-4`" style="font-size: 30px" /></b>
