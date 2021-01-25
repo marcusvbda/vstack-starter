@@ -59,7 +59,9 @@ class Role extends RootRoleModel
 			'description' => ['required', function ($attribute, $value, $fail) use ($id) {
 				$name = $this->makeRoleName($value);
 				$tenant_code = @Auth::user()->tenant->code;
-				if (Role::where("name", $tenant_code . "_" . $name)->where("id", "!=", $id)->count() > 0) $fail('Este Grupo de acesso já existe');
+				$role_name = $tenant_code . "_" . $name;
+				if (Role::where("name", $role_name)->where("id", "!=", $id)->count() > 0) $fail('Este Grupo de acesso já existe');
+				if (in_array($role_name, static::$protected_roles)) return $fail("Não é possível cadastrar um grupo com este nome.");
 			}],
 		];
 	}
