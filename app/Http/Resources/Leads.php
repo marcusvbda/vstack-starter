@@ -106,7 +106,7 @@ class Leads extends Resource
 		return [
 			"code" => ["label" => "Código"],
 			"name" => ["label" => "Nome"],
-			"status" => ["label" => "Status"],
+			"f_status" => ["label" => "Status"],
 			"profession" => ["label" => "Profissão"],
 			"email" => ["label" => "Email"],
 			"phones" => ["label" => "Telefones", "handler" => function ($row) {
@@ -223,4 +223,9 @@ class Leads extends Resource
 			]),
 		];
 	}
+
+	// public function maxWaitingReportsByUser()
+	// {
+	// 	return 5;
+	// }
 }
