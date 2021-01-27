@@ -31,10 +31,15 @@
 </div>
 <div class="row d-flex align-items-end mb-2">
     <div class="col-12 d-flex align-items-end justify-content-between">
+		<?php
+			$_filters = [];
+			foreach($filters as $row) if(get_class($row) != \App\Http\Filters\Leads\LeadsByStatus::class) $_filters[] = $row;
+			$filters = $_filters;
+		?>
 		<resource-filter-tags 
 			ref="tags_filter" 
-			:resource_filters="{{json_encode($filters)}}" 
-			:get_params="{{json_encode($_GET)}}"
+			:resource_filters='@json($filters)' 
+			:get_params='@json($_GET)'
 		>
 		</resource-filter-tags>
 		<div class="d-flex flex-row align-items-center">
@@ -50,5 +55,10 @@
     </div>
 </div>
 
-<funnel-section :status='@json($status)'></funnel-section>
+<funnel-section 
+	:status='@json($status)' 
+	:get_params='@json($_GET)'
+	:can_edit='@json(hasPermissionTo("edit-leads"))'
+>
+</funnel-section>
 @endsection

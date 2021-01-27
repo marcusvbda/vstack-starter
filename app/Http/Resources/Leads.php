@@ -6,10 +6,11 @@ use marcusvbda\vstack\Resource;
 use App\Http\Models\Lead;
 use App\Http\Filters\Leads\{
 	LeadsByName,
-	LeadsByCreatedDate
+	LeadsByCreatedDate,
+	LeadsByStatus
 };
 use App\Http\Actions\Leads\{
-	LeadTransfer
+	LeadTransfer,
 };
 use marcusvbda\vstack\Fields\{
 	Card,
@@ -20,6 +21,17 @@ use marcusvbda\vstack\Fields\{
 class Leads extends Resource
 {
 	public $model = Lead::class;
+	public $_filters = [];
+
+	public function __construct()
+	{
+		$this->_filters = [
+			new LeadsByName(),
+			new LeadsByStatus(),
+			new LeadsByCreatedDate()
+		];
+		parent::__construct();
+	}
 
 	public function label()
 	{
@@ -50,13 +62,13 @@ class Leads extends Resource
 	{
 		$columns = [];
 		$columns["code"] = ["label" => "Código", "sortable_index" => "id", "size" => "100px"];
-		$columns["btn_conversion"] = ["label" => "", "sortable" => false];
+		$columns["btn_conversion"] = ["label" => "", "sortable" => false, "size" => "300px"];
 		$columns["name"] = ["label" => "Nome", "sortable_index" => "data->name"];
 		$columns["profession"] = ["label" => "Profissão", "sortable_index" => "data->profession"];
 		$columns["email_url"] = ["label" => "Email", "sortable_index" => "data->email"];
 		$columns["phones_url"] = ["label" => "Telefones", "sortable_index" => "data->phones"];
 		$columns["origin"] = ["label" => "Origem", "sortable" => false];
-		$columns["f_created"] = ["label" => "Data", "sortable_index" => "created_at"];
+		$columns["f_complete_created"] = ["label" => "Data", "sortable_index" => "created_at"];
 		return $columns;
 	}
 
@@ -82,7 +94,7 @@ class Leads extends Resource
 
 	public function canView()
 	{
-		return false;
+		return hasPermissionTo("edit-leads");
 	}
 
 	public function canViewReport()
@@ -121,9 +133,7 @@ class Leads extends Resource
 
 	public function filters()
 	{
-		$filters[] = new LeadsByName();
-		$filters[] = new LeadsByCreatedDate();
-		return $filters;
+		return $this->_filters;
 	}
 
 	public function actions()

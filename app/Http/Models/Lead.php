@@ -20,6 +20,8 @@ class Lead extends DefaultModel
 		"data" => "object",
 	];
 
+	public $appends = ["code", "name", "f_status", "email", "profession", "f_last_conversion", "cellphone_number", "phone_number", "obs", "f_created_at"];
+
 	public static function boot()
 	{
 		parent::boot();
@@ -33,6 +35,11 @@ class Lead extends DefaultModel
 			}
 			$model->conversions = [];
 		});
+	}
+
+	public function getFLastConversionAttribute()
+	{
+		return "01/01/1992 - 21:52:10";
 	}
 
 	public function users()
@@ -52,9 +59,9 @@ class Lead extends DefaultModel
 
 	public function getFLastConversionDateAttribute()
 	{
-		$last_conversion = $this->last_conversion;
+		$last_conversion = $this->f_last_conversion;
 		if (!$last_conversion) return "Nunca Convertido";
-		return "Última Conversão : " . formatDate(Arr::get($last_conversion, 'created_at'));
+		return "Última Conversão : " . $last_conversion;
 	}
 
 	public function getBtnConversionAttribute()
@@ -107,10 +114,16 @@ class Lead extends DefaultModel
 		return "<div class='d-flex flex-column text-center'>{$html}</div>";
 	}
 
-	public function getFCreatedAttribute()
+	public function getFCreatedAtAttribute()
 	{
 		$created = $this->created_at;
-		$formated = formatDate($created);
+		return formatDate($created);
+	}
+
+	public function getFCompleteCreatedAttribute()
+	{
+		$created = $this->created_at;
+		$formated = $this->f_created_at;
 		$diff = $created->diffForHumans();
 		return "
 		<div class='d-flex flex-column'>
@@ -141,12 +154,12 @@ class Lead extends DefaultModel
 
 	public function getCellphoneNumberAttribute()
 	{
-		return @$this->data->phones[1];
+		return @$this->data->phones[0];
 	}
 
 	public function getPhoneNumberAttribute()
 	{
-		return @$this->data->phones[0];
+		return @$this->data->phones[1];
 	}
 
 	public function setPhoneNumberAttribute($value)

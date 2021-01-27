@@ -11,13 +11,13 @@
 
     .col {
         &.col-status {
-            min-width: 250px;
+            min-width: 350px;
             padding: 0;
             margin-top: 10px;
             margin-bottom: 10px;
 
             &.hidding {
-                max-width: 100px;
+                max-width: 100px !important;
                 opacity: 0.5;
                 font-size: 12px;
             }

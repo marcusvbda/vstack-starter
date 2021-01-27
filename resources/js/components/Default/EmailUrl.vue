@@ -96,7 +96,8 @@ export default {
     },
     methods: {
         cancelWpp() {
-            this.email.body = ''
+            this.dialog = false
+            this.wpp.body = ''
         },
         cancelEmail() {
             this.email.body = ''
