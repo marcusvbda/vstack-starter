@@ -31,7 +31,7 @@ export default {
         this.$store.commit('setGetParams', this.get_params)
         this.$nextTick(() => {
             this.selected_status = Object.keys(this.status)
-                .filter((x) => !['_CUSTOMER_', '_UNQUALIFIED_'].includes(x))
+                .filter((x) => !['_CUSTOMER_', '_QUALIFIED_', '_UNQUALIFIED_'].includes(x))
                 .map((x) => x)
         })
     },

@@ -13,7 +13,7 @@ class FunnelController extends Controller
 	{
 		$resource = static::getProcessedResource();
 		$status = Statuses::options();
-		return view("admin.leads.funnel", compact('resource', 'status'));
+		return view("admin.leads.funnel.index", compact('resource', 'status'));
 	}
 
 	public function filter(Request $request)
@@ -36,5 +36,13 @@ class FunnelController extends Controller
 		$filters = $_filters;
 		$resource->_filters = $_filters;
 		return $resource;
+	}
+
+	public function convert($id)
+	{
+		$resource = ResourcesHelpers::find("leads");
+		if (!hasPermissionTo("edit-leads")) abort(403);
+		$lead = $resource->model->findOrFail($id);
+		return view("admin.leads.funnel.convert", compact('resource', 'lead'));
 	}
 }

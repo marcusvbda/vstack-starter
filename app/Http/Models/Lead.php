@@ -7,7 +7,6 @@ use App\User;
 use App\Http\Models\Scopes\{OrderByScope, PoloScope};
 use App\Http\Constants\Leads\Statuses;
 use Auth;
-use Illuminate\Support\Arr;
 
 class Lead extends DefaultModel
 {
@@ -16,11 +15,13 @@ class Lead extends DefaultModel
 	// public $restrictDeletes = [""];
 
 	public $casts = [
-		"conversions" => "array",
 		"data" => "object",
 	];
 
-	public $appends = ["code", "name", "f_status", "email", "profession", "f_last_conversion", "cellphone_number", "phone_number", "obs", "f_created_at"];
+	public $appends = [
+		"code", "name", "f_status", "email", "profession", "f_last_conversion", "cellphone_number",
+		"phone_number", "obs", "f_created_at", "objection", "comment", "interest"
+	];
 
 	public static function boot()
 	{
@@ -33,8 +34,17 @@ class Lead extends DefaultModel
 				if (!@$model->user_id) $model->user_id = $user->id;
 				if (!@$model->polo_id && $user->polo_id) $model->polo_id = $user->polo_id;
 			}
-			$model->conversions = [];
 		});
+	}
+
+	public function getObjectionAttribute()
+	{
+		return @$this->data->objection;
+	}
+
+	public function getCommentAttribute()
+	{
+		return $this->data->comment;
 	}
 
 	public function getFLastConversionAttribute()
@@ -72,7 +82,7 @@ class Lead extends DefaultModel
 		return "
 			<div class='d-flex flex-column align-items-center justify-content-center'>
 				<small class='status-color {$status}'>{$status}</small>
-				<a href='/admin/funil-de-conversao/{$code}' class='el-button el-button--default el-button--small is-round my-2'>Converter</a>
+				<a href='/admin/funil-de-conversao/{$code}/converter' class='el-button el-button--default el-button--small is-round my-2'>Converter</a>
 				<small>{$f_last_conversion_date}</small>
 			</div>
 		";
@@ -164,12 +174,12 @@ class Lead extends DefaultModel
 
 	public function setPhoneNumberAttribute($value)
 	{
-		$this->setDataValue("phones", [$value, $this->cellphone_number]);
+		$this->setDataValue("phones", [$this->cellphone_number, $value]);
 	}
 
 	public function setCellphoneNumberAttribute($value)
 	{
-		$this->setDataValue("phones", [$this->phone_number, $value]);
+		$this->setDataValue("phones", [$value, $this->phone_number]);
 	}
 
 	public function getEmailAttribute()
@@ -195,6 +205,11 @@ class Lead extends DefaultModel
 	public function getObsAttribute()
 	{
 		return @$this->data->obs;
+	}
+
+	public function setCommentAttribute($value)
+	{
+		$this->setDataValue("comment", $value);
 	}
 
 	public function setObsAttribute($value)
@@ -267,5 +282,10 @@ class Lead extends DefaultModel
 		$_data = @$this->data ?? (object)[];
 		$_data->{$field} = $value;
 		$this->data = $_data;
+	}
+
+	public function useTags()
+	{
+		return true;
 	}
 }

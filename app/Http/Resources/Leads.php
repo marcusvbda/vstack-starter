@@ -94,7 +94,7 @@ class Leads extends Resource
 
 	public function canView()
 	{
-		return hasPermissionTo("edit-leads");
+		return false;
 	}
 
 	public function canViewReport()
@@ -210,20 +210,14 @@ class Leads extends Resource
 					"field" => "complementary",
 					"rules" => ["max:255"]
 				]),
-				// new Text([
-				// 	"label" => "Telefone",
-				// 	"field" => "phone_number",
-				// 	"mask" => ["(##) ####-####", "(##) #####-####"],
-				// 	"rules" => ["max:255"]
-				// ]),
-				// new Text([
-				// 	"label" => "Celular",
-				// 	"field" => "cellphone_number",
-				// 	"mask" => ["(##) ####-####", "(##) #####-####"],
-				// 	"rules" => ["max:255"]
-				// ]),
 			]),
 			new Card("Informações Adicionais", [
+				new TextArea([
+					"label" => "Comentários",
+					"field" => "comment",
+					"rows" => 10,
+					"rules" => ["max:255"]
+				]),
 				new TextArea([
 					"label" => "Observações",
 					"field" => "obs",

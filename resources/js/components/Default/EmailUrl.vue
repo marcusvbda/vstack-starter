@@ -30,7 +30,7 @@
                     </div>
                     <span slot="footer" class="dialog-footer">
                         <div class="d-flex justify-content-end">
-                            <el-button @click="cancelEmail">Cancelar</el-button>
+                            <el-button @click="cancel">Cancelar</el-button>
                             <el-button type="primary" @click="sendEmail">Enviar</el-button>
                         </div>
                     </span>
@@ -53,7 +53,7 @@
                     </div>
                     <span slot="footer" class="dialog-footer">
                         <div class="d-flex justify-content-end">
-                            <el-button @click="cancelWpp">Cancelar</el-button>
+                            <el-button @click="cancel">Cancelar</el-button>
                             <el-button type="primary" @click="sendWpp">Enviar</el-button>
                         </div>
                     </span>
@@ -95,12 +95,10 @@ export default {
         }
     },
     methods: {
-        cancelWpp() {
+        cancel() {
             this.dialog = false
-            this.wpp.body = ''
-        },
-        cancelEmail() {
             this.email.body = ''
+            this.wpp.body = ''
             this.email.subject = ''
         },
         sendEmail() {
@@ -111,7 +109,7 @@ export default {
         sendWpp() {
             if (!this.wpp.body) return this.$message.error('Digite a mensagem que deseja enviar')
             let formated = this.wpp.to.replace(/\D/g, '')
-            window.open(`https://api.whatsapp.com/send?phone=${formated}&text=${this.wpp.body}`)
+            window.open(`https://api.whatsapp.com/send?phone=+55${formated}&text=${this.wpp.body}`)
         },
     },
 }

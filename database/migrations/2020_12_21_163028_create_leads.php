@@ -18,7 +18,6 @@ class CreateLeads extends Migration
 			$table->collation = 'utf8mb4_unicode_ci';
 			$table->engine = 'InnoDB';
 			$table->bigIncrements('id');
-			$table->jsonb('conversions');
 			$table->jsonb('data');
 			$table->string("status")->default("_OPPORTUNITY_");
 			$table->unsignedBigInteger('api_user_id')->nullable();

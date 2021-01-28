@@ -23,7 +23,28 @@
                 <email-url v-if="lead.cellphone_number" type="wpp" :value="lead.cellphone_number">{{ lead.cellphone_number }}</email-url>
             </div>
         </div>
-        <div class="d-flex flex-row mt-2 align-items-center">
+        <div class="d-flex flex-column mt-2 align-items-start mt-3">
+            <div class="d-flex flex-row justify-content-between w-100">
+                <small>
+                    <a class="link" :href="`https://www.google.com.br/search?q=${lead.name}`" target="_BLANK">Encontrar no Google</a>
+                </small>
+                <small>
+                    <a class="link" :href="`https://www.facebook.com/search/top/?q=${lead.name}`" target="_BLANK">Encontrar no Facebook</a>
+                </small>
+            </div>
+            <div class="d-flex flex-row justify-content-between w-100">
+                <small>
+                    <a class="link" :href="`https://www.linkedin.com/search/results/people/?keywords=${lead.name}`" target="_BLANK">Encontrar no Linkedin</a>
+                </small>
+                <small>
+                    <a class="link" :href="`https://twitter.com/search?q=${user}&f=user`" target="_BLANK">Encontrar no Twitter</a>
+                </small>
+            </div>
+        </div>
+        <div class="d-flex flex-column mt-2 align-items-start">
+            <small class="text-success" v-if="lead.interest"><span class="el-icon-s-flag mr-2" /> {{ lead.interest }}</small>
+            <small class="text-primary" v-if="lead.comment"><span class="el-icon-chat-round mr-2" /> {{ lead.comment }}</small>
+            <small class="text-danger" v-if="lead.objection"><span class="el-icon-warning mr-2" /> {{ lead.objection }}</small>
             <small class="text-muted" v-if="lead.obs"><span class="el-icon-info mr-2" /> {{ lead.obs }}</small>
         </div>
     </div>
@@ -44,7 +65,7 @@ export default {
             this[command]()
         },
         convert() {
-            window.location.href = `/admin/leads/${this.lead.code}`
+            window.location.href = `/admin/funil-de-conversao/${this.lead.code}/converter`
         },
         edit() {
             window.location.href = `/admin/leads/${this.lead.code}/edit`
