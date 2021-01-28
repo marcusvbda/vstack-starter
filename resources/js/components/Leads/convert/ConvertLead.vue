@@ -1,7 +1,7 @@
 <template>
     <div id="lead-convert">
         <div class="row">
-            <div class="col-12">
+            <div class="col-12 d-flex flex-row justify-content-between">
                 <div class="d-flex flex-column header">
                     <span v-html="lead.f_status_badge" />
                     <a :href="`/admin/leads/${lead.code}/edit`" class="lead-name" target="_BLANK">
@@ -9,9 +9,9 @@
                     </a>
                     <small class="text-muted f-12">{{ lead.f_last_conversion_date }}</small>
                 </div>
+                <resource-tags-input class="mt-3" v-if="use_tags" :resource="resource_id" :resource_code="lead.code" />
             </div>
         </div>
-        <resource-tags-input class="mt-3" v-if="use_tags" :resource="resource_id" :resource_code="lead.code" />
         <div class="row mt-3">
             <div class="col-12">
                 <div class="card">
@@ -66,6 +66,7 @@
                             <el-step title="Step 3" />
                         </el-steps>
                         <div class="mt-3">
+                            <h1>INTERESSES</h1>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id feugiat nisi, id lobortis neque. Nunc auctor tempus condimentum.
                             Fusce ultricies eget ex sed pellentesque. Etiam pulvinar, ligula ac dictum volutpat, odio lacus hendrerit mi, non venenatis lacus
                             sem ut dolor. Pellentesque massa lacus, semper eget hendrerit in, fermentum non sapien. Donec diam erat, dictum sed feugiat sed,
@@ -74,6 +75,7 @@
                         </div>
                         <el-tabs type="border-card" class="mt-4">
                             <el-tab-pane label="User">
+                                <h1>CONVERSOES</h1>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id feugiat nisi, id lobortis neque. Nunc auctor tempus condimentum.
                                 Fusce ultricies eget ex sed pellentesque. Etiam pulvinar, ligula ac dictum volutpat, odio lacus hendrerit mi, non venenatis
                                 lacus sem ut dolor. Pellentesque massa lacus, semper eget hendrerit in, fermentum non sapien. Donec diam erat, dictum sed
@@ -82,9 +84,11 @@
                                 at ipsum.
                             </el-tab-pane>
                             <el-tab-pane label="Config">
+                                <h1>LEADS RELACIONADOS</h1>
                                 {{ lead }}
                             </el-tab-pane>
                             <el-tab-pane label="Role">
+                                <h1>CAMPOS ADICIONAIS</h1>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed id feugiat nisi, id lobortis neque. Nunc auctor tempus condimentum.
                                 Fusce ultricies eget ex sed pellentesque. Etiam pulvinar, ligula ac dictum volutpat, odio lacus hendrerit mi, non venenatis
                                 lacus sem ut dolor. Pellentesque massa lacus, semper eget hendrerit in, fermentum non sapien. Donec diam erat, dictum sed
@@ -93,6 +97,8 @@
                                 at ipsum.
                             </el-tab-pane>
                             <el-tab-pane label="Task">
+                                <h1>ATENDIMENTO</h1>
+
                                 {{ lead }}
                             </el-tab-pane>
                         </el-tabs>
