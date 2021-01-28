@@ -12,5 +12,10 @@
 	</nav>
 @endsection 
 @section('content')
-dadas
+<convert-lead
+	:lead='@json($lead)'
+	:use_tags='@json($resource->useTags())'
+	resource_id="{{ $resource->id }}"
+>
+</convert-lead>
 @endsection

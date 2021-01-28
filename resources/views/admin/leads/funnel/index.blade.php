@@ -10,7 +10,7 @@
 		</ol>
 	</nav>
 @endsection
-<?php 
+@php 
     $model_count = $resource->model->count();
 	$filters = $resource->filters();
 	$report_mode = false;
@@ -19,7 +19,7 @@
         "query" => request()->query(),
         "value" => @$_GET["_"] ? $_GET["_"] : ""
     ];
-?>
+@endphp
 @section('content')
 <div class="row mb-3 mt-2">
     <div class="col-12 d-flex flex-row align-items-center">
@@ -31,11 +31,15 @@
 </div>
 <div class="row d-flex align-items-end mb-2">
     <div class="col-12 d-flex align-items-end justify-content-between">
-		<?php
+		@php
 			$_filters = [];
-			foreach($filters as $row) if(get_class($row) != \App\Http\Filters\Leads\LeadsByStatus::class) $_filters[] = $row;
+			foreach($filters as $row) {
+				if(get_class($row) != \App\Http\Filters\Leads\LeadsByStatus::class) {
+					$_filters[] = $row;
+				}
+			}
 			$filters = $_filters;
-		?>
+		@endphp
 		<resource-filter-tags 
 			ref="tags_filter" 
 			:resource_filters='@json($filters)' 
@@ -59,6 +63,8 @@
 	:status='@json($status)' 
 	:get_params='@json($_GET)'
 	:can_edit='@json(hasPermissionTo("edit-leads"))'
+	:use_tags='@json($resource->useTags())'
+	resource_id='{{ $resource->id }}'
 >
 </funnel-section>
 @endsection

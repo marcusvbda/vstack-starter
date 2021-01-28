@@ -12,6 +12,7 @@
         </div>
         <small class="text-muted"> <span class="el-icon-alarm-clock mr-2" /> Data de entrada : {{ lead.f_created_at }}</small>
         <small class="text-muted"> <span class="el-icon-alarm-clock mr-2" /> Última conversão : {{ lead.f_last_conversion }}</small>
+        <resource-tags-input class="mt-3 extra-mini-tags" v-if="use_tags" :resource="resource_id" :resource_code="lead.code" only_view />
         <div class="mt-2">
             <email-url type="email" :value="lead.email">{{ lead.email }}</email-url>
         </div>
@@ -37,7 +38,7 @@
                     <a class="link" :href="`https://www.linkedin.com/search/results/people/?keywords=${lead.name}`" target="_BLANK">Encontrar no Linkedin</a>
                 </small>
                 <small>
-                    <a class="link" :href="`https://twitter.com/search?q=${user}&f=user`" target="_BLANK">Encontrar no Twitter</a>
+                    <a class="link" :href="`https://twitter.com/search?q=${lead.name}&f=user`" target="_BLANK">Encontrar no Twitter</a>
                 </small>
             </div>
         </div>
@@ -58,6 +59,12 @@ export default {
     computed: {
         can_edit() {
             return this.$store.state.permissions.can_edit
+        },
+        use_tags() {
+            return this.$store.state.permissions.use_tags
+        },
+        resource_id() {
+            return this.$store.state.resource_id
         },
     },
     methods: {

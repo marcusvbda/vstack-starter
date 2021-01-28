@@ -7,7 +7,8 @@ use App\Http\Models\Lead;
 use App\Http\Filters\Leads\{
 	LeadsByName,
 	LeadsByCreatedDate,
-	LeadsByStatus
+	LeadsByStatus,
+	LeadsByTags
 };
 use App\Http\Actions\Leads\{
 	LeadTransfer,
@@ -28,7 +29,8 @@ class Leads extends Resource
 		$this->_filters = [
 			new LeadsByName(),
 			new LeadsByStatus(),
-			new LeadsByCreatedDate()
+			new LeadsByCreatedDate(),
+			new LeadsByTags()
 		];
 		parent::__construct();
 	}
@@ -64,10 +66,7 @@ class Leads extends Resource
 		$columns["code"] = ["label" => "Código", "sortable_index" => "id", "size" => "100px"];
 		$columns["btn_conversion"] = ["label" => "", "sortable" => false, "size" => "300px"];
 		$columns["name"] = ["label" => "Nome", "sortable_index" => "data->name"];
-		$columns["profession"] = ["label" => "Profissão", "sortable_index" => "data->profession"];
 		$columns["email_url"] = ["label" => "Email", "sortable_index" => "data->email"];
-		$columns["phones_url"] = ["label" => "Telefones", "sortable_index" => "data->phones"];
-		$columns["origin"] = ["label" => "Origem", "sortable" => false];
 		$columns["f_complete_created"] = ["label" => "Data", "sortable_index" => "created_at"];
 		return $columns;
 	}
@@ -153,6 +152,12 @@ class Leads extends Resource
 					"rules" => ["required", "max:255"]
 				]),
 				new Text([
+					"type" => "date",
+					"label" => "Data de Nascimento",
+					"field" => "birthdate",
+					"rules" => ["max:255"]
+				]),
+				new Text([
 					"label" => "Profissão",
 					"field" => "profession",
 					"rules" => ["max:255"]
@@ -228,8 +233,8 @@ class Leads extends Resource
 		];
 	}
 
-	// public function maxWaitingReportsByUser()
-	// {
-	// 	return 5;
-	// }
+	public function useTags()
+	{
+		return true;
+	}
 }

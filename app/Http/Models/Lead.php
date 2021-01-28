@@ -7,6 +7,7 @@ use App\User;
 use App\Http\Models\Scopes\{OrderByScope, PoloScope};
 use App\Http\Constants\Leads\Statuses;
 use Auth;
+use Carbon\Carbon;
 
 class Lead extends DefaultModel
 {
@@ -20,7 +21,8 @@ class Lead extends DefaultModel
 
 	public $appends = [
 		"code", "name", "f_status", "email", "profession", "f_last_conversion", "cellphone_number",
-		"phone_number", "obs", "f_created_at", "objection", "comment", "interest"
+		"phone_number", "obs", "f_created_at", "objection", "comment", "interest", "f_status_badge",
+		"f_birthdate", "age", "f_last_conversion_date"
 	];
 
 	public static function boot()
@@ -37,75 +39,47 @@ class Lead extends DefaultModel
 		});
 	}
 
-	public function getObjectionAttribute()
-	{
-		return @$this->data->objection;
-	}
 
-	public function getCommentAttribute()
+	// getters
+	public function getConversionsAttribute()
 	{
-		return $this->data->comment;
-	}
-
-	public function getFLastConversionAttribute()
-	{
-		return "01/01/1992 - 21:52:10";
-	}
-
-	public function users()
-	{
-		return $this->hasMany(User::class);
-	}
-
-	public function tenant()
-	{
-		return $this->belongsTo(Tenant::class);
+		return $this->data->log ?? [];
 	}
 
 	public function getLastConversionAttribute()
 	{
-		return current($this->conversions ?? []);
+		return current($this->conversions);
 	}
 
 	public function getFLastConversionDateAttribute()
 	{
 		$last_conversion = $this->f_last_conversion;
-		if (!$last_conversion) return "Nunca Convertido";
 		return "Última Conversão : " . $last_conversion;
+	}
+
+	public function getFStatusBadgeAttribute()
+	{
+		$status = $this->f_status;
+		return "<small class='status-color {$status}'>{$status}</small>";
 	}
 
 	public function getBtnConversionAttribute()
 	{
 		$code = $this->code;
-		$status = $this->f_status;
+		$status = $this->f_status_badge;
 		$f_last_conversion_date = $this->f_last_conversion_date;
 		return "
 			<div class='d-flex flex-column align-items-center justify-content-center'>
-				<small class='status-color {$status}'>{$status}</small>
+				{$status}
 				<a href='/admin/funil-de-conversao/{$code}/converter' class='el-button el-button--default el-button--small is-round my-2'>Converter</a>
 				<small>{$f_last_conversion_date}</small>
 			</div>
 		";
 	}
 
-	public function setStatusAttribute($value)
-	{
-		$this->attributes["status"] = Statuses::getIndex($value);
-	}
-
 	public function getFStatusAttribute()
 	{
 		return Statuses::getValue($this->status);
-	}
-
-	public function apiUser()
-	{
-		return $this->belongsTo(ApiUser::class);
-	}
-
-	public function user()
-	{
-		return $this->belongsTo(User::class);
 	}
 
 	public function getEmailUrlAttribute()
@@ -141,12 +115,6 @@ class Lead extends DefaultModel
 			<small>{$diff}</small>
 		</div>";
 	}
-
-	public function polo()
-	{
-		return $this->belongsTo(Polo::class);
-	}
-
 	public function getOriginAttribute()
 	{
 		return $this->api_user_id ? ApiUser::findOrFail($this->api_user_id)->name : User::findOrFail($this->user_id)->name;
@@ -157,9 +125,40 @@ class Lead extends DefaultModel
 		return @$this->data->name;
 	}
 
-	public function setEmailAttribute($value)
+	public function getBirthdateAttribute()
 	{
-		$this->setDataValue("email", $value);
+		return @$this->data->birthdate;
+	}
+
+	public function getFBirthdateAttribute()
+	{
+		$birthdate = @$this->birthdate;
+		if (!$birthdate) return;
+		return Carbon::create($birthdate)->format("d/m/Y");
+	}
+
+	public function getAgeAttribute()
+	{
+		$birthdate = @$this->birthdate;
+		if (!$birthdate) return;
+		return Carbon::create($birthdate)->age;
+	}
+
+	public function getObjectionAttribute()
+	{
+		return @$this->data->objection;
+	}
+
+	public function getCommentAttribute()
+	{
+		return $this->data->comment;
+	}
+
+	public function getFLastConversionAttribute()
+	{
+		$last_conversion = $this->last_conversion;
+		if (!@$last_conversion->data) return "Nunca Convertido";
+		return $last_conversion->data . " - " . $last_conversion->hora;
 	}
 
 	public function getCellphoneNumberAttribute()
@@ -172,6 +171,64 @@ class Lead extends DefaultModel
 		return @$this->data->phones[1];
 	}
 
+	public function getEmailAttribute()
+	{
+		return @$this->data->email;
+	}
+
+	public function getObsAttribute()
+	{
+		return @$this->data->obs;
+	}
+
+	public function getCityAttribute()
+	{
+		return @$this->data->city;
+	}
+
+	public function getZipcodeAttribute()
+	{
+		return @$this->data->zipcode;
+	}
+
+	public function getDistrictAttribute()
+	{
+		return @$this->data->district;
+	}
+
+	public function getAddressNumberAttribute()
+	{
+		return @$this->data->address_number;
+	}
+
+	public function getProfessionAttribute()
+	{
+		return @$this->data->profession;
+	}
+
+	public function getComplementaryAttribute()
+	{
+		return @$this->data->complementary;
+	}
+
+	public function getInterestAttribute()
+	{
+		return @$this->data->interest;
+	}
+	// getters
+
+	// setters
+
+	public function setBirthdateAttribute($value)
+	{
+		$this->setDataValue("birthdate", $value);
+	}
+
+	public function setEmailAttribute($value)
+	{
+		$this->setDataValue("email", $value);
+	}
+
 	public function setPhoneNumberAttribute($value)
 	{
 		$this->setDataValue("phones", [$this->cellphone_number, $value]);
@@ -182,9 +239,9 @@ class Lead extends DefaultModel
 		$this->setDataValue("phones", [$value, $this->phone_number]);
 	}
 
-	public function getEmailAttribute()
+	public function setStatusAttribute($value)
 	{
-		return @$this->data->email;
+		$this->attributes["status"] = Statuses::getIndex($value);
 	}
 
 	public function setNameAttribute($value)
@@ -192,19 +249,9 @@ class Lead extends DefaultModel
 		$this->setDataValue("name", $value);
 	}
 
-	public function getProfessionAttribute()
-	{
-		return @$this->data->profession;
-	}
-
 	public function setProfessionAttribute($value)
 	{
 		$this->setDataValue("profession", $value);
-	}
-
-	public function getObsAttribute()
-	{
-		return @$this->data->obs;
 	}
 
 	public function setCommentAttribute($value)
@@ -217,19 +264,9 @@ class Lead extends DefaultModel
 		$this->setDataValue("obs", $value);
 	}
 
-	public function getCityAttribute()
-	{
-		return @$this->data->city;
-	}
-
 	public function setCityAttribute($value)
 	{
 		$this->setDataValue("city", $value);
-	}
-
-	public function getZipcodeAttribute()
-	{
-		return @$this->data->zipcode;
 	}
 
 	public function setZipcodeAttribute($value)
@@ -237,19 +274,9 @@ class Lead extends DefaultModel
 		$this->setDataValue("zipcode", $value);
 	}
 
-	public function getDistrictAttribute()
-	{
-		return @$this->data->district;
-	}
-
 	public function setDistrictAttribute($value)
 	{
 		$this->setDataValue("district", $value);
-	}
-
-	public function getComplementaryAttribute()
-	{
-		return @$this->data->complementary;
 	}
 
 	public function setComplementaryAttribute($value)
@@ -257,19 +284,9 @@ class Lead extends DefaultModel
 		$this->setDataValue("complementary", $value);
 	}
 
-	public function getAddressNumberAttribute()
-	{
-		return @$this->data->address_number;
-	}
-
 	public function setAddressNumberAttribute($value)
 	{
 		$this->setDataValue("address_number", $value);
-	}
-
-	public function getInterestAttribute()
-	{
-		return @$this->data->interest;
 	}
 
 	public function setInterestAttribute($value)
@@ -283,9 +300,32 @@ class Lead extends DefaultModel
 		$_data->{$field} = $value;
 		$this->data = $_data;
 	}
+	// setters
 
-	public function useTags()
+	// relations
+	public function users()
 	{
-		return true;
+		return $this->hasMany(User::class);
 	}
+
+	public function tenant()
+	{
+		return $this->belongsTo(Tenant::class);
+	}
+
+	public function apiUser()
+	{
+		return $this->belongsTo(ApiUser::class);
+	}
+
+	public function user()
+	{
+		return $this->belongsTo(User::class);
+	}
+
+	public function polo()
+	{
+		return $this->belongsTo(Polo::class);
+	}
+	// relations
 }

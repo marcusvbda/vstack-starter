@@ -1,30 +1,19 @@
-// import api from '~/config/libs/axios'
-// import Message from 'element-ui/lib/message'
+import api from '~/config/libs/axios'
 
-// export function showError({ state }, error = "") {
-// 	Message.error({
-// 		showClose: true,
-// 		duration: 5000,
-// 		dangerouslyUseHTMLString: true,
-// 		message: error,
-// 	})
-// }
-
-// export function getPolos({ commit, dispatch }, user_id) {
-// 	return api.post(`${window.location.pathname}/polos`, { user_id }).then(({ data }) => {
-// 		commit("setPolos", data)
-// 	}).catch(er => {
-// 		console.log(er)
-// 	})
-// }
-
-
-// export function getDateRanges({ state, commit, dispatch }) {
-// 	return api.post(`${window.location.pathname}/dates/get-ranges`).then(({ data }) => {
-// 		commit("setDateRanges", data)
-// 		commit('setDateRange', data[state.predefined_filter])
-// 	}).catch(er => {
-// 		console.log(er)
-// 	})
-// }
-
+export function getStatusLeads({ state, commit }, { page, status, callback }) {
+	let get_params = state.get_params
+	api.post(`${window.location.pathname}/filter`, {
+		...{ status: status, page: page },
+		...get_params
+	}, { retries: 3 })
+		.then(({ data }) => {
+			let leads = {}
+			leads[status] = data.leads
+			commit('setStatusLeads', leads)
+			commit('setTotal', data.total)
+			let qty = {}
+			qty[status] = data.leads.total
+			commit('setStatusQty', qty)
+			if (callback) callback()
+		})
+}
