@@ -11449,3 +11449,7 @@ a.el-button:hover {
   opacity: 0;
 }
 
+.no-radius {
+  border-radius: unset !important;
+}
+

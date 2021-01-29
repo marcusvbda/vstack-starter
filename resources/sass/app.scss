@@ -217,3 +217,7 @@ a {
     transform: translateY(20px);
     opacity: 0;
 }
+
+.no-radius {
+    border-radius: unset !important;
+}

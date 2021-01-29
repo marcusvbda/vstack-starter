@@ -1,6 +1,6 @@
 <template>
     <div :class="`col col-status ${col_class}`">
-        <div :class="`status-color-bgtop ${col} card col-header no-border d-flex flex-column py-2 mb-1`">
+        <div :class="`status-color-bgtop ${col} card col-header no-border d-flex flex-column py-2 mb-1`" v-loading="loading">
             <div class="p-2 col-header">
                 <b :class="`d-flex flex-row align-items-center status-color ${col} justify-content-center mb-2 title`" @click="visible = !visible">
                     {{ col }} <counter-number class="ml-2" :start="0" :end="qty" :times="10" :speed="50" />
@@ -24,8 +24,10 @@
             </div>
         </div>
         <transition name="slide">
-            <div class="no-border list-content modern-scroll" v-if="visible" v-loading="loading">
-                <lead-card v-for="(lead, i) in leads.data" :key="i" :lead="lead" />
+            <div class="no-border list-content modern-scroll" v-if="visible">
+                <template v-if="!loading">
+                    <lead-card v-for="(lead, i) in leads.data" :key="i" :lead="lead" />
+                </template>
             </div>
         </transition>
     </div>
@@ -77,6 +79,7 @@ export default {
     },
     methods: {
         getLeads(page) {
+            this.loading = true
             this.loading = true
             this.$store.dispatch('getStatusLeads', {
                 status: this.col,

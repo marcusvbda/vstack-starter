@@ -22,7 +22,8 @@ class Lead extends DefaultModel
 	public $appends = [
 		"code", "name", "f_status", "email", "profession", "f_last_conversion", "cellphone_number",
 		"phone_number", "obs", "f_created_at", "objection", "comment", "interest", "f_status_badge",
-		"f_birthdate", "age", "f_last_conversion_date"
+		"f_birthdate", "age", "f_last_conversion_date", "api_ref_token", "other_objection", "conversions",
+		"tries", "lead_api"
 	];
 
 	public static function boot()
@@ -41,6 +42,16 @@ class Lead extends DefaultModel
 
 
 	// getters
+	public function getLeadApiAttribute()
+	{
+		return $this->data->lead_api ?? [];
+	}
+
+	public function getTriesAttribute()
+	{
+		return $this->data->tries ?? [];
+	}
+
 	public function getConversionsAttribute()
 	{
 		return $this->data->log ?? [];
@@ -149,6 +160,11 @@ class Lead extends DefaultModel
 		return @$this->data->objection;
 	}
 
+	public function getOtherObjectionAttribute()
+	{
+		return @$this->data->other_objection;
+	}
+
 	public function getCommentAttribute()
 	{
 		return $this->data->comment;
@@ -215,9 +231,18 @@ class Lead extends DefaultModel
 	{
 		return @$this->data->interest;
 	}
+
+	public function getApiRefTokenAttribute()
+	{
+		return @$this->data->api_ref_token;
+	}
 	// getters
 
 	// setters
+	public function setApiRefTokenAttribute($value)
+	{
+		$this->setDataValue("api_ref_token", $value);
+	}
 
 	public function setBirthdateAttribute($value)
 	{

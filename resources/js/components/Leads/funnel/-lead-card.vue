@@ -1,7 +1,10 @@
 <template>
     <div class="card lead-card mb-1">
         <div class="d-flex flex-row align-items-center justify-content-between">
-            <b class="d-flex flex-row align-items-center"><span class="el-icon-user-solid mr-2" />{{ lead.name }}</b>
+            <b class="d-flex flex-row align-items-center">
+                <span class="el-icon-user-solid mr-2" />
+                {{ lead.name }}<small class="ml-2 text-muted">#{{ lead.code }}</small>
+            </b>
             <el-dropdown @command="handleCommand">
                 <span class="el-dropdown-link"> <span class="el-icon-more" /></span>
                 <el-dropdown-menu slot="dropdown" v-if="can_edit">
