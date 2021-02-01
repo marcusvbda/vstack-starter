@@ -2315,7 +2315,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/marcusvbda/vstack.git",
-                "reference": "fb6708248d3fc537aa125ab327f45d1a125dcbc9"
+                "reference": "20c27b37837d392a64a89642897a9229033768bc"
             },
             "require": {
                 "spatie/laravel-permission": "^3.3",
@@ -2340,7 +2340,7 @@
                     "email": "bassalobre.vinicius@gmail.com"
                 }
             ],
-            "time": "2021-01-28T01:37:10+00:00"
+            "time": "2021-02-01T22:37:14+00:00"
         },
         {
             "name": "markbaker/complex",
