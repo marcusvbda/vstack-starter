@@ -3,7 +3,7 @@
 return [
 	"default_upload_route" => "/admin/upload_file",
 	"resource_export_extension" => "xlsx",
-	"timezone" => "+00:00",
+	// "timezone" => "+00:00",
 	"timezones" => [
 		'Pacific/Midway'       => "-11:00",
 		'US/Samoa'             => "-11:00",
