@@ -3,11 +3,11 @@
         <div class="col-md-7 col-sm-12 px-0">
             <label> Total de Leads : <counter-number :start="0" :end="total" :times="10" :speed="50" /> </label>
             <el-select v-model="selected_status" multiple placeholder="Selecione os status que deseja visualizar" class="w-100">
-                <el-option v-for="key in Object.keys(status)" :key="key" :label="status[key]" :value="key" />
+                <el-option v-for="s in ordered_status" :key="s.id" :label="s.name" :value="s.id" />
             </el-select>
         </div>
         <div class="funnel-section modern-scroll">
-            <funnel-status-col :col="col" v-for="(col, i) in filtered_status" :key="i" />
+            <funnel-status-col :status="s" v-for="s in filtered_status" :key="s.value" />
         </div>
     </div>
 </template>
@@ -27,13 +27,15 @@ export default {
         }
     },
     computed: {
+        ordered_status() {
+            return _.orderBy(this.status, 'seq', 'asc')
+        },
         filtered_status() {
-            let _status = Object.assign({}, this.status)
-            let not_selected_status = Object.keys(this.status).filter((key) => !this.selected_status.includes(key))
-            not_selected_status.forEach((key) => {
-                delete _status[key]
-            })
-            return _status
+            return _.orderBy(
+                this.status.filter((x) => this.selected_status.includes(x.id)),
+                'seq',
+                'asc'
+            )
         },
         permissions() {
             return this.$store.permissions
@@ -50,9 +52,7 @@ export default {
         this.$store.commit('setResourceId', this.resource_id)
         this.$store.commit('setGetParams', this.get_params)
         this.$nextTick(() => {
-            this.selected_status = Object.keys(this.status)
-                .filter((x) => !['_CUSTOMER_', '_UNQUALIFIED_'].includes(x))
-                .map((x) => x)
+            this.selected_status = this.status.filter((x) => !['customer', 'unqualified'].includes(x.value)).map((x) => x.id)
         })
     },
 }

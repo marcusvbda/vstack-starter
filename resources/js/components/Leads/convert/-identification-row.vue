@@ -6,7 +6,7 @@
                     <a :href="`/admin/leads/${lead.code}/edit`" class="lead-name" target="_BLANK">
                         {{ lead.name ? lead.name : undefined_text }} <small class="ml-2 f-12">#{{ lead.code }}</small>
                     </a>
-                    <small class="text-muted f-12">{{ lead.f_last_conversion_date }}</small>
+                    <small class="text-muted f-12">Data de Entrada : {{ lead.f_created_at ? lead.f_created_at : undefined_text }}</small>
                 </div>
                 <resource-tags-input class="mt-3" v-if="use_tags" :resource="resource_id" :resource_code="lead.code" />
             </div>
@@ -73,9 +73,9 @@
                                 </td>
                                 <td>
                                     <div class="d-flex flex-column">
-                                        <b class="f-12 text-muted">Data de Entrada</b>
+                                        <b class="f-12 text-muted">Sub Status</b>
                                         <span class="f-12">
-                                            {{ lead.f_created_at ? lead.f_created_at : undefined_text }}
+                                            {{ lead.f_substatus ? lead.f_substatus : undefined_text }}
                                         </span>
                                     </div>
                                 </td>

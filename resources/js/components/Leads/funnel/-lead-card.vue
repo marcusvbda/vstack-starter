@@ -13,6 +13,9 @@
                 </el-dropdown-menu>
             </el-dropdown>
         </div>
+        <div class="text-right">
+            <small class="text-muted">{{ lead.f_substatus }}</small>
+        </div>
         <small class="text-muted"> <span class="el-icon-alarm-clock mr-2" /> Data de entrada : {{ lead.f_created_at }}</small>
         <small class="text-muted"> <span class="el-icon-alarm-clock mr-2" /> Última conversão : {{ lead.f_last_conversion }}</small>
         <resource-tags-input class="mt-3 extra-mini-tags" v-if="use_tags" :resource="resource_id" :resource_code="lead.code" only_view />

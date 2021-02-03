@@ -1,10 +1,10 @@
 <template>
     <div :class="`col col-status ${col_class}`">
-        <div :class="`status-color-bgtop ${col} card col-header no-border d-flex flex-column py-2 mb-1`" v-loading="loading">
+        <div :class="`status-color-bgtop ${status.name} card col-header no-border d-flex flex-column py-2 mb-1`" v-loading="loading">
             <div class="p-2 col-header">
-                <b :class="`d-flex flex-row align-items-center status-color ${col} justify-content-center mb-2 title`" @click="visible = !visible">
-                    {{ col }} <counter-number class="ml-2" :start="0" :end="qty" :times="10" :speed="50" />
-                    <span :class="`status-color ${col} ${toggle_icon} ml-3`" />
+                <b :class="`d-flex flex-row align-items-center status-color ${status.name} justify-content-center mb-2 title`" @click="visible = !visible">
+                    {{ status.name }} <counter-number class="ml-2" :start="0" :end="qty" :times="10" :speed="50" />
+                    <span :class="`status-color ${status.name} ${toggle_icon} ml-3`" />
                 </b>
                 <template v-if="visible">
                     <el-progress class="align-items-center justify-content-center d-flex" :percentage="percentage" :color="progress_color" />
@@ -34,7 +34,7 @@
 </template>
 <script>
 export default {
-    props: ['col'],
+    props: ['status'],
     data() {
         return {
             visible: false,
@@ -47,13 +47,13 @@ export default {
     },
     computed: {
         leads() {
-            return this.$store.state.status_leads[this.col]
+            return this.$store.state.status_leads[this.status.id]
         },
         progress_color() {
             return this.$store.state.progress_color
         },
         qty() {
-            return this.$store.state.status_qty[this.col] ? this.$store.state.status_qty[this.col] : 0
+            return this.$store.state.status_qty[this.status.id] ? this.$store.state.status_qty[this.status.id] : 0
         },
         total() {
             return this.$store.state.total
@@ -82,7 +82,7 @@ export default {
             this.loading = true
             this.loading = true
             this.$store.dispatch('getStatusLeads', {
-                status: this.col,
+                status: this.status.id,
                 page,
                 callback: () => {
                     this.visible = true

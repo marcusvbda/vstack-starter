@@ -3,7 +3,7 @@
 namespace App\Http\Filters\Leads;
 
 use  marcusvbda\vstack\Filter;
-use App\Http\Constants\Leads\Statuses;
+use App\Http\Models\LeadStatus;
 
 class LeadsByStatus extends Filter
 {
@@ -15,15 +15,12 @@ class LeadsByStatus extends Filter
 
 	public function __construct()
 	{
-		$this->_options = Statuses::options();
-		foreach (Statuses::options() as $key => $value) {
-			$this->options[] = (object) ["value" => array_search($key, array_keys($this->_options)) + 1, "label" => $value];
-		}
+		$this->options = LeadStatus::selectRaw("id as value,name as label")->get();
 		parent::__construct();
 	}
 
 	public function apply($query, $value)
 	{
-		return $query->where("status", @array_keys($this->_options)[intval($value) - 1]);
+		return $query->whereIn("lead_substatus_id", LeadStatus::findOrFail($value)->sub_status()->pluck("id"));
 	}
 }

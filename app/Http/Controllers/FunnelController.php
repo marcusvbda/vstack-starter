@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Constants\Leads\Statuses;
+// use App\Http\Constants\Leads\Statuses;
 use Illuminate\Http\Request;
 use ResourcesHelpers;
 use marcusvbda\vstack\Controllers\ResourceController;
+use App\Http\Models\LeadStatus;
 
 class FunnelController extends Controller
 {
 	public function index(Request $request)
 	{
 		$resource = static::getProcessedResource();
-		$status = Statuses::options();
+		$status = LeadStatus::get();
 		return view("admin.leads.funnel.index", compact('resource', 'status'));
 	}
 
@@ -20,8 +21,9 @@ class FunnelController extends Controller
 	{
 		$resource = static::getProcessedResource();
 		$data = (new ResourceController)->getData($resource, $request);
+		$sub_status = LeadStatus::findOrFail($request["status"]);
 		$total = $data->count();
-		$leads = $data->where("status", @Statuses::getIndex($request["status"]))
+		$leads = $data->whereIn("lead_substatus_id", $sub_status->sub_status()->pluck("id"))
 			->select("*")
 			->paginate($request["per_page"] ? $request["per_page"] : $resource->resultsPerPage()[0]);
 		return ["total" => $total, "leads" => $leads];

@@ -19,7 +19,10 @@ class CreateLeads extends Migration
 			$table->engine = 'InnoDB';
 			$table->bigIncrements('id');
 			$table->jsonb('data');
-			$table->string("status")->default("_OPPORTUNITY_");
+			$table->unsignedBigInteger('lead_substatus_id');
+			$table->foreign('lead_substatus_id')
+				->references('id')
+				->on('lead_substatuses');
 			$table->unsignedBigInteger('api_user_id')->nullable();
 			$table->foreign('api_user_id')
 				->references('id')

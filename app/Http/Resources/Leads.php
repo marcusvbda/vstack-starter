@@ -8,7 +8,8 @@ use App\Http\Filters\Leads\{
 	LeadsByName,
 	LeadsByCreatedDate,
 	LeadsByStatus,
-	LeadsByTags
+	LeadsByTags,
+	LeadsBySubStatus
 };
 use App\Http\Actions\Leads\{
 	LeadTransfer,
@@ -29,6 +30,7 @@ class Leads extends Resource
 		$this->_filters = [
 			new LeadsByName(),
 			new LeadsByStatus(),
+			new LeadsBySubStatus(),
 			new LeadsByCreatedDate(),
 			new LeadsByTags()
 		];

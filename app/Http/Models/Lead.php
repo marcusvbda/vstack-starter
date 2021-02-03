@@ -5,7 +5,6 @@ namespace App\Http\Models;
 use marcusvbda\vstack\Models\DefaultModel;
 use App\User;
 use App\Http\Models\Scopes\{OrderByScope, PoloScope};
-use App\Http\Constants\Leads\Statuses;
 use Auth;
 use Carbon\Carbon;
 
@@ -20,7 +19,7 @@ class Lead extends DefaultModel
 	];
 
 	public $appends = [
-		"code", "name", "f_status", "email", "profession", "f_last_conversion", "cellphone_number",
+		"code", "name", "f_status", "f_substatus", "email", "profession", "f_last_conversion", "cellphone_number",
 		"phone_number", "obs", "f_created_at", "objection", "comment", "interest", "f_status_badge",
 		"f_birthdate", "age", "f_last_conversion_date", "api_ref_token", "other_objection", "conversions",
 		"tries", "lead_api"
@@ -37,6 +36,7 @@ class Lead extends DefaultModel
 				if (!@$model->user_id) $model->user_id = $user->id;
 				if (!@$model->polo_id && $user->polo_id) $model->polo_id = $user->polo_id;
 			}
+			if (!@$model->lead_substatus_id) $model->lead_substatus_id = LeadSubStatus::where("value", "new_contact")->firstOrFail()->id;
 		});
 	}
 
@@ -70,7 +70,7 @@ class Lead extends DefaultModel
 
 	public function getFStatusBadgeAttribute()
 	{
-		$status = $this->f_status;
+		$status = $this->substatus->status->name;
 		return "<small class='status-color {$status}'>{$status}</small>";
 	}
 
@@ -78,19 +78,34 @@ class Lead extends DefaultModel
 	{
 		$code = $this->code;
 		$status = $this->f_status_badge;
-		$f_last_conversion_date = $this->f_last_conversion_date;
+		$f_substatus = $this->substatus->name;
 		return "
 			<div class='d-flex flex-column align-items-center justify-content-center'>
 				{$status}
 				<a href='/admin/funil-de-conversao/{$code}/converter' class='el-button el-button--default el-button--small is-round my-2'>Converter</a>
-				<small>{$f_last_conversion_date}</small>
+				<small>{$f_substatus}</small>
 			</div>
 		";
 	}
 
+	public function getStatusAttribute()
+	{
+		return $this->substatus->status;
+	}
+
+	public function substatus()
+	{
+		return $this->belongsTo(LeadSubstatus::class, "lead_substatus_id");
+	}
+
 	public function getFStatusAttribute()
 	{
-		return Statuses::getValue($this->status);
+		return $this->status->name;
+	}
+
+	public function getFSubStatusAttribute()
+	{
+		return $this->substatus->name;
 	}
 
 	public function getEmailUrlAttribute()
@@ -262,11 +277,6 @@ class Lead extends DefaultModel
 	public function setCellphoneNumberAttribute($value)
 	{
 		$this->setDataValue("phones", [$value, $this->phone_number]);
-	}
-
-	public function setStatusAttribute($value)
-	{
-		$this->attributes["status"] = Statuses::getIndex($value);
 	}
 
 	public function setNameAttribute($value)

@@ -1,5 +1,5 @@
 <template>
-    <h1 class="logo" :style="{ fontSize: `${size}px` }"><b>Le</b>ads</h1>
+    <h1 class="logo" :style="{ fontSize: `${size}px` }"><b>L</b>ead<b>s</b></h1>
 </template>
 <script>
 export default {
