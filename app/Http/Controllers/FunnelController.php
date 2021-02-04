@@ -45,6 +45,7 @@ class FunnelController extends Controller
 		$resource = ResourcesHelpers::find("leads");
 		if (!hasPermissionTo("edit-leads")) abort(403);
 		$lead = $resource->model->findOrFail($id);
+		$lead->load(["substatus", "substatus.status"]);
 		return view("admin.leads.funnel.convert", compact('resource', 'lead'));
 	}
 }

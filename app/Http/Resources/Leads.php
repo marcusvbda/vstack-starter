@@ -28,10 +28,10 @@ class Leads extends Resource
 	public function __construct()
 	{
 		$this->_filters = [
+			new LeadsByCreatedDate(),
 			new LeadsByName(),
 			new LeadsByStatus(),
 			new LeadsBySubStatus(),
-			new LeadsByCreatedDate(),
 			new LeadsByTags()
 		];
 		parent::__construct();
