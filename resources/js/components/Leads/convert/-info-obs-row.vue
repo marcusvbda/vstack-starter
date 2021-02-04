@@ -22,16 +22,19 @@
                                     <a href="#" @click.prevent="addContact" class="link"><span class="el-icon-circle-plus mr-1" />Novo Contato</a>
                                 </p>
                             </el-timeline-item>
-                            <el-timeline-item v-for="(t, i) in lead.tries" :key="i" :timestamp="`${t.date} - ${t.timestamp}`">
-                                <p class="f-12 text-muted">
-                                    <p class="mr-1 mb-0" v-if="t.type">Tipo : <b v-html="t.type" /></p>
-                                    <p class="mr-1 mb-0" v-if="t.obs">Observações : <b v-html="t.obs" /></p>
-                                    <p class="mr-1 mb-0" v-if="t.comment">Comentário : <b v-html="t.comment" /></p>
-                                    <p class="mr-1 mb-0" v-if="t.objection">
-										Objeção : <b v-html="t.objection" /><span class="ml-1" v-if="t.other_objection" v-html="t.other_objection"/>
+							<template v-if="lead.tries.lenght > 0">
+								<el-timeline-item  v-for="(t, i) in lead.tries" :key="i" :timestamp="`${t.date} - ${t.timestamp}`">
+									<p class="f-12 text-muted">
+										<p class="mr-1 mb-0" v-if="t.type">Tipo : <b v-html="t.type" /></p>
+										<p class="mr-1 mb-0" v-if="t.obs">Observações : <b v-html="t.obs" /></p>
+										<p class="mr-1 mb-0" v-if="t.comment">Comentário : <b v-html="t.comment" /></p>
+										<p class="mr-1 mb-0" v-if="t.objection">
+											Objeção : <b v-html="t.objection" /><span class="ml-1" v-if="t.other_objection" v-html="t.other_objection"/>
+										</p>
 									</p>
-                                </p>
-                            </el-timeline-item>
+								</el-timeline-item>
+							</template>
+							<div class="text-muted text-center f-12" v-else>Nenhuma contato antigo</div>
                         </el-timeline>
                     </el-tab-pane>
                     <el-tab-pane label="Conversões Anteriores">
