@@ -19,7 +19,9 @@
                         <el-timeline class="pt-3">
 							<el-timeline-item>
                                 <p class="f-12 text-muted">
-                                    <a href="#" @click.prevent="addContact" class="link"><span class="el-icon-circle-plus mr-1" />Novo Contato</a>
+                                    <a href="#" @click.prevent="addContact" class="link" style="font-size: 14px;">
+										<span class="el-icon-circle-plus mr-1" />Novo Contato
+									</a>
                                 </p>
                             </el-timeline-item>
 							<template v-if="lead.tries.lenght > 0">
@@ -77,7 +79,7 @@
                     </span>
                 </el-dialog>
 				
-				<el-dialog title="Novo Contato" :visible.sync="form_new_contact.visible" width="85%" :close-on-click-modal="false" :top="10">
+				<el-dialog title="Novo Contato / Atendimento" :visible.sync="form_new_contact.visible" width="85%" :close-on-click-modal="false" top="10">
                     <el-steps :active="form_new_contact.step" align-center finish-status="success" :space="500">
 						<el-step title="Step 1" description="Defina o tipo do contato"/>
 						<el-step title="Step 2" description="Resposta do contato"/>
@@ -85,7 +87,7 @@
 						<el-step title="Step 4" description="Dados para retorno"/>
 						<el-step title="Step 5" description="Conclusão do Contato"/>
 					</el-steps>
-					<div class="d-flex flex-column my-4">
+					<div class="d-flex flex-column my-4 mt-5">
 						<template v-if="form_new_contact.step == 0">
 							<label>Selecione o tipo de contato</label>
 							<el-select
@@ -93,11 +95,7 @@
 								filterable
 								placeholder="Selecione o tipo de contato"
 							>
-								<el-option label="Via Ligação Telefonica" value="phone" />
-								<el-option label="Via Mensagem SMS" value="sms" />
-								<el-option label="Via Mensagem Whatsapp" value="wpp" />
-								<el-option label="Via Mensagem Telegram" value="wpp" />
-								<el-option label="Via Email" value="email" />
+								<el-option v-for="(type,i) in contact_types" :key="i" :label="type.label" :value="type.value" />
 							</el-select>
 							<small class="text-muted">Selecione o meio que o operador utilizará para efetuar o contato com o lead</small>
 							<hr>
@@ -110,14 +108,8 @@
 						<template v-if="form_new_contact.step == 1">
 							<label>Informe a resposta do contato</label>
 							<el-select v-model="form_new_contact.answer" placeholder="Informe a resposta do contato">
-								<el-option-group label="Resposta Neutra">
-									<el-option label="Sem Contato (Reagendar Retorno)" value="no_answer" />
-								</el-option-group>
-								<el-option-group label="Resposta Negativa">
-									<el-option label="Sem Interesse" value="no_interest" />
-								</el-option-group>
-								<el-option-group label="Resposta Positiva">
-									<el-option label="Tem Interesse" value="has_interest" />
+								<el-option-group v-for="(group, g) in grouped_answer_types" :key="g" :label="group.group">
+									<el-option v-for="(answer, x) in group.options" :key="x"  :label="answer.label" :value="answer.value" />
 								</el-option-group>
 							</el-select>
 							<small class="text-muted">Selecione a resposta do contato referente a proposta realizada</small>
@@ -134,12 +126,7 @@
 						<template v-if="form_new_contact.step == 2">
 							<label>Selecione a objeção informada pelo contato</label>
 							<el-select v-model="form_new_contact.objection" placeholder="Selecione a objeção do contato">
-								<el-option label="Financeiro" value="financeiro" />
-								<el-option label="Ausência de Curso" value="ausencia do curso" />
-								<el-option label="Desconhecimento da Marca" value="desconhecimento da marca" />
-								<el-option label="Resistência ao EAD" value="resistência ao EAD" />
-								<el-option label="Estuda em Outra Instituição" value="estuda em outra instituição" />
-								<el-option label="Outro" value="outro" />
+								<el-option v-for="(ob,i) in objection_options" :key="i"  :label="ob.label" :value="ob.value" />
 							</el-select>
 							<small class="text-muted">Selecione a resposta do contato referente a proposta realizada</small>
 							<div class="mt-3 d-flex flex-column" v-if="form_new_contact.objection == 'outro' ">
@@ -183,7 +170,37 @@
 							</span>
 						</template>
 						<template v-if="form_new_contact.step == 4">
-							{{ form_new_contact }}
+							<div class="jumbotron">
+								<div class="row">
+									<div class="col-md-8 col-sm-12">
+										<h4  class="mb-4"><b>Resumo do Contato</b></h4>
+										<p class="mb-0"><b>Tipo de Contato : </b>{{ contact_types.find(x=> x.value == form_new_contact.type).label }}</p>
+										<p class="mb-0" v-if="form_new_contact.schedule"><b>Agendamento : </b>{{ formatDate(form_new_contact.schedule) }}</p>
+										<p class="mb-0"><b>Resposta do Contato : </b>{{ answer_types.find(x=> x.value == form_new_contact.answer).label }}</p>
+										<p class="mb-0" v-if="form_new_contact.objection"><b>Objeção : </b>{{ objection_options.find(x=> x.value == form_new_contact.objection).label }}</p>
+										<p class="mb-0" v-if="form_new_contact.other_objection"><b>Descrição da Objeção : </b>{{form_new_contact.other_objection}}</p>
+									</div>
+									<div class="col-md-4 col-sm-12">
+										<label>Observações<small class="text-muted ml-2">Informações adicionais do contato</small></label>
+										<textarea
+											v-model="form_new_contact.obs" 
+											class="form-control"
+											:rows="4"
+											style="resize:none;"
+										/>
+										<small class="text-muted">Digite aqui caso queira adicionar alguma observação sobre este contato</small>
+									</div>
+								</div>
+							</div>
+							<hr>
+							<span slot="footer" class="dialog-footer d-flex justify-content-end">
+								<el-button @click="cancelStepFour">
+									<span class="el-icon-back mr-2" />Voltar
+								</el-button>
+								<el-button type="primary" @click="confirmContact">
+									Concluir<span class="el-icon-check ml-2" />
+								</el-button>
+							</span>
 						</template>
 					</div>
                 </el-dialog>
@@ -201,6 +218,7 @@ const new_contact = () => {
         objection: null,
         other_objection: null,
         schedule: null,
+        obs: null,
     }
 }
 export default {
@@ -213,9 +231,33 @@ export default {
                 value: null,
             },
             form_new_contact: new_contact(),
+            contact_types: [
+                { value: 'phone', label: 'Via Mensagem SMS' },
+                { value: 'wpp', label: 'Via Mensagem Whatsapp' },
+                { value: 'telegram', label: 'Via Mensagem Telegram' },
+                { value: 'email', label: 'Via Email' },
+            ],
+            answer_types: [
+                { value: 'no_answer', label: 'Sem Contato (Reagendar Retorno)', group: 'Resposta Neutra' },
+                { value: 'no_interest', label: 'Sem Interesse', group: 'Resposta Negativa' },
+                { value: 'has_interest', label: 'Com Interesse', group: 'Resposta Positiva' },
+            ],
+            objection_options: [
+                { value: 'ausencia do curso', label: 'Ausência de Curso' },
+                { value: 'desconhecimento da marca', label: 'Desconhecimento da Marca' },
+                { value: 'resistência ao ead', label: 'Resistência ao EAD' },
+                { value: 'estuda em outra instituição', label: 'Estuda em Outra Instituição' },
+                { value: 'outro', label: 'Outro' },
+            ],
         }
     },
     computed: {
+        grouped_answer_types() {
+            return _(this.answer_types)
+                .groupBy('group')
+                .map((options, group) => ({ options, group }))
+                .value()
+        },
         lead() {
             return this.$store.state.lead
         },
@@ -224,6 +266,16 @@ export default {
         },
     },
     methods: {
+        confirmContact() {
+            console.log('confirmar')
+        },
+        cancelStepFour() {
+            if (this.form_new_contact.answer == 'no_interest') return (this.form_new_contact.step = 2)
+            return (this.form_new_contact.step = 3)
+        },
+        formatDate(date) {
+            return this.$moment(date).format('DD/mm/YYYY - HH:mm:ss')
+        },
         finishStepFour() {
             if (!this.form_new_contact.schedule) return this.$message.error('Define a data e hora do agendamento')
             this.form_new_contact.step = 4
