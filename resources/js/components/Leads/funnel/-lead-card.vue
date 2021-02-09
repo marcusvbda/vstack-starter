@@ -16,6 +16,7 @@
         <div class="text-right">
             <small class="text-muted">{{ lead.f_substatus }}</small>
         </div>
+        <v-runtime-template class="mb-2" :template="lead.f_rating" />
         <small class="text-muted"> <span class="el-icon-alarm-clock mr-2" /> Data de entrada : {{ lead.f_created_at }}</small>
         <small class="text-muted"> <span class="el-icon-alarm-clock mr-2" /> Última conversão : {{ lead.f_last_conversion }}</small>
         <resource-tags-input class="mt-3 extra-mini-tags" v-if="use_tags" :resource="resource_id" :resource_code="lead.code" only_view />
@@ -57,10 +58,12 @@
     </div>
 </template>
 <script>
+import VRuntimeTemplate from 'v-runtime-template'
 export default {
     props: ['lead'],
     components: {
         'email-url': require('../../Default/EmailUrl.vue').default,
+        'v-runtime-template': VRuntimeTemplate,
     },
     computed: {
         can_edit() {

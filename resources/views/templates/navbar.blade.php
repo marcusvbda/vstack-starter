@@ -35,28 +35,46 @@ $polo = $user->polo;
 			<li class="nav-item {{ currentClass(['/admin']) }}">
 				<a class="nav-link" href="/admin"><i class="el-icon-data-line mr-2"></i>CRM Dashboard <span class="sr-only">(current)</span></a>
 			</li>
-			<li class="nav-item dropdown {{ currentClass(['/admin/funil-de-conversao/*']) }}">
-				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<i class="el-icon-magic-stick mr-2"></i>Converter
-				</a>
-				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item @if(!hasPermissionTo('convertion-funnel')) disabled @endif" href="/admin/funil-de-conversao" data-label="Esteira de Produção">Funil de Conversão</a>
-				</div>
-			</li>
-			<li class="nav-item dropdown {{ currentClass(['/admin/campanhas/*','/admin/leads/*']) }}">
+			<li class="nav-item dropdown {{ currentClass(['/admin/leads/*','/admin/funil-de-conversao/*']) }}">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<i class="el-icon-attract mr-2"></i>Oportunidades
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item @if(!hasPermissionTo('viewlist-leads')) disabled @endif" href="/admin/leads" data-label="Base de Leads">Leads</a>
+					<a class="dropdown-item @if(!hasPermissionTo('convertion-funnel')) disabled @endif" href="/admin/funil-de-conversao" data-label="Esteira de Produção">Funil de Conversão</a>
+				</div>
+			</li>
+			<li class="nav-item dropdown {{ currentClass(['/admin/emails/*','/admin/campanhas/*','/admin/captacao/*','/admin/automacao/*']) }}">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="el-icon-s-flag mr-2"></i>Marketing
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item @if(!hasPermissionTo('viewlist-email')) disabled @endif" href="/admin/email" data-label="Pré-Definição de Emails">Email</a>
+					<a class="dropdown-item @if(!hasPermissionTo('viewlist-campaign')) disabled @endif" href="/admin/campanhas" data-label="Campanhas de Marketing">Campanhas</a>
+					<a class="dropdown-item @if(!hasPermissionTo('viewlist-capture')) disabled @endif" href="/admin/captacao" data-label="Captação de Leads">Captação</a>
+					<a class="dropdown-item @if(!hasPermissionTo('viewlist-automation')) disabled @endif" href="/admin/automacao" data-label="Automação de Campanha">Automação</a>
 				</div>
 			</li>
 			<li class="nav-item dropdown {{ currentClass(['/admin/relatorios/*']) }}">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					<i class="el-icon-data-analysis mr-2"></i>Análise e Relatórios
+					<i class="el-icon-data-analysis mr-2"></i>Relatórios
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item @if(!hasPermissionTo('conversion-report')) disabled @endif" href="/admin/relatorios/leads" data-label="Relatório de Leads">Leads</a>
+					<a class="dropdown-item @if(!hasPermissionTo('campaign-report')) disabled @endif" href="/admin/relatorios/campanhas" data-label="Relatório de Campanhas">Campanha</a>
+					<a class="dropdown-item @if(!hasPermissionTo('capture-report')) disabled @endif" href="/admin/relatorios/captacao" data-label="Relatório de Captação">Captação</a>
+					<a class="dropdown-item @if(!hasPermissionTo('automation-report')) disabled @endif" href="/admin/relatorios/automacao" data-label="Relatório de Automação">Automação</a>
+				</div>
+			</li>
+			<li class="nav-item dropdown {{ currentClass(['/admin/resposta-contatos/*','/admin/tipos-contato/*','/admin/respostas-contato/*','/admin/regra-classificacao/*']) }}">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					<i class="el-icon-bangzhu mr-2"></i>Extras
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item @if(!hasPermissionTo('viewlist-objections')) disabled @endif" href="/admin/objecoes" data-label="Objeções de respostas negativas">Objeções de Contato</a>
+					<a class="dropdown-item @if(!hasPermissionTo('viewlist-contactype')) disabled @endif" href="/admin/tipos-contato" data-label="Formar que o lead foi contato">Tipos de Contato</a>
+					<a class="dropdown-item @if(!hasPermissionTo('viewlist-leadanswer')) disabled @endif" href="/admin/respostas-contato" data-label="Contatos com Lead">Respostas de Contato</a>
+					<a class="dropdown-item @if(!hasPermissionTo('config-rating-behavior')) disabled @endif" href="/admin/regra-classificacao" data-label="Regra de Rating de Lead">Regra de Classificação</a>
 				</div>
 			</li>
 		</ul>
@@ -67,7 +85,7 @@ $polo = $user->polo;
 				<a class="nav-link dropdown-toggle py-0 d-flex flex-row align-items-center" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<div class="d-flex flex-column mr-2">
 						<b>{{ $user->name }}</b>
-						<small class="f-12">{{ $user->email }}<span class="badge badge-primary ml-2 pb-1">{{ $user->role_description }}</span></small>
+						<small class="f-12">{{ $user->email }}</small>
 					</div>
 				</a>
 				<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">

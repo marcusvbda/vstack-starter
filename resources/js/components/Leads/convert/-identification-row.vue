@@ -7,6 +7,7 @@
                         {{ lead.name ? lead.name : undefined_text }} <small class="ml-2 f-12">#{{ lead.code }}</small>
                     </a>
                     <small class="text-muted f-12">Data de Entrada : {{ lead.f_created_at ? lead.f_created_at : undefined_text }}</small>
+                    <v-runtime-template class="mt-2" :template="lead.f_rating" />
                 </div>
                 <resource-tags-input class="mt-3" v-if="use_tags" :resource="resource_id" :resource_code="lead.code" />
             </div>
@@ -126,11 +127,16 @@
     </div>
 </template>
 <script>
+import VRuntimeTemplate from 'v-runtime-template'
+
 export default {
     data() {
         return {
             undefined_text: 'Não Informado',
         }
+    },
+    components: {
+        'v-runtime-template': VRuntimeTemplate,
     },
     computed: {
         lead() {

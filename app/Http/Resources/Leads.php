@@ -69,6 +69,7 @@ class Leads extends Resource
 		$columns["btn_conversion"] = ["label" => "", "sortable" => false, "size" => "300px"];
 		$columns["name"] = ["label" => "Nome", "sortable_index" => "data->name"];
 		$columns["email_url"] = ["label" => "Email", "sortable_index" => "data->email"];
+		$columns["f_rating"] = ["label" => "Classificação", "sortable" => false];
 		$columns["f_complete_created"] = ["label" => "Data", "sortable_index" => "created_at"];
 		return $columns;
 	}

@@ -84,18 +84,19 @@
 						<el-step title="Step 1" description="Defina o tipo do contato"/>
 						<el-step title="Step 2" description="Resposta do contato"/>
 						<el-step title="Step 3" description="Objeção do contato"/>
-						<el-step title="Step 4" description="Dados para retorno"/>
+						<el-step title="Step 4" description="Dados para agendamento"/>
 						<el-step title="Step 5" description="Conclusão do Contato"/>
 					</el-steps>
 					<div class="d-flex flex-column my-4 mt-5">
 						<template v-if="form_new_contact.step == 0">
 							<label>Selecione o tipo de contato</label>
 							<el-select
-								v-model="form_new_contact.type"
+								clearable
+								v-model="form_new_contact.type_id"
 								filterable
 								placeholder="Selecione o tipo de contato"
 							>
-								<el-option v-for="(type,i) in contact_types" :key="i" :label="type.label" :value="type.value" />
+								<el-option v-for="(type,i) in contact_types" :key="i" :label="type.description" :value="type.id" />
 							</el-select>
 							<small class="text-muted">Selecione o meio que o operador utilizará para efetuar o contato com o lead</small>
 							<hr>
@@ -107,9 +108,9 @@
 						</template>
 						<template v-if="form_new_contact.step == 1">
 							<label>Informe a resposta do contato</label>
-							<el-select v-model="form_new_contact.answer" placeholder="Informe a resposta do contato">
-								<el-option-group v-for="(group, g) in grouped_answer_types" :key="g" :label="group.group">
-									<el-option v-for="(answer, x) in group.options" :key="x"  :label="answer.label" :value="answer.value" />
+							<el-select v-model="form_new_contact.answer_id" placeholder="Informe a resposta do contato">
+								<el-option-group v-for="(group, g) in grouped_answer_types" :key="g" :label="group.type">
+									<el-option v-for="(answer, x) in group.options" :key="x"  :label="answer.description" :value="answer.id" />
 								</el-option-group>
 							</el-select>
 							<small class="text-muted">Selecione a resposta do contato referente a proposta realizada</small>
@@ -125,15 +126,15 @@
 						</template>
 						<template v-if="form_new_contact.step == 2">
 							<label>Selecione a objeção informada pelo contato</label>
-							<el-select v-model="form_new_contact.objection" placeholder="Selecione a objeção do contato">
-								<el-option v-for="(ob,i) in objection_options" :key="i"  :label="ob.label" :value="ob.value" />
+							<el-select v-model="form_new_contact.objection_id" placeholder="Selecione a objeção do contato">
+								<el-option v-for="(ob,i) in objection_options" :key="i"  :label="ob.description" :value="ob.id" />
 							</el-select>
 							<small class="text-muted">Selecione a resposta do contato referente a proposta realizada</small>
-							<div class="mt-3 d-flex flex-column" v-if="form_new_contact.objection == 'outro' ">
+							<div class="mt-3 d-flex flex-column">
 								<label>Descreva a objeção</label>
 								<textarea
 									v-model="form_new_contact.other_objection" 
-									placeholder="Descreva a objeção"  class="form-control"
+									class="form-control"
 									:rows="3"
 									style="resize:none;"
 								/>
@@ -174,10 +175,10 @@
 								<div class="row">
 									<div class="col-md-8 col-sm-12">
 										<h4  class="mb-4"><b>Resumo do Contato</b></h4>
-										<p class="mb-0"><b>Tipo de Contato : </b>{{ contact_types.find(x=> x.value == form_new_contact.type).label }}</p>
+										<p class="mb-0"><b>Tipo de Contato : </b>{{ contact_types.find(x=> x.id == form_new_contact.type_id).description }}</p>
 										<p class="mb-0" v-if="form_new_contact.schedule"><b>Agendamento : </b>{{ formatDate(form_new_contact.schedule) }}</p>
-										<p class="mb-0"><b>Resposta do Contato : </b>{{ answer_types.find(x=> x.value == form_new_contact.answer).label }}</p>
-										<p class="mb-0" v-if="form_new_contact.objection"><b>Objeção : </b>{{ objection_options.find(x=> x.value == form_new_contact.objection).label }}</p>
+										<p class="mb-0"><b>Resposta do Contato : </b>{{ answers.find(x=> x.id == form_new_contact.answer_id).description }}</p>
+										<p class="mb-0" v-if="form_new_contact.objection"><b>Objeção : </b>{{ objection_options.find(x=> x.id == form_new_contact.objection_id).description }}</p>
 										<p class="mb-0" v-if="form_new_contact.other_objection"><b>Descrição da Objeção : </b>{{form_new_contact.other_objection}}</p>
 									</div>
 									<div class="col-md-4 col-sm-12">
@@ -213,9 +214,9 @@ const new_contact = () => {
     return {
         step: 0,
         visible: false,
-        type: null,
-        answer: null,
-        objection: null,
+        type_id: null,
+        answer_id: null,
+        objection_id: null,
         other_objection: null,
         schedule: null,
         obs: null,
@@ -231,32 +232,23 @@ export default {
                 value: null,
             },
             form_new_contact: new_contact(),
-            contact_types: [
-                { value: 'phone', label: 'Via Mensagem SMS' },
-                { value: 'wpp', label: 'Via Mensagem Whatsapp' },
-                { value: 'telegram', label: 'Via Mensagem Telegram' },
-                { value: 'email', label: 'Via Email' },
-            ],
-            answer_types: [
-                { value: 'no_answer', label: 'Sem Contato (Reagendar Retorno)', group: 'Resposta Neutra' },
-                { value: 'no_interest', label: 'Sem Interesse', group: 'Resposta Negativa' },
-                { value: 'has_interest', label: 'Com Interesse', group: 'Resposta Positiva' },
-            ],
-            objection_options: [
-                { value: 'ausencia do curso', label: 'Ausência de Curso' },
-                { value: 'desconhecimento da marca', label: 'Desconhecimento da Marca' },
-                { value: 'resistência ao ead', label: 'Resistência ao EAD' },
-                { value: 'estuda em outra instituição', label: 'Estuda em Outra Instituição' },
-                { value: 'outro', label: 'Outro' },
-            ],
         }
     },
     computed: {
         grouped_answer_types() {
-            return _(this.answer_types)
-                .groupBy('group')
-                .map((options, group) => ({ options, group }))
+            return _(this.answers)
+                .groupBy('type')
+                .map((options, type) => ({ options, type }))
                 .value()
+        },
+        answers() {
+            return this.$store.state.answers
+        },
+        objection_options() {
+            return this.$store.state.objections
+        },
+        contact_types() {
+            return this.$store.state.types
         },
         lead() {
             return this.$store.state.lead
@@ -270,8 +262,10 @@ export default {
             console.log('confirmar')
         },
         cancelStepFour() {
-            if (this.form_new_contact.answer == 'no_interest') return (this.form_new_contact.step = 2)
-            return (this.form_new_contact.step = 3)
+            let answer = this.answers.find((x) => x.id == this.form_new_contact.answer_id)
+            if (answer.behavior == 'Solicitar Objeção') return (this.form_new_contact.step = 2)
+            if (answer.behavior == 'Solicitar Agendamento') return (this.form_new_contact.step = 3)
+            this.form_new_contact.step = 1
         },
         formatDate(date) {
             return this.$moment(date).format('DD/mm/YYYY - HH:mm:ss')
@@ -281,20 +275,22 @@ export default {
             this.form_new_contact.step = 4
         },
         finishStepThree() {
-            if (!this.form_new_contact.objection) return this.$message.error('Selecione a objeção do contato')
-            if (this.form_new_contact.objection == 'outro') {
+            if (!this.form_new_contact.objection_id) return this.$message.error('Selecione a objeção do contato')
+            let objection = this.objection_options.find((x) => x.id == this.form_new_contact.objection_id)
+            if (objection.need_description) {
                 if (!this.form_new_contact.other_objection) return this.$message.error('Informe a descrição da objeção do contato')
             }
             this.form_new_contact.step = 4
         },
         finishStepTwo() {
-            if (!this.form_new_contact.answer) return this.$message.error('Selecione a respota do contato')
-            if (this.form_new_contact.answer == 'no_interest') return (this.form_new_contact.step = 2)
-            if (this.form_new_contact.answer == 'no_answer') return (this.form_new_contact.step = 3)
+            if (!this.form_new_contact.answer_id) return this.$message.error('Selecione a respota do contato')
+            let answer = this.answers.find((x) => x.id == this.form_new_contact.answer_id)
+            if (answer.behavior == 'Solicitar Objeção') return (this.form_new_contact.step = 2)
+            if (answer.behavior == 'Solicitar Agendamento') return (this.form_new_contact.step = 3)
             this.form_new_contact.step = 4
         },
         finishStepOne() {
-            if (!this.form_new_contact.type) return this.$message.error('Selecione o tipo do contato')
+            if (!this.form_new_contact.type_id) return this.$message.error('Selecione o tipo do contato')
             this.form_new_contact.step++
         },
         confirmNewContact() {

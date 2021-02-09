@@ -38,4 +38,16 @@ class Tenant extends DefaultModel
 	{
 		return $this->hasMany(Polo::class);
 	}
+
+	public function getDefaultRatingRulesAttribute()
+	{
+		return [
+			"Possui Nome Completo" => floatval(20),
+			"Possui Email" => floatval(30),
+			"Possui Telefone Fixo" => floatval(20),
+			"Possui Telefone Celular" => floatval(30),
+			"Possui Interesse" => floatval(35),
+			"Convertido Anteriormente" => floatval(10)
+		];
+	}
 }

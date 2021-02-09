@@ -6,7 +6,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use ResourcesHelpers;
 use marcusvbda\vstack\Controllers\ResourceController;
-use App\Http\Models\LeadStatus;
+use App\Http\Models\{
+	LeadStatus,
+	ContactType,
+	LeadAnswer,
+	Objection
+};
 
 class FunnelController extends Controller
 {
@@ -46,6 +51,9 @@ class FunnelController extends Controller
 		if (!hasPermissionTo("edit-leads")) abort(403);
 		$lead = $resource->model->findOrFail($id);
 		$lead->load(["substatus", "substatus.status"]);
-		return view("admin.leads.funnel.convert", compact('resource', 'lead'));
+		$types = ContactType::get();
+		$answers = LeadAnswer::get();
+		$objections = Objection::get();
+		return view("admin.leads.funnel.convert", compact('resource', 'lead', 'types', 'answers', 'objections'));
 	}
 }

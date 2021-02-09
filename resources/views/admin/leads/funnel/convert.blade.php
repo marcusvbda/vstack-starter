@@ -16,6 +16,9 @@
 	:lead='@json($lead)'
 	:use_tags='@json($resource->useTags())'
 	resource_id="{{ $resource->id }}"
+	:types='@json($types)'
+	:answers='@json($answers)'
+	:objections='@json($objections)'	
 >
 </convert-lead>
 @endsection
