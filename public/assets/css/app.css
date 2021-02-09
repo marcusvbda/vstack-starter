@@ -11329,6 +11329,12 @@ ol.breadcrumb {
   color: #dbdbdb;
 }
 
+.dropdown-item.active {
+  color: #0066ff;
+  background: #dceaff;
+  background: linear-gradient(0deg, #dceaff 0%, white 100%);
+}
+
 .link {
   cursor: pointer;
 }
