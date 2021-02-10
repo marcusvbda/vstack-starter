@@ -49,7 +49,7 @@ $polo = $user->polo;
 					<i class="el-icon-s-flag mr-2"></i>Marketing
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item @if(!hasPermissionTo('viewlist-email')) disabled @endif {{ currentClass(['/admin/email/*'])  }}" href="/admin/email" data-label="Pré-Definição de Emails">Email</a>
+					<a class="dropdown-item @if(!hasPermissionTo('viewlist-email')) disabled @endif {{ currentClass(['/admin/emails/*'])  }}" href="/admin/emails" data-label="Pré-Definição de Emails">Emails</a>
 					<a class="dropdown-item @if(!hasPermissionTo('viewlist-campaign')) disabled @endif {{ currentClass(['/admin/campanhas/*'])  }}" href="/admin/campanhas" data-label="Campanhas de Marketing">Campanhas</a>
 					<a class="dropdown-item @if(!hasPermissionTo('viewlist-capture')) disabled @endif {{ currentClass(['/admin/captacao/*'])  }}" href="/admin/captacao" data-label="Captação de Leads">Captação</a>
 					<a class="dropdown-item @if(!hasPermissionTo('viewlist-automation')) disabled @endif {{ currentClass(['/admin/automacao/*'])  }}" href="/admin/automacao" data-label="Automação de Campanha">Automação</a>

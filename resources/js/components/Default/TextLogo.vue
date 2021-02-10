@@ -1,5 +1,5 @@
 <template>
-    <h1 class="logo" :style="{ fontSize: `${size}px` }"><b>L</b>ead<b>s</b></h1>
+    <h1 class="logo" :style="{ fontSize: `${size}px` }"><b></b>Leads<b></b></h1>
 </template>
 <script>
 export default {
@@ -19,7 +19,7 @@ export default {
     align-items: center;
     position: relative;
     color: #001737;
-    text-transform: lowercase;
+    // text-transform: lowercase;
     font-weight: bolder;
     margin-bottom: 0;
     b {

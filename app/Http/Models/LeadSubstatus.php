@@ -9,7 +9,7 @@ class LeadSubstatus extends Model
 {
 	public $guarded = ["created_at"];
 	public $cascadeDeletes = [];
-	public $restrictDeletes = [];
+	public $restrictDeletes = ['lead'];
 	protected $table = "lead_substatuses";
 
 	public $casts = [
@@ -25,5 +25,10 @@ class LeadSubstatus extends Model
 	public function status()
 	{
 		return $this->belongsTo(LeadStatus::class, "lead_status_id");
+	}
+
+	public function lead()
+	{
+		return $this->hasMany(Lead::class);
 	}
 }

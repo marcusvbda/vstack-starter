@@ -9,7 +9,7 @@ class LeadStatus extends Model
 {
 	public $guarded = ["created_at"];
 	public $cascadeDeletes = [];
-	public $restrictDeletes = [];
+	public $restrictDeletes = ['sub_status'];
 	protected $table = "lead_statuses";
 
 	public $casts = [
