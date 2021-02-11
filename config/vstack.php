@@ -1,7 +1,7 @@
 <?php
 
 return [
-	"default_upload_route" => "/admin/upload_file",
+	"default_upload_route" => "/admin/upload",
 	"resource_export_extension" => "xlsx",
 	// "timezone" => "+00:00",
 	"timezones" => [

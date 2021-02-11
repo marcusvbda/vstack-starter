@@ -6,7 +6,7 @@ use marcusvbda\vstack\Resource;
 use marcusvbda\vstack\Fields\{
 	Card,
 	Text,
-	Custom
+	HtmlEditor
 };
 
 class Emails extends Resource
@@ -105,6 +105,11 @@ class Emails extends Resource
 					"label" => "Assunto",
 					"field" => "subject",
 					"rules" => ["required", "max:255"]
+				]),
+				new HtmlEditor([
+					"label" => "Corpo do Email",
+					"field" => "body",
+					"mode" => "newsletter"
 				]),
 			]),
 		];
