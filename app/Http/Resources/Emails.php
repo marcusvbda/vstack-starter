@@ -101,6 +101,8 @@ class Emails extends Resource
 					"field" => "name",
 					"rules" => ["required", "max:255"]
 				]),
+			]),
+			new Card("Email", [
 				new Text([
 					"label" => "Assunto",
 					"field" => "subject",
@@ -113,5 +115,15 @@ class Emails extends Resource
 				]),
 			]),
 		];
+	}
+
+	public function beforeCreateSlot()
+	{
+		return view('admin.emails.crud_alert')->render();
+	}
+
+	public function beforeEditSlot()
+	{
+		return view('admin.emails.crud_alert')->render();
 	}
 }

@@ -8,9 +8,9 @@ use App\Http\Filters\Leads\{
 	LeadsByName,
 	LeadsByCreatedDate,
 	LeadsByStatus,
-	LeadsByTags,
 	LeadsBySubStatus
 };
+use App\Http\Filters\FilterByTags;
 use App\Http\Actions\Leads\{
 	LeadTransfer,
 };
@@ -32,7 +32,7 @@ class Leads extends Resource
 			new LeadsByName(),
 			new LeadsByStatus(),
 			new LeadsBySubStatus(),
-			new LeadsByTags()
+			new FilterByTags(Lead::class)
 		];
 		parent::__construct();
 	}
