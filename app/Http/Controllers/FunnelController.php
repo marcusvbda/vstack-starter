@@ -14,6 +14,7 @@ use App\Http\Models\{
 	LeadSubstatus
 };
 use Carbon\Carbon;
+use Auth;
 
 class FunnelController extends Controller
 {
@@ -82,7 +83,6 @@ class FunnelController extends Controller
 		]);
 		$lead->conversions = $conversions;
 		$lead->save();
-
 		return ["success" => true, "route" => "/admin/funil-de-conversao" . @$request["back_query"]];
 	}
 }

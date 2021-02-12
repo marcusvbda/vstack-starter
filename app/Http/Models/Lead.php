@@ -217,8 +217,8 @@ class Lead extends DefaultModel
 	public function getFLastConversionAttribute()
 	{
 		$last_conversion = $this->last_conversion;
-		if (!@$last_conversion->data) return "Nunca Convertido";
-		return $last_conversion->data . " - " . $last_conversion->hora;
+		if (!@$last_conversion->date || !$last_conversion->timestamp) return "Nunca Convertido";
+		return $last_conversion->date . " - " . @$last_conversion->timestamp;
 	}
 
 	public function getCellphoneNumberAttribute()
@@ -293,6 +293,11 @@ class Lead extends DefaultModel
 	// getters
 
 	// setters
+	public function setConversionsAttribute($value)
+	{
+		$this->setDataValue("log", $value);
+	}
+
 	public function setScheduleAttribute($value)
 	{
 		$this->setDataValue("schedule", $value);
