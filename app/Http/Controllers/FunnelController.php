@@ -50,7 +50,7 @@ class FunnelController extends Controller
 	public function convert($id)
 	{
 		$resource = ResourcesHelpers::find("leads");
-		if (!hasPermissionTo("edit-leads")) abort(403);
+		if (!$resource->canUpdate()) abort(403);
 		$lead = $resource->model->findOrFail($id);
 		$lead->load(["substatus", "substatus.status"]);
 		$types = ContactType::get();
@@ -62,15 +62,27 @@ class FunnelController extends Controller
 	public function finishConvert($id, Request $request)
 	{
 		$resource = ResourcesHelpers::find("leads");
-		if (!hasPermissionTo("edit-leads")) abort(403);
+		if (!$resource->canUpdate()) abort(403);
 		$lead = Lead::findOrFail($id);
+		$conversions = $lead->conversions;
+		$now =  Carbon::now();
+		$user = Auth::user();
 		$answer = LeadAnswer::findOrFail($request["answer_id"]);
 		if ($answer->need_schedule) {
 			$status = LeadSubstatus::value("schedule");
 			$lead->lead_substatus_id = $status->id;
 			$lead->schedule = Carbon::create($request["schedule"]);
-			$lead->save();
 		}
+		array_unshift($conversions, [
+			"obs" => @$request["obs"],
+			"date" =>  $now->format("d/m/Y"),
+			"desc" => "Converteu no funil de produção",
+			"user" => $user->name,
+			"timestamp" => $now->format("H:i:s")
+		]);
+		$lead->conversions = $conversions;
+		$lead->save();
+
 		return ["success" => true, "route" => "/admin/funil-de-conversao" . @$request["back_query"]];
 	}
 }
