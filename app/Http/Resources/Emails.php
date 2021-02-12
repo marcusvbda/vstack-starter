@@ -8,10 +8,11 @@ use marcusvbda\vstack\Fields\{
 	Text,
 	HtmlEditor
 };
+use App\Http\Models\{Email, EmailTemplate};
 
 class Emails extends Resource
 {
-	public $model = \App\Http\Models\Email::class;
+	public $model = Email::class;
 	public $_filters = [];
 
 	public function label()
@@ -94,12 +95,18 @@ class Emails extends Resource
 
 	public function fields()
 	{
+		$content = request("content");
+		$default = (object)["css" => "", "body" => ""];
+		if (!@$content->id && @request("template")) {
+			$template = EmailTemplate::where("slug", request("template"))->first();
+			$default = $template ? $template->body : (object)["css" => "", "body" => ""];
+		}
 		return [
 			new Card("Identificação", [
 				new Text([
 					"label" => "Nome",
 					"field" => "name",
-					"rules" => ["required", "max:255"]
+					"rules" => ["required", "max:255"],
 				]),
 			]),
 			new Card("Email", [
@@ -111,7 +118,8 @@ class Emails extends Resource
 				new HtmlEditor([
 					"label" => "Corpo do Email",
 					"field" => "body",
-					"mode" => "newsletter"
+					"mode" => "newsletter",
+					"default" => $default
 				]),
 			]),
 		];
