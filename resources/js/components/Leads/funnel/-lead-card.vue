@@ -18,6 +18,7 @@
         </div>
         <v-runtime-template class="mb-2" :template="lead.f_rating" />
         <small class="text-muted"> <span class="el-icon-alarm-clock mr-2" /> Data de entrada : {{ lead.f_created_at }}</small>
+        <small class="text-muted" v-if="lead.f_schedule"> <span class="el-icon-alarm-clock mr-2" /> Data de agendamento : {{ lead.f_schedule }}</small>
         <small class="text-muted"> <span class="el-icon-alarm-clock mr-2" /> Última conversão : {{ lead.f_last_conversion }}</small>
         <resource-tags-input class="mt-3 extra-mini-tags" v-if="use_tags" :resource="resource_id" :resource_code="lead.code" only_view />
         <div class="mt-2">
@@ -81,7 +82,7 @@ export default {
             this[command]()
         },
         convert() {
-            window.location.href = `/admin/funil-de-conversao/${this.lead.code}/converter`
+            window.location.href = `/admin/funil-de-conversao/${this.lead.code}/converter${window.location.search}`
         },
         edit() {
             window.location.href = `/admin/leads/${this.lead.code}/edit`

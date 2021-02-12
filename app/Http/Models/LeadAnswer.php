@@ -14,4 +14,9 @@ class LeadAnswer extends DefaultModel
 	// {
 	//     return true;
 	// }
+
+	public function getNeedScheduleAttribute()
+	{
+		return $this->behavior === 'Solicitar Agendamento';
+	}
 }

@@ -18,15 +18,23 @@
                                         <table class="table table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th class="w-70">Descrição</th>
-                                                    <th class="w-30">Peso</th>
+                                                    <th class="w-25">Descrição</th>
+                                                    <th class="w-75">Peso</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr class="mb-3" v-for="(key, i) in Object.keys(rating_rules)" :key="i">
                                                     <td>{{ key }}</td>
                                                     <td>
-                                                        <input class="form-control" type="number" v-model="rating_rules[key]" />
+                                                        <h1>
+                                                            <el-rate
+                                                                v-model="rating_rules[key]"
+                                                                show-score
+                                                                text-color="#ff9900"
+                                                                :max="10"
+                                                                score-template="{value} ponto(s)"
+                                                            />
+                                                        </h1>
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -64,3 +72,12 @@ export default {
     },
 }
 </script>
+<style lang="scss" >
+h1 {
+    .el-rate__item {
+        .el-rate__icon {
+            font-size: 30px !important;
+        }
+    }
+}
+</style>

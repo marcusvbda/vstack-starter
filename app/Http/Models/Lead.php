@@ -22,7 +22,7 @@ class Lead extends DefaultModel
 		"code", "name", "f_status", "f_substatus", "email", "profession", "f_last_conversion", "cellphone_number",
 		"phone_number", "obs", "f_created_at", "objection", "comment", "interest", "f_status_badge",
 		"f_birthdate", "age", "f_last_conversion_date", "api_ref_token", "other_objection", "conversions",
-		"tries", "lead_api", "f_rating"
+		"tries", "lead_api", "f_rating", "f_schedule"
 	];
 
 	public static function boot()
@@ -36,7 +36,13 @@ class Lead extends DefaultModel
 				if (!@$model->user_id) $model->user_id = $user->id;
 				if (!@$model->polo_id && $user->polo_id) $model->polo_id = $user->polo_id;
 			}
-			if (!@$model->lead_substatus_id) $model->lead_substatus_id = LeadSubStatus::where("value", "new_contact")->firstOrFail()->id;
+			if (!@$model->lead_substatus_id) {
+				if ($model->interest) {
+					$model->lead_substatus_id = LeadSubStatus::value("has_interest")->id;
+				} else {
+					$model->lead_substatus_id = LeadSubStatus::value("new_contact")->id;
+				}
+			}
 		});
 	}
 
@@ -274,9 +280,24 @@ class Lead extends DefaultModel
 	{
 		return @$this->data->api_ref_token;
 	}
+
+	public function getScheduleAttribute()
+	{
+		return @$this->data->schedule;
+	}
+
+	public function getFscheduleAttribute()
+	{
+		return @$this->schedule  ? Carbon::create($this->schedule)->format("d/m/Y - H:i:s") : false;
+	}
 	// getters
 
 	// setters
+	public function setScheduleAttribute($value)
+	{
+		$this->setDataValue("schedule", $value);
+	}
+
 	public function setApiRefTokenAttribute($value)
 	{
 		$this->setDataValue("api_ref_token", $value);

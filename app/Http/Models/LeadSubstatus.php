@@ -31,4 +31,9 @@ class LeadSubstatus extends Model
 	{
 		return $this->hasMany(Lead::class);
 	}
+
+	public static function value($val)
+	{
+		return static::where("value", $val)->firstOrFail();
+	}
 }

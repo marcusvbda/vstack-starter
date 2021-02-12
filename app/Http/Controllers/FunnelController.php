@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-// use App\Http\Constants\Leads\Statuses;
 use Illuminate\Http\Request;
 use ResourcesHelpers;
 use marcusvbda\vstack\Controllers\ResourceController;
 use App\Http\Models\{
 	LeadStatus,
 	ContactType,
+	Lead,
 	LeadAnswer,
-	Objection
+	Objection,
+	LeadSubstatus
 };
+use Carbon\Carbon;
 
 class FunnelController extends Controller
 {
@@ -55,5 +57,20 @@ class FunnelController extends Controller
 		$answers = LeadAnswer::get();
 		$objections = Objection::get();
 		return view("admin.leads.funnel.convert", compact('resource', 'lead', 'types', 'answers', 'objections'));
+	}
+
+	public function finishConvert($id, Request $request)
+	{
+		$resource = ResourcesHelpers::find("leads");
+		if (!hasPermissionTo("edit-leads")) abort(403);
+		$lead = Lead::findOrFail($id);
+		$answer = LeadAnswer::findOrFail($request["answer_id"]);
+		if ($answer->need_schedule) {
+			$status = LeadSubstatus::value("schedule");
+			$lead->lead_substatus_id = $status->id;
+			$lead->schedule = Carbon::create($request["schedule"]);
+			$lead->save();
+		}
+		return ["success" => true, "route" => "/admin/funil-de-conversao" . @$request["back_query"]];
 	}
 }

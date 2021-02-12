@@ -42,11 +42,11 @@ class Tenant extends DefaultModel
 	public function getDefaultRatingRulesAttribute()
 	{
 		return [
-			"Possui Nome Completo" => floatval(20),
-			"Possui Email" => floatval(30),
-			"Possui Telefone Fixo" => floatval(20),
-			"Possui Telefone Celular" => floatval(30),
-			"Possui Interesse" => floatval(35),
+			"Possui Nome Completo" => floatval(15),
+			"Possui Email" => floatval(20),
+			"Possui Telefone Fixo" => floatval(10),
+			"Possui Telefone Celular" => floatval(20),
+			"Possui Interesse" => floatval(10),
 			"Convertido Anteriormente" => floatval(10)
 		];
 	}

@@ -259,7 +259,18 @@ export default {
     },
     methods: {
         confirmContact() {
-            console.log('confirmar')
+            let loading = this.$loading({ text: 'Finalizando contato ...' })
+            this.$http
+                .post(window.location.pathname, { ...this.form_new_contact, back_query: window.location.search })
+                .then(({ data }) => {
+                    if (data.success && data.route) {
+                        window.location.href = data.route
+                    }
+                })
+                .catch((er) => {
+                    console.log(er)
+                    loading.close()
+                })
         },
         cancelStepFour() {
             let answer = this.answers.find((x) => x.id == this.form_new_contact.answer_id)
