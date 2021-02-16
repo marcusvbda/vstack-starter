@@ -1,5 +1,5 @@
 <template>
-    <div id="notification-view">
+    <div id="notification-view" class="f-12">
         <div class="row" v-if="has_new">
             <div class="col-12" @click="update_page">
                 <el-alert
@@ -53,9 +53,9 @@
                                 <a href="#" @click.prevent="load">Carregar mais... <span class="el-icon-caret-bottom ml-3" /> </a>
                             </b>
                             <b v-else class="text-muted">
-								<template v-if="notifications.length <=0 ">Sem Notificações</template>
-								<template v-else>Sem mais notificações antigas</template>
-							</b>
+                                <template v-if="notifications.length <= 0">Sem Notificações</template>
+                                <template v-else>Sem mais notificações antigas</template>
+                            </b>
                         </template>
                     </div>
                 </div>

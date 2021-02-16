@@ -167,6 +167,29 @@ ul.pagination {
   cursor: pointer;
 }
 
+.table-crud .w-25 {
+  background-color: #f9f9f9;
+}
+
+.table-crud .input-title {
+  font-weight: bold;
+  font-size: 13px;
+  color: #444;
+}
+
+.f-12 {
+  font-size: 12px;
+}
+
+.card-title {
+  color: #444;
+  font-size: 14px;
+}
+
+.crud-card-header {
+  padding: 5px 13px !important;
+}
+
 a {
   display: inline-block;
   position: relative;

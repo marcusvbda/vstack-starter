@@ -5,14 +5,14 @@
                 <div class="row mb-3">
                     <div class="col-12">
                         <div class="card box-shadow">
-                            <div class="card-header d-flex align-items-center">
+                            <div class="card-header crud-card-header d-flex align-items-center">
                                 <b>Informações Básicas</b>
                             </div>
                             <div class="card-body p-0">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="row-responsive-table">
-                                            <table class="table table-striped mb-0">
+                                            <table class="table table-crud mb-0">
                                                 <tbody>
                                                     <v-input
                                                         label="Nome *"
@@ -33,7 +33,7 @@
                 <div class="row mb-3" v-for="(chunked_permissions, group) in permissions_groups" :key="group">
                     <div class="col-12">
                         <div class="card box-shadow">
-                            <div class="card-header d-flex align-items-center">
+                            <div class="card-header crud-card-header d-flex align-items-center">
                                 <label class="d-flex flex-row align-items-center mb-0">
                                     <input type="checkbox" v-model="check_all[group]" class="mr-2" @change="selectAll(group)" :ref="`check_${group}`" />
                                     Permissões
@@ -46,7 +46,7 @@
                                     </template>
                                 </label>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body f-12">
                                 <div class="row d-flex flex-wrap flex-row mb-4" v-for="(cp, i) in chunked_permissions" :key="i">
                                     <div class="col-md-3 col-sm-12" v-for="(p, i) in cp" :key="`${group}_${i}`">
                                         <label class="d-flex flex-row align-items-center mb-0">
