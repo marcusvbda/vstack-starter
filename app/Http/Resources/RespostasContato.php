@@ -6,7 +6,7 @@ use marcusvbda\vstack\Resource;
 use marcusvbda\vstack\Fields\{
 	Card,
 	Text,
-	BelongsTo,
+	Radio,
 };
 
 class RespostasContato extends Resource
@@ -92,16 +92,20 @@ class RespostasContato extends Resource
 				"required" => true,
 				"rules" => "max:255"
 			]),
-			new BelongsTo([
+			new Radio([
 				"label" => "Tipo da Resposta",
+				"description" => "O tipo da resposta que o operador recebeu para o contato realizado",
 				"field" => "type",
 				"required" => true,
+				// "default" => "Resposta Neutra",
 				"options" => ["Resposta Neutra", "Resposta Negativa", "Resposta Positiva"]
 			]),
-			new BelongsTo([
+			new Radio([
 				"label" => "Comportamento",
+				"description" => "Como o sistema deve se comportar caso essa resposta seja selecionada pelo operador",
 				"field" => "behavior",
 				"required" => true,
+				// "default" => "Solicitar Agendamento",
 				"options" => ["Solicitar Objeção", "Solicitar Agendamento"]
 			])
 		];
