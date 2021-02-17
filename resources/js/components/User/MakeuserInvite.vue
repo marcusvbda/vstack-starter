@@ -1,18 +1,18 @@
 <template>
-    <div class="row mb-5">
+    <div class="row mb-5" id="crud-view">
         <div class="col-12">
             <form class="needs-validation m-0" novalidate v-on:submit.prevent="submit" @keypress.13.prevent>
                 <div class="row mb-3">
                     <div class="col-12">
                         <div class="card box-shadow">
-                            <div class="card-header d-flex align-items-center">
-                                <b>Informações Básicas</b>
+                            <div class="card-header crud-card-header d-flex align-items-center">
+                                <b class="crud-title">Informações Básicas</b>
                             </div>
                             <div class="card-body p-0">
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="row-responsive-table">
-                                            <table class="table table-striped mb-0">
+                                            <table class="table table-crud mb-0">
                                                 <tbody>
                                                     <v-input
                                                         label="Email *"
@@ -21,7 +21,7 @@
                                                         :errors="errors.email ? errors.email : false"
                                                     />
                                                     <tr>
-                                                        <td>
+                                                        <td class="w-25">
                                                             <el-switch v-model="select_all" active-text="Todos os Polos" inactive-text="Selecionar os Polos" />
                                                             *
                                                         </td>
@@ -43,7 +43,9 @@
                                                         </td>
                                                     </tr>
                                                     <tr>
-                                                        <td>Grupo de Acesso *</td>
+                                                        <td class="w-25">
+                                                            <span class="input-title">Grupo de Acesso *</span>
+                                                        </td>
                                                         <td>
                                                             <div class="d-flex flex-column">
                                                                 <div class="input-group">
