@@ -4,6 +4,13 @@ namespace App\Http\Resources;
 
 use marcusvbda\vstack\Resource;
 use Auth;
+use marcusvbda\vstack\Fields\{
+	Card,
+	Text,
+	Check,
+};
+use App\Http\Models\Role;
+use App\Http\Models\Permission;
 
 class GruposDeAcesso extends Resource
 {
@@ -82,6 +89,41 @@ class GruposDeAcesso extends Resource
 		return false;
 	}
 
+	public function fields()
+	{
+		$model = new Role;
+		$role = @request()->content;
+		$fields =  [
+			new Card("Identificação", [
+				new Text([
+					"label" => "Nome",
+					"description" => "Nome de exibição do grupo de acesso",
+					"field" => "description",
+					"rules" => ["required", "max:255", function ($attribute, $value, $fail) use ($model, $role) {
+						$name = $model->makeRoleName($value);
+						$tenant_code = @Auth::user()->tenant->code;
+						$role_name = $tenant_code . "_" . $name;
+						if (Role::where("name", $role_name)->where("id", "!=", @$role->id)->count() > 0) $fail('Este Grupo de acesso já existe');
+						if (in_array($role_name, Role::$protected_roles)) return $fail("Não é possível cadastrar um grupo com este nome.");
+					}]
+				])
+			])
+		];
+		foreach (Permission::groupBy("group")->get() as $permission) {
+			$group_fields = [];
+			foreach (Permission::where("group", $permission->group)->get() as $group_permission) {
+				$group_fields[] = new Check([
+					"label"   => $group_permission->description,
+					"description"   => $group_permission->name,
+					"field"   => str_replace("-", "_", $group_permission->name),
+					"default" => !@$role ? false : $role->hasPermissionTo($group_permission->name)
+				]);
+			}
+			$fields[] = new Card($permission->group, $group_fields);
+		}
+		return $fields;
+	}
+
 
 	public function nothingStoredText()
 	{
@@ -97,7 +139,7 @@ class GruposDeAcesso extends Resource
 	{
 		return '
         <div class="alert alert-warning" role="alert">
-            <strong>Atenção ! </strong>Este listagem de <b>Grupos de Acesso</b>, contém todos os grupos exceto o administrador, pois o usuário não pode alterar seu próprio grupo de acesso ).
+            <strong>Atenção ! </strong>Este listagem de <b>Grupos de Acesso</b>, contém todos os grupos exceto o administrador, pois o usuário não pode alterar seu próprio grupo de acesso.
         </div>';
 	}
 }

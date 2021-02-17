@@ -37,7 +37,7 @@ class Role extends RootRoleModel
 		return $this->created_at->diffForHumans();
 	}
 
-	private function makeRoleName($description)
+	public function makeRoleName($description)
 	{
 		return preg_replace('/\s+/', "", strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', $description)));
 	}
@@ -50,22 +50,6 @@ class Role extends RootRoleModel
 			$this->attributes["name"] = $tenant_code . "_" . $this->makeRoleName(@$this->attributes["name"] ? $this->attributes["name"] : $description);
 		}
 	}
-
-	public function getRules()
-	{
-		$id = @$this->id ? $this->id : null;
-		return [
-			'permissions' => 'required',
-			'description' => ['required', function ($attribute, $value, $fail) use ($id) {
-				$name = $this->makeRoleName($value);
-				$tenant_code = @Auth::user()->tenant->code;
-				$role_name = $tenant_code . "_" . $name;
-				if (Role::where("name", $role_name)->where("id", "!=", $id)->count() > 0) $fail('Este Grupo de acesso já existe');
-				if (in_array($role_name, static::$protected_roles)) return $fail("Não é possível cadastrar um grupo com este nome.");
-			}],
-		];
-	}
-
 
 	public function getProcessedPermissionsAttribute()
 	{

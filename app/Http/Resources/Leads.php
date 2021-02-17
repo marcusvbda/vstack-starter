@@ -151,7 +151,7 @@ class Leads extends Resource
 			new Card("Identificação", [
 				new Text([
 					"label" => "Nome Completo",
-					"description" => "lorem ipsum lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum",
+					// "description" => "lorem ipsum lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum",
 					"field" => "name",
 					"rules" => ["required", "max:255"]
 				]),

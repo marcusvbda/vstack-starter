@@ -25,29 +25,29 @@ class A_AclSeeder extends Seeder
 	{
 		DB::table("permissions")->truncate();
 		Cache::flush('spatie.permission.cache');
-		Permission::create(["group" => "Campanhas", "name" => "viewlist-leads", "description" => "Ver Listagem de Leads"]);
-		Permission::create(["group" => "Campanhas", "name" => "edit-leads", "description" => "Editar Leads"]);
-		Permission::create(["group" => "Campanhas", "name" => "destroy-leads", "description" => "Excluir Leads"]);
-		Permission::create(["group" => "Campanhas", "name" => "view-leads-report", "description" => "Ver Relatório de Leads"]);
+		Permission::create(["group" => "Leads", "name" => "viewlist-leads", "description" => "Ver Listagem de Leads"]);
+		Permission::create(["group" => "Leads", "name" => "edit-leads", "description" => "Editar Leads"]);
+		Permission::create(["group" => "Leads", "name" => "destroy-leads", "description" => "Excluir Leads"]);
+		Permission::create(["group" => "Leads", "name" => "view-leads-report", "description" => "Ver Relatório de Leads"]);
 
-		Permission::create(["group" => "Tabelas Auxiliares", "name" => "viewlist-leadanswer", "description" => "Ver Listagem de Respostas de Contatos"]);
-		Permission::create(["group" => "Tabelas Auxiliares", "name" => "create-leadanswer", "description" => "Cadastrar Respostas de Contatos"]);
-		Permission::create(["group" => "Tabelas Auxiliares", "name" => "edit-leadanswer", "description" => "Editar Respostas de Contatos"]);
-		Permission::create(["group" => "Tabelas Auxiliares", "name" => "destroy-leadanswer", "description" => "Excluir Respostas de Contatos"]);
+		Permission::create(["group" => "Respostas de Contatos", "name" => "viewlist-leadanswer", "description" => "Ver Listagem de Respostas de Contatos"]);
+		Permission::create(["group" => "Respostas de Contatos", "name" => "create-leadanswer", "description" => "Cadastrar Respostas de Contatos"]);
+		Permission::create(["group" => "Respostas de Contatos", "name" => "edit-leadanswer", "description" => "Editar Respostas de Contatos"]);
+		Permission::create(["group" => "Respostas de Contatos", "name" => "destroy-leadanswer", "description" => "Excluir Respostas de Contatos"]);
 
-		Permission::create(["group" => "Tabelas Auxiliares", "name" => "viewlist-contacttype", "description" => "Ver Listagem de Tipo de Contatos"]);
-		Permission::create(["group" => "Tabelas Auxiliares", "name" => "create-contacttype", "description" => "Cadastrar Tipo de Contatos"]);
-		Permission::create(["group" => "Tabelas Auxiliares", "name" => "edit-contacttype", "description" => "Editar Tipo de Contatos"]);
-		Permission::create(["group" => "Tabelas Auxiliares", "name" => "destroy-contacttype", "description" => "Excluir Tipo de Contatos"]);
+		Permission::create(["group" => "Tipo de Contato", "name" => "viewlist-contacttype", "description" => "Ver Listagem de Tipo de Contatos"]);
+		Permission::create(["group" => "Tipo de Contato", "name" => "create-contacttype", "description" => "Cadastrar Tipo de Contatos"]);
+		Permission::create(["group" => "Tipo de Contato", "name" => "edit-contacttype", "description" => "Editar Tipo de Contatos"]);
+		Permission::create(["group" => "Tipo de Contato", "name" => "destroy-contacttype", "description" => "Excluir Tipo de Contatos"]);
 
-		Permission::create(["group" => "Tabelas Auxiliares", "name" => "viewlist-objections", "description" => "Ver Listagem de Objeções"]);
-		Permission::create(["group" => "Tabelas Auxiliares", "name" => "create-objections", "description" => "Cadastrar Objeções"]);
-		Permission::create(["group" => "Tabelas Auxiliares", "name" => "edit-objections", "description" => "Editar Objeções"]);
-		Permission::create(["group" => "Tabelas Auxiliares", "name" => "destroy-objections", "description" => "Excluir Objeções"]);
+		Permission::create(["group" => "Objeções", "name" => "viewlist-objections", "description" => "Ver Listagem de Objeções"]);
+		Permission::create(["group" => "Objeções", "name" => "create-objections", "description" => "Cadastrar Objeções"]);
+		Permission::create(["group" => "Objeções", "name" => "edit-objections", "description" => "Editar Objeções"]);
+		Permission::create(["group" => "Objeções", "name" => "destroy-objections", "description" => "Excluir Objeções"]);
 
 		Permission::create(["group" => "Marketing", "name" => "viewlist-email", "description" => "Ver Listagem de Emails"]);
 		Permission::create(["group" => "Marketing", "name" => "create-email", "description" => "Cadastrar Emails"]);
-		Permission::create(["group" => "Marketings", "name" => "edit-email", "description" => "Editar Emails"]);
+		Permission::create(["group" => "Marketing", "name" => "edit-email", "description" => "Editar Emails"]);
 		Permission::create(["group" => "Marketing", "name" => "destroy-email", "description" => "Excluir Emails"]);
 	}
 
