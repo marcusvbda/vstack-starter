@@ -128,6 +128,9 @@ class FunnelController extends Controller
 
 		if ($answer->need_objection && $answer->is_negative) return  LeadSubstatus::value("canceled");
 		if ($answer->need_schedule && $answer->is_negative) return  LeadSubstatus::value("possible_non_qualified");
+
+		if ($answer->need_test) return  LeadSubstatus::value("test");
+
 		return  LeadSubstatus::value("waiting");
 	}
 }

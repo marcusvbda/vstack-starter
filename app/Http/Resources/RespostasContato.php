@@ -108,7 +108,7 @@ class RespostasContato extends Resource
 				"required" => true,
 				"default" => "need_schedule",
 				"options" => LeadAnswer::_BEHAVIORS_
-			])
+			]),
 		];
 		$cards = [new Card("Informações Básicas", $fields)];
 		return $cards;

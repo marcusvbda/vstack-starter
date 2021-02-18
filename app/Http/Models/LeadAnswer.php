@@ -17,8 +17,14 @@ class LeadAnswer extends DefaultModel
 
 	const _BEHAVIORS_ = [
 		["value" => "need_objection", "label" => "Solicitar Objeção"],
-		["value" => "need_schedule", "label" => "Solicitar Agendamento"]
+		["value" => "need_schedule", "label" => "Reagendar Contato"],
+		["value" => "need_schedule_test", "label" => "Agendar Vestibular"]
 	];
+
+	public function getNeedTestAttribute()
+	{
+		return $this->behavior === 'need_schedule_test';
+	}
 
 	public function getNeedScheduleAttribute()
 	{

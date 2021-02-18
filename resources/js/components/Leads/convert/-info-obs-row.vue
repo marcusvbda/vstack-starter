@@ -139,7 +139,8 @@
 							</span>
 						</template>
 						<template v-if="form_new_contact.step == 3">
-							<label>Selecione informações para reagendamento de contato</label>
+							<label v-if="selected_answer.behavior == 'need_schedule_test'">Selecione informações para agendamento do vestibular</label>
+							<label v-else>Selecione informações para reagendamento de contato</label>
 							<el-date-picker
 								v-model="form_new_contact.schedule"
 								type="datetime"
@@ -147,7 +148,8 @@
 								class="w-100"
 								format="dd/MM/yyyy  HH:mm:ss"
 							/>
-							<small class="text-muted">Nesta data e hora seu usuário será notificado para efetuar um novo contato com este lead</small>
+							<small class="text-muted" v-if="selected_answer.behavior == 'need_schedule_test'">Nesta data e hora o lead deverá comparecer para realizar a prova</small>
+							<small class="text-muted" v-else>Nesta data e hora seu usuário será notificado para efetuar um novo contato com este lead</small>
 							<hr>
 							<span slot="footer" class="dialog-footer d-flex justify-content-end">
 								<el-button @click="form_new_contact.step = 1">
@@ -279,9 +281,9 @@ export default {
             this.form_new_contact.step = step
         },
         cancelStepFour() {
-            let answer = this.answers.find((x) => x.id == this.form_new_contact.answer_id)
+            let answer = this.selected_answer
             if (answer.behavior == 'need_objection') return this.clearScheduleAndObjectionsAndGoTo(2)
-            if (answer.behavior == 'need_schedule') return this.clearScheduleAndObjectionsAndGoTo(3)
+            if (['need_schedule', 'need_schedule_test'].includes(answer.behavior)) return this.clearScheduleAndObjectionsAndGoTo(3)
             this.form_new_contact.step = 1
         },
         formatDate(date) {
@@ -293,17 +295,16 @@ export default {
         },
         finishStepThree() {
             if (!this.form_new_contact.objection_id) return this.$message.error('Selecione a objeção do contato')
-            let objection = this.objection_options.find((x) => x.id == this.form_new_contact.objection_id)
+            let objection = this.selected_objection
             if (objection.need_description) {
                 if (!this.form_new_contact.other_objection) return this.$message.error('Informe a descrição da objeção do contato')
             }
             this.form_new_contact.step = 4
         },
         finishStepTwo() {
-            if (!this.form_new_contact.answer_id) return this.$message.error('Selecione a respota do contato')
-            let answer = this.answers.find((x) => x.id == this.form_new_contact.answer_id)
+            let answer = this.selected_answer
             if (answer.behavior == 'need_objection') return this.clearScheduleAndObjectionsAndGoTo(2)
-            if (answer.behavior == 'need_schedule') return this.clearScheduleAndObjectionsAndGoTo(3)
+            if (['need_schedule', 'need_schedule_test'].includes(answer.behavior)) return this.clearScheduleAndObjectionsAndGoTo(3)
             this.form_new_contact.step = 4
         },
         finishStepOne() {

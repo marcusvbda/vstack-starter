@@ -86,11 +86,6 @@ class C_StatusesSeeder extends Seeder
 			"value" => "test",
 			"name" => "Vestibular Agendado",
 		]);
-		$qualified->addSubtatus([
-			"seq"  => 1,
-			"value" => "waiting_test",
-			"name" => "Aguardando Agendamento Vestibular",
-		]);
 
 		$customer = LeadStatus::create([
 			"seq"  => 4,
