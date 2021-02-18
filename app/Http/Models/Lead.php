@@ -293,112 +293,104 @@ class Lead extends DefaultModel
 	// getters
 
 	// setters
-
 	public function setTriesAttribute($value)
 	{
-		$this->setDataValue("tries", $value);
+		setModelDataValue($this, "tries", $value);
 	}
 
 	public function setConversionsAttribute($value)
 	{
-		$this->setDataValue("log", $value);
+		setModelDataValue($this, "log", $value);
 	}
 
 	public function setScheduleAttribute($value)
 	{
-		$this->setDataValue("schedule", $value);
+		setModelDataValue($this, "schedule", $value);
 	}
 
 	public function setApiRefTokenAttribute($value)
 	{
-		$this->setDataValue("api_ref_token", $value);
+		setModelDataValue($this, "api_ref_token", $value);
 	}
 
 	public function setBirthdateAttribute($value)
 	{
-		$this->setDataValue("birthdate", $value);
+		setModelDataValue($this, "birthdate", $value);
 	}
 
 	public function setEmailAttribute($value)
 	{
-		$this->setDataValue("email", $value);
+		setModelDataValue($this, "email", $value);
 	}
 
 	public function setPhoneNumberAttribute($value)
 	{
-		$this->setDataValue("phones", [$this->cellphone_number, $value]);
+		setModelDataValue($this, "phones", [$this->cellphone_number, $value]);
 	}
 
 	public function setCellphoneNumberAttribute($value)
 	{
-		$this->setDataValue("phones", [$value, $this->phone_number]);
+		setModelDataValue($this, "phones", [$value, $this->phone_number]);
 	}
 
 	public function setNameAttribute($value)
 	{
-		$this->setDataValue("name", $value);
+		setModelDataValue($this, "name", $value);
 	}
 
 	public function setProfessionAttribute($value)
 	{
-		$this->setDataValue("profession", $value);
+		setModelDataValue($this, "profession", $value);
 	}
 
 	public function setCommentAttribute($value)
 	{
-		$this->setDataValue("comment", $value);
+		setModelDataValue($this, "comment", $value);
 	}
 
 	public function setObjectionAttribute($value)
 	{
-		$this->setDataValue("objection", $value);
+		setModelDataValue($this, "objection", $value);
 	}
 
 	public function setOtherObjectionAttribute($value)
 	{
-		$this->setDataValue("other_objection", $value);
+		setModelDataValue($this, "other_objection", $value);
 	}
 
 	public function setObsAttribute($value)
 	{
-		$this->setDataValue("obs", $value);
+		setModelDataValue($this, "obs", $value);
 	}
 
 	public function setCityAttribute($value)
 	{
-		$this->setDataValue("city", $value);
+		setModelDataValue($this, "city", $value);
 	}
 
 	public function setZipcodeAttribute($value)
 	{
-		$this->setDataValue("zipcode", $value);
+		setModelDataValue($this, "zipcode", $value);
 	}
 
 	public function setDistrictAttribute($value)
 	{
-		$this->setDataValue("district", $value);
+		setModelDataValue($this, "district", $value);
 	}
 
 	public function setComplementaryAttribute($value)
 	{
-		$this->setDataValue("complementary", $value);
+		setModelDataValue($this, "complementary", $value);
 	}
 
 	public function setAddressNumberAttribute($value)
 	{
-		$this->setDataValue("address_number", $value);
+		setModelDataValue($this, "address_number", $value);
 	}
 
 	public function setInterestAttribute($value)
 	{
-		$this->setDataValue("interest", $value);
-	}
-
-	protected function setDataValue($field, $value)
-	{
-		$_data = @$this->data ?? (object)[];
-		$_data->{$field} = $value;
-		$this->data = $_data;
+		setModelDataValue($this, "interest", $value);
 	}
 	// setters
 

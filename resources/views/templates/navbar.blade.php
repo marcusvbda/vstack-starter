@@ -41,7 +41,7 @@ $polo = $user->polo;
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item @if(!hasPermissionTo('viewlist-leads')) disabled @endif {{ currentClass(['/admin/leads/*'])  }}" href="/admin/leads" data-label="Base de Leads">Leads</a>
-					<a class="dropdown-item @if(!hasPermissionTo('convertion-funnel')) disabled @endif {{ currentClass(['/admin/funil-de-conversao/*'])  }}" href="/admin/funil-de-conversao" data-label="Esteira de Produção">Funil de Conversão</a>
+					<a class="dropdown-item @if(!hasPermissionTo('edit-leads')) disabled @endif {{ currentClass(['/admin/funil-de-conversao/*'])  }}" href="/admin/funil-de-conversao" data-label="Esteira de Produção">Funil de Conversão</a>
 				</div>
 			</li>
 			<li class="nav-item dropdown {{ currentClass(['/admin/emails/*','/admin/campanhas/*','/admin/captacao/*','/admin/automacao/*']) }}">
@@ -60,10 +60,10 @@ $polo = $user->polo;
 					<i class="el-icon-data-analysis mr-2"></i>Relatórios
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item @if(!hasPermissionTo('conversion-report')) disabled @endif {{ currentClass(['/admin/relatorios/leads/*'])  }}" href="/admin/relatorios/leads" data-label="Relatório de Leads">Leads</a>
+					<a class="dropdown-item @if(!hasPermissionTo('view-leads-report')) disabled @endif {{ currentClass(['/admin/relatorios/leads/*'])  }}" href="/admin/relatorios/leads" data-label="Relatório de Leads">Leads</a>
 					<a class="dropdown-item @if(!hasPermissionTo('campaign-report')) disabled @endif {{ currentClass(['/admin/relatorios/campanhas/*'])  }}" href="/admin/relatorios/campanhas" data-label="Relatório de Campanhas">Campanha</a>
 					<a class="dropdown-item @if(!hasPermissionTo('capture-report')) disabled @endif {{ currentClass(['/admin/relatorios/captacao/*'])  }}" href="/admin/relatorios/captacao" data-label="Relatório de Captação">Captação</a>
-					<a class="dropdown-item @if(!hasPermissionTo('automation-report')) disabled @endif {{ currentClass(['/admin/relatorios/automacao/*'])  }}" href="/admin/relatorios/automacao" data-label="Relatório de Automação">Automação</a>
+					<a class="dropdown-item @if(!hasPermissionTo('report-automation')) disabled @endif {{ currentClass(['/admin/relatorios/automacao/*'])  }}" href="/admin/relatorios/automacao" data-label="Relatório de Automação">Automação</a>
 				</div>
 			</li>
 			<li class="nav-item dropdown {{ currentClass(['/admin/resposta-contatos/*','/admin/tipos-contato/*','/admin/respostas-contato/*','/admin/regra-classificacao/*','/admin/objecoes/*']) }}">
@@ -72,7 +72,7 @@ $polo = $user->polo;
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="dropdown-item @if(!hasPermissionTo('viewlist-objections')) disabled @endif {{ currentClass(['/admin/objecoes/*'])  }}" href="/admin/objecoes" data-label="Objeções de respostas negativas">Objeções de Contato</a>
-					<a class="dropdown-item @if(!hasPermissionTo('viewlist-contactype')) disabled @endif {{ currentClass(['/admin/tipos-contato/*'])  }}" href="/admin/tipos-contato" data-label="Formar que o lead foi contato">Tipos de Contato</a>
+					<a class="dropdown-item @if(!hasPermissionTo('viewlist-contacttype')) disabled @endif {{ currentClass(['/admin/tipos-contato/*'])  }}" href="/admin/tipos-contato" data-label="Formar que o lead foi contato">Tipos de Contato</a>
 					<a class="dropdown-item @if(!hasPermissionTo('viewlist-leadanswer')) disabled @endif {{ currentClass(['/admin/respostas-contato/*'])  }}" href="/admin/respostas-contato" data-label="Contatos com Lead">Respostas de Contato</a>
 					<a class="dropdown-item @if(!hasPermissionTo('config-rating-behavior')) disabled @endif {{ currentClass(['/admin/regra-classificacao/*'])  }}" href="/admin/regra-classificacao" data-label="Regra de Rating de Lead">Regra de Classificação</a>
 				</div>

@@ -114,7 +114,6 @@ class GruposDeAcesso extends Resource
 			foreach (Permission::where("group", $permission->group)->get() as $group_permission) {
 				$group_fields[] = new Check([
 					"label"   => $group_permission->description,
-					"description"   => $group_permission->name,
 					"field"   => str_replace("-", "_", $group_permission->name),
 					"default" => !@$role ? false : $role->hasPermissionTo($group_permission->name)
 				]);
@@ -139,7 +138,7 @@ class GruposDeAcesso extends Resource
 	{
 		return '
         <div class="alert alert-warning" role="alert">
-            <strong>Atenção ! </strong>Este listagem de <b>Grupos de Acesso</b>, contém todos os grupos exceto o administrador, pois o usuário não pode alterar seu próprio grupo de acesso.
+            <strong>Atenção ! </strong>Esta é a listagem de <b>Grupos de Acesso</b>, contendo todos os grupos, exceto o administrador.
         </div>';
 	}
 }

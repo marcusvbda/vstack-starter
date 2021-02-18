@@ -15,6 +15,7 @@ use App\Http\Models\{
 };
 use Carbon\Carbon;
 use Auth;
+use marcusvbda\vstack\Services\Messages;
 
 class FunnelController extends Controller
 {
@@ -84,6 +85,7 @@ class FunnelController extends Controller
 			$lead->other_objection = @$request["other_objection"];
 		}
 		$lead->save();
+		Messages::send("success", "Contato Salvo");
 		return ["success" => true, "route" => "/admin/funil-de-conversao" . @$request["back_query"]];
 	}
 

@@ -94,3 +94,8 @@ function queryBetweenDates($column, $dates)
 {
 	return "DATE($column) >= DATE('$dates[0]') and DATE($column) <= DATE('$dates[1]')";
 }
+
+function setModelDataValue($self, $field, $value)
+{
+	$self->data = (object)array_merge(@$self->data ? (array) $self->data : [], [$field => $value]);
+}

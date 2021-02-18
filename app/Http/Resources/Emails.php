@@ -46,22 +46,22 @@ class Emails extends Resource
 
 	public function canCreate()
 	{
-		return hasPermissionTo("create-emails");
+		return hasPermissionTo("create-email");
 	}
 
 	public function canUpdate()
 	{
-		return hasPermissionTo("edit-emails");
+		return hasPermissionTo("edit-email");
 	}
 
 	public function canDelete()
 	{
-		return hasPermissionTo("destroy-emails");
+		return hasPermissionTo("destroy-email");
 	}
 
 	public function canViewList()
 	{
-		return hasPermissionTo("viewlist-emails");
+		return hasPermissionTo("viewlist-email");
 	}
 
 	public function canView()

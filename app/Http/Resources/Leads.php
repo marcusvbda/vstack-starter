@@ -101,7 +101,7 @@ class Leads extends Resource
 
 	public function canViewReport()
 	{
-		return hasPermissionTo("view-report-leads");
+		return hasPermissionTo("view-leads-report");
 	}
 
 	public function canImport()
@@ -111,7 +111,7 @@ class Leads extends Resource
 
 	public function canExport()
 	{
-		return hasPermissionTo("view-report-leads");
+		return hasPermissionTo("view-leads-report");
 	}
 
 
