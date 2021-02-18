@@ -73,7 +73,7 @@ class C_StatusesSeeder extends Seeder
 		$oportunity->addSubtatus([
 			"seq"  => 0,
 			"value" => "has_interest_with_objection",
-			"name" => "Interessado Condicional",
+			"name" => "Possivelmente Interessado",
 		]);
 
 		$qualified = LeadStatus::create([
