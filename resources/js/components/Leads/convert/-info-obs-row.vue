@@ -24,26 +24,27 @@
 									</a>
                                 </p>
                             </el-timeline-item>
-							<template v-if="lead.tries.lenght > 0">
+							<template v-if="lead.tries.length > 0">
 								<el-timeline-item  v-for="(t, i) in lead.tries" :key="i" :timestamp="`${t.date} - ${t.timestamp}`">
 									<p class="f-12 text-muted">
-										<p class="mr-1 mb-0" v-if="t.type">Tipo : <b v-html="t.type" /></p>
-										<p class="mr-1 mb-0" v-if="t.obs">Observações : <b v-html="t.obs" /></p>
-										<p class="mr-1 mb-0" v-if="t.comment">Comentário : <b v-html="t.comment" /></p>
-										<p class="mr-1 mb-0" v-if="t.objection">
-											Objeção : <b v-html="t.objection" /><span class="ml-1" v-if="t.other_objection" v-html="t.other_objection"/>
+										<p class="mr-1 mb-0 f-12 " v-if="t.type">Tipo : <b v-html="t.type" /></p>
+										<p class="mr-1 mb-0 f-12" v-if="t.user">Por : <b v-html="t.user" /></p>
+										<p class="mr-1 mb-0 f-12" v-if="t.obs">Observações : <b v-html="t.obs" /></p>
+										<p class="mr-1 mb-0 f-12" v-if="t.comment">Comentário : <b v-html="t.comment" /></p>
+										<p class="mr-1 mb-0 f-12" v-if="t.objection">
+											Objeção : <b v-html="t.objection" /><span class="ml-1" v-if="t.other_objection" v-html="`( ${t.other_objection} )`"/>
 										</p>
 									</p>
 								</el-timeline-item>
 							</template>
-							<div class="text-muted text-center f-12" v-else>Nenhuma contato antigo</div>
+							<div class="text-muted text-center f-12" v-else>Nenhuma contato anterior</div>
                         </el-timeline>
                     </el-tab-pane>
                     <el-tab-pane label="Conversões Anteriores">
                         <el-timeline class="pt-3" v-if="lead.conversions.length > 0">
                             <el-timeline-item v-for="(conversion, i) in lead.conversions" :key="i" :timestamp="`${conversion.date} - ${conversion.timestamp}`">
-                                <p class="mb-0" v-html="conversion.desc" />
-                                <p class="mb-0" v-html="conversion.obs" />
+                                <p class="mb-0 f-12" v-html="conversion.desc" />
+                                <p class="mb-0  f-12" v-html="conversion.obs" />
                                 <p class="f-12 text-muted" v-if="conversion.user">
                                     <span class="mr-1">Por : <b v-html="conversion.user" /></span>
                                 </p>
@@ -52,7 +53,7 @@
                         <div class="text-muted text-center f-12" v-else>Nenhuma conversão anterior</div>
                     </el-tab-pane>
 					<el-tab-pane label="Lead Completo (Webhook)" v-if="lead.lead_api">
-						 <pre>{{ lead.lead_api || pretty }}</pre>
+						 <pre class="f-12">{{ lead.lead_api || pretty }}</pre>
                     </el-tab-pane>
                 </el-tabs>
             </div>
@@ -60,24 +61,11 @@
                 <div class="d-flex flex-row align-items-center mb-3 f-12">
                     <b class="mr-1">Observações :</b>
                     <span v-html="lead.obs" />
-                    <a href="#" class="ml-3" @click.prevent="edit('obs')">
-                        <i class="el-icon-edit" />
-                    </a>
                 </div>
                 <div class="d-flex flex-row align-items-center f-12">
                     <b class="mr-1">Comentários :</b>
                     <span v-html="lead.comment" />
-                    <a href="#" class="ml-3" @click.prevent="edit('comment')">
-                        <i class="el-icon-edit" />
-                    </a>
                 </div>
-                <el-dialog :title="editing_form.title" :visible.sync="dialogVisible" width="40%">
-                    <textarea class="form-control" v-model="editing_form.value" rows="8" />
-                    <span slot="footer" class="dialog-footer">
-                        <el-button @click="dialogVisible = false">Cancelar</el-button>
-                        <el-button type="primary" @click="confirm">Confirmar</el-button>
-                    </span>
-                </el-dialog>
 				
 				<el-dialog title="Novo Contato / Atendimento" :visible.sync="form_new_contact.visible" width="85%" :close-on-click-modal="false" top="10">
                     <el-steps :active="form_new_contact.step" align-center finish-status="success" :space="500">
@@ -131,14 +119,14 @@
 							</el-select>
 							<small class="text-muted">Selecione a resposta do contato referente a proposta realizada</small>
 							<div class="mt-3 d-flex flex-column">
-								<label>Descreva a objeção</label>
+								<label>Detalhes</label>
 								<textarea
 									v-model="form_new_contact.other_objection" 
 									class="form-control"
 									:rows="3"
 									style="resize:none;"
 								/>
-								<small class="text-muted">Selecione a resposta do contato referente a proposta realizada</small>
+								<small class="text-muted">Dependendo da objeção escolhida, o detalhamento é obrigatório</small>
 							</div>
 							<hr>
 							<span slot="footer" class="dialog-footer d-flex justify-content-end">
@@ -175,10 +163,11 @@
 								<div class="row">
 									<div class="col-md-8 col-sm-12">
 										<h4  class="mb-4"><b>Resumo do Contato</b></h4>
-										<p class="mb-0"><b>Tipo de Contato : </b>{{ contact_types.find(x=> x.id == form_new_contact.type_id).description }}</p>
+										<p class="mb-0"><b>Tipo de Contato : </b>{{ selected_contact_type.description }}</p>
 										<p class="mb-0" v-if="form_new_contact.schedule"><b>Agendamento : </b>{{ formatDate(form_new_contact.schedule) }}</p>
-										<p class="mb-0"><b>Resposta do Contato : </b>{{ answers.find(x=> x.id == form_new_contact.answer_id).description }}</p>
-										<p class="mb-0" v-if="form_new_contact.objection"><b>Objeção : </b>{{ objection_options.find(x=> x.id == form_new_contact.objection_id).description }}</p>
+										<p class="mb-0"><b>Tipo de Resposta : </b>{{ selected_answer.f_type }}</p>
+										<p class="mb-0"><b>Resposta do Contato : </b>{{ selected_answer.description }}</p>
+										<p class="mb-0" v-if="selected_objection"><b>Objeção : </b>{{ selected_objection.description }}</p>
 										<p class="mb-0" v-if="form_new_contact.other_objection"><b>Descrição da Objeção : </b>{{form_new_contact.other_objection}}</p>
 									</div>
 									<div class="col-md-4 col-sm-12">
@@ -225,7 +214,6 @@ const new_contact = () => {
 export default {
     data() {
         return {
-            dialogVisible: false,
             editing_form: {
                 field: null,
                 title: null,
@@ -235,9 +223,21 @@ export default {
         }
     },
     computed: {
+        selected_objection() {
+            if (!this.form_new_contact.objection_id) return
+            return this.objection_options.find((x) => x.id == this.form_new_contact.objection_id)
+        },
+        selected_answer() {
+            if (!this.form_new_contact.answer_id) return
+            return this.answers.find((x) => x.id == this.form_new_contact.answer_id)
+        },
+        selected_contact_type() {
+            if (!this.form_new_contact.type_id) return
+            return this.contact_types.find((x) => x.id == this.form_new_contact.type_id)
+        },
         grouped_answer_types() {
             return _(this.answers)
-                .groupBy('type')
+                .groupBy('f_type')
                 .map((options, type) => ({ options, type }))
                 .value()
         },
@@ -272,10 +272,16 @@ export default {
                     loading.close()
                 })
         },
+        clearScheduleAndObjectionsAndGoTo(step) {
+            this.form_new_contact.objection_id = null
+            this.form_new_contact.other_objection = null
+            this.form_new_contact.schedule = null
+            this.form_new_contact.step = step
+        },
         cancelStepFour() {
             let answer = this.answers.find((x) => x.id == this.form_new_contact.answer_id)
-            if (answer.behavior == 'Solicitar Objeção') return (this.form_new_contact.step = 2)
-            if (answer.behavior == 'Solicitar Agendamento') return (this.form_new_contact.step = 3)
+            if (answer.behavior == 'need_objection') return this.clearScheduleAndObjectionsAndGoTo(2)
+            if (answer.behavior == 'need_schedule') return this.clearScheduleAndObjectionsAndGoTo(3)
             this.form_new_contact.step = 1
         },
         formatDate(date) {
@@ -296,8 +302,8 @@ export default {
         finishStepTwo() {
             if (!this.form_new_contact.answer_id) return this.$message.error('Selecione a respota do contato')
             let answer = this.answers.find((x) => x.id == this.form_new_contact.answer_id)
-            if (answer.behavior == 'Solicitar Objeção') return (this.form_new_contact.step = 2)
-            if (answer.behavior == 'Solicitar Agendamento') return (this.form_new_contact.step = 3)
+            if (answer.behavior == 'need_objection') return this.clearScheduleAndObjectionsAndGoTo(2)
+            if (answer.behavior == 'need_schedule') return this.clearScheduleAndObjectionsAndGoTo(3)
             this.form_new_contact.step = 4
         },
         finishStepOne() {
@@ -310,16 +316,6 @@ export default {
         addContact() {
             this.form_new_contact = new_contact()
             this.form_new_contact.visible = true
-        },
-        edit(field) {
-            this.editing_form.field = field
-            this.editing_form.title = field == 'comment' ? 'Comentários' : 'Observações'
-            this.editing_form.value = this.lead[field]
-            this.dialogVisible = true
-        },
-        confirm() {
-            this.lead[this.editing_form.field] = this.editing_form.value
-            this.dialogVisible = false
         },
     },
 }

@@ -49,6 +49,16 @@ class C_StatusesSeeder extends Seeder
 			"value" => "schedule",
 			"name" => "Contato Agendado",
 		]);
+		$waiting->addSubtatus([
+			"seq"  => 1,
+			"value" => "waiting_with_objection",
+			"name" => "Aguardando Com Objeçao",
+		]);
+		$waiting->addSubtatus([
+			"seq"  => 1,
+			"value" => "possible_non_qualified",
+			"name" => "Possivelmente Não Qualificado",
+		]);
 
 		$oportunity = LeadStatus::create([
 			"seq"  => 2,
@@ -61,9 +71,9 @@ class C_StatusesSeeder extends Seeder
 			"name" => "Interessado",
 		]);
 		$oportunity->addSubtatus([
-			"seq"  => 1,
-			"value" => "waiting_info",
-			"name" => "Aguardando Informação",
+			"seq"  => 0,
+			"value" => "has_interest_with_objection",
+			"name" => "Interessado Condicional",
 		]);
 
 		$qualified = LeadStatus::create([
@@ -80,11 +90,6 @@ class C_StatusesSeeder extends Seeder
 			"seq"  => 1,
 			"value" => "waiting_test",
 			"name" => "Aguardando Agendamento Vestibular",
-		]);
-		$qualified->addSubtatus([
-			"seq"  => 2,
-			"value" => "waiting_doc",
-			"name" => "Documentação Pendente",
 		]);
 
 		$customer = LeadStatus::create([

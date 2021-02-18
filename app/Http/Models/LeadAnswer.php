@@ -3,20 +3,63 @@
 namespace App\Http\Models;
 
 use marcusvbda\vstack\Models\DefaultModel;
+use Arr;
 
 class LeadAnswer extends DefaultModel
 {
 	protected $table = "lead_answers";
-	// public $cascadeDeletes = [];
-	// public $restrictDeletes = [];
-	// public $relations = []; //add relations that you want to load in resource field (ajax)
-	// public static function hasTenant() //default true
-	// {
-	//     return true;
-	// }
+	public $appends = ["f_type"];
+	const _TYPES_ = [
+		["value" => "neutral", "label" => "Resposta Neutra"],
+		["value" => "negative", "label" => "Resposta Negativa"],
+		["value" => "positive", "label" => "Resposta Positiva"]
+	];
+
+	const _BEHAVIORS_ = [
+		["value" => "need_objection", "label" => "Solicitar Objeção"],
+		["value" => "need_schedule", "label" => "Solicitar Agendamento"]
+	];
 
 	public function getNeedScheduleAttribute()
 	{
-		return $this->behavior === 'Solicitar Agendamento';
+		return $this->behavior === 'need_schedule';
+	}
+
+	public function getNeedObjectionAttribute()
+	{
+		return $this->behavior === 'need_objection';
+	}
+
+	public function getIsNeutralAttribute()
+	{
+		return $this->type === 'neutral';
+	}
+
+	public function getIsNegativeAttribute()
+	{
+		return $this->type === 'negative';
+	}
+
+	public function getIsPositiveAttribute()
+	{
+		return $this->type === 'positive';
+	}
+
+	public function getFTypeAttribute()
+	{
+		return $this->getValueFromConst($this->type, static::_TYPES_);
+	}
+
+	public function getFBehaviorAttribute()
+	{
+		return $this->getValueFromConst($this->behavior, static::_BEHAVIORS_);
+	}
+
+	private function getValueFromConst($index, $options)
+	{
+		$found = array_filter($options, function ($x) use ($index) {
+			if (Arr::get($x, "value") == $index) return $x;
+		});
+		return Arr::get(current($found), "label");
 	}
 }

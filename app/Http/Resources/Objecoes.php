@@ -92,7 +92,8 @@ class Objecoes extends Resource
 				"rules" => "max:255"
 			]),
 			new Check([
-				"label" => "Descrição Obrigatória",
+				"label" => "Solicitar Detalhes",
+				"description" => "O campo de detalhes da objeção será obrigatório para seguir com o atendimento",
 				"field" => "need_description",
 				"default" => false
 			])

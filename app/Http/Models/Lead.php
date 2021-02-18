@@ -293,6 +293,12 @@ class Lead extends DefaultModel
 	// getters
 
 	// setters
+
+	public function setTriesAttribute($value)
+	{
+		$this->setDataValue("tries", $value);
+	}
+
 	public function setConversionsAttribute($value)
 	{
 		$this->setDataValue("log", $value);
@@ -341,6 +347,16 @@ class Lead extends DefaultModel
 	public function setCommentAttribute($value)
 	{
 		$this->setDataValue("comment", $value);
+	}
+
+	public function setObjectionAttribute($value)
+	{
+		$this->setDataValue("objection", $value);
+	}
+
+	public function setOtherObjectionAttribute($value)
+	{
+		$this->setDataValue("other_objection", $value);
 	}
 
 	public function setObsAttribute($value)

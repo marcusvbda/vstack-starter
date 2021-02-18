@@ -8,10 +8,11 @@ use marcusvbda\vstack\Fields\{
 	Text,
 	Radio,
 };
+use App\Http\Models\LeadAnswer;
 
 class RespostasContato extends Resource
 {
-	public $model = \App\Http\Models\LeadAnswer::class;
+	public $model = LeadAnswer::class;
 
 	public function globallySearchable()
 	{
@@ -43,8 +44,8 @@ class RespostasContato extends Resource
 		$columns = [];
 		$columns["code"] = ["label" => "#", "sortable_index" => "id"];
 		$columns["description"] = ["label" => "Descrição"];
-		$columns["type"] = ["label" => "Tipo da Resposta"];
-		$columns["behavior"] = ["label" => "Comportamento"];
+		$columns["f_type"] = ["label" => "Tipo da Resposta"];
+		$columns["f_behavior"] = ["label" => "Comportamento"];
 		return $columns;
 	}
 
@@ -97,16 +98,16 @@ class RespostasContato extends Resource
 				"description" => "O tipo da resposta que o operador recebeu para o contato realizado",
 				"field" => "type",
 				"required" => true,
-				// "default" => "Resposta Neutra",
-				"options" => ["Resposta Neutra", "Resposta Negativa", "Resposta Positiva"]
+				"default" => "neutral",
+				"options" => LeadAnswer::_TYPES_
 			]),
 			new Radio([
 				"label" => "Comportamento",
 				"description" => "Como o sistema deve se comportar caso essa resposta seja selecionada pelo operador",
 				"field" => "behavior",
 				"required" => true,
-				// "default" => "Solicitar Agendamento",
-				"options" => ["Solicitar Objeção", "Solicitar Agendamento"]
+				"default" => "need_schedule",
+				"options" => LeadAnswer::_BEHAVIORS_
 			])
 		];
 		$cards = [new Card("Informações Básicas", $fields)];

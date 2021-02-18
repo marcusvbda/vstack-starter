@@ -65,24 +65,69 @@ class FunnelController extends Controller
 		$resource = ResourcesHelpers::find("leads");
 		if (!$resource->canUpdate()) abort(403);
 		$lead = Lead::findOrFail($id);
-		$conversions = $lead->conversions;
 		$now =  Carbon::now();
 		$user = Auth::user();
 		$answer = LeadAnswer::findOrFail($request["answer_id"]);
-		if ($answer->need_schedule) {
-			$status = LeadSubstatus::value("schedule");
-			$lead->lead_substatus_id = $status->id;
-			$lead->schedule = Carbon::create($request["schedule"]);
+		$type = ContactType::findOrfail($request["type_id"]);
+		$objection = Objection::find($request["objection_id"]);
+		$new_status = $this->getNewStatus($answer);
+		if ($answer->need_schedule) $lead->schedule = Carbon::create($request["schedule"]);
+
+		$lead = $this->logConversions($lead, $now, $user, $new_status);
+		$lead = $this->logTries($lead, $now, $user, $type, @$objection->description, @$request["other_objection"], @$request['obs']);
+
+		$lead->lead_substatus_id = $new_status->id;
+
+		if ($answer->need_objection) {
+			$objection = $objection;
+			$lead->objection = $objection->description;
+			$lead->other_objection = @$request["other_objection"];
 		}
+		$lead->save();
+		return ["success" => true, "route" => "/admin/funil-de-conversao" . @$request["back_query"]];
+	}
+
+	private function logTries($lead, $now, $user, $type, $objection, $other_objection, $obs)
+	{
+		$tries = $lead->tries;
+		array_unshift($tries, [
+			"type" => $type->description,
+			"date" => $now->format("d/m/Y"),
+			"timestamp" => $now->format("H:i:s"),
+			"objection" => @$objection,
+			"other_objection" => @$other_objection,
+			"obs" => @$obs,
+			"user" => $user->name,
+			"comment" => null
+		]);
+		$lead->tries = $tries;
+		return $lead;
+	}
+
+	private function logConversions($lead, $now, $user, $new_status)
+	{
+		$conversions = $lead->conversions;
 		array_unshift($conversions, [
 			"obs" => @$request["obs"],
 			"date" =>  $now->format("d/m/Y"),
-			"desc" => "Converteu no funil de produção",
+			"desc" => "Converteu no funil de produção de <b>" . $lead->substatus->name . "</b> para <b>" . $new_status->name . "</b>",
 			"user" => $user->name,
 			"timestamp" => $now->format("H:i:s")
 		]);
 		$lead->conversions = $conversions;
-		$lead->save();
-		return ["success" => true, "route" => "/admin/funil-de-conversao" . @$request["back_query"]];
+		return $lead;
+	}
+
+	private function getNewStatus($answer)
+	{
+		if ($answer->need_objection && $answer->is_neutral) return  LeadSubstatus::value("waiting_with_objection");
+		if ($answer->need_schedule && $answer->is_neutral) return  LeadSubstatus::value("schedule");
+
+		if ($answer->need_objection && $answer->is_positive) return  LeadSubstatus::value("has_interest_with_objection");
+		if ($answer->need_schedule && $answer->is_positive) return  LeadSubstatus::value("has_interest");
+
+		if ($answer->need_objection && $answer->is_negative) return  LeadSubstatus::value("canceled");
+		if ($answer->need_schedule && $answer->is_negative) return  LeadSubstatus::value("possible_non_qualified");
+		return  LeadSubstatus::value("waiting");
 	}
 }
