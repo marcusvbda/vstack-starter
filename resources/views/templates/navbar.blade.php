@@ -44,7 +44,7 @@ $polo = $user->polo;
 					<a class="dropdown-item @if(!hasPermissionTo('edit-leads')) disabled @endif {{ currentClass(['/admin/funil-de-conversao/*'])  }}" href="/admin/funil-de-conversao" data-label="Esteira de Produção">Funil de Conversão</a>
 				</div>
 			</li>
-			<li class="nav-item dropdown {{ currentClass(['/admin/emails/*','/admin/campanhas/*','/admin/captacao/*','/admin/automacao/*']) }}">
+			<li class="nav-item dropdown {{ currentClass(['/admin/emails/*','/admin/campanhas/*','/admin/captacao/*','/admin/automacoes-customizadas/*']) }}">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<i class="el-icon-s-flag mr-2"></i>Marketing
 				</a>
@@ -52,7 +52,7 @@ $polo = $user->polo;
 					<a class="dropdown-item @if(!hasPermissionTo('viewlist-email')) disabled @endif {{ currentClass(['/admin/emails/*'])  }}" href="/admin/emails" data-label="Pré-Definição de Emails">Emails</a>
 					<a class="dropdown-item @if(!hasPermissionTo('viewlist-campaign')) disabled @endif {{ currentClass(['/admin/campanhas/*'])  }}" href="/admin/campanhas" data-label="Campanhas de Marketing">Campanhas</a>
 					<a class="dropdown-item @if(!hasPermissionTo('viewlist-capture')) disabled @endif {{ currentClass(['/admin/captacao/*'])  }}" href="/admin/captacao" data-label="Captação de Leads">Captação</a>
-					<a class="dropdown-item @if(!hasPermissionTo('viewlist-automation')) disabled @endif {{ currentClass(['/admin/automacao/*'])  }}" href="/admin/automacao" data-label="Automação de Campanha">Automação</a>
+					<a class="dropdown-item @if(!hasPermissionTo('viewlist-automation')) disabled @endif {{ currentClass(['/admin/automacoes-customizadas/*'])  }}" href="/admin/automacoes-customizadas" data-label="Automação de Campanha Customizada">Automações Customizadas</a>
 				</div>
 			</li>
 			<li class="nav-item dropdown {{ currentClass(['/admin/relatorios/*']) }}">
@@ -63,7 +63,7 @@ $polo = $user->polo;
 					<a class="dropdown-item @if(!hasPermissionTo('view-leads-report')) disabled @endif {{ currentClass(['/admin/relatorios/leads/*'])  }}" href="/admin/relatorios/leads" data-label="Relatório de Leads">Leads</a>
 					<a class="dropdown-item @if(!hasPermissionTo('campaign-report')) disabled @endif {{ currentClass(['/admin/relatorios/campanhas/*'])  }}" href="/admin/relatorios/campanhas" data-label="Relatório de Campanhas">Campanha</a>
 					<a class="dropdown-item @if(!hasPermissionTo('capture-report')) disabled @endif {{ currentClass(['/admin/relatorios/captacao/*'])  }}" href="/admin/relatorios/captacao" data-label="Relatório de Captação">Captação</a>
-					<a class="dropdown-item @if(!hasPermissionTo('report-automation')) disabled @endif {{ currentClass(['/admin/relatorios/automacao/*'])  }}" href="/admin/relatorios/automacao" data-label="Relatório de Automação">Automação</a>
+					<a class="dropdown-item @if(!hasPermissionTo('report-automation')) disabled @endif {{ currentClass(['/admin/relatorios/automacoes-customizadas/*'])  }}" href="/admin/relatorios/automacoes-customizadas" data-label="Relatório de Automações Customizadas">Automação</a>
 				</div>
 			</li>
 			<li class="nav-item dropdown {{ currentClass(['/admin/resposta-contatos/*','/admin/tipos-contato/*','/admin/respostas-contato/*','/admin/regra-classificacao/*','/admin/objecoes/*']) }}">

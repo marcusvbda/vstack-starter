@@ -13,7 +13,7 @@ class CreateAutomations extends Migration
 	 */
 	public function up()
 	{
-		Schema::create('automations', function (Blueprint $table) {
+		Schema::create('custom_automations', function (Blueprint $table) {
 			$table->charset = 'utf8mb4';
 			$table->collation = 'utf8mb4_unicode_ci';
 			$table->engine = 'InnoDB';
@@ -40,6 +40,6 @@ class CreateAutomations extends Migration
 	 */
 	public function down()
 	{
-		Schema::dropIfExists('automations');
+		Schema::dropIfExists('custom_automations');
 	}
 }

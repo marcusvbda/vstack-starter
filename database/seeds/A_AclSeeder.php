@@ -26,6 +26,7 @@ class A_AclSeeder extends Seeder
 		DB::table("permissions")->truncate();
 		Cache::flush('spatie.permission.cache');
 		Permission::create(["group" => "Leads", "name" => "viewlist-leads", "description" => "Ver Listagem de Leads"]);
+		Permission::create(["group" => "Leads", "name" => "create-leads", "description" => "Cadastrar Leads"]);
 		Permission::create(["group" => "Leads", "name" => "edit-leads", "description" => "Editar Leads"]);
 		Permission::create(["group" => "Leads", "name" => "destroy-leads", "description" => "Excluir Leads"]);
 		Permission::create(["group" => "Leads", "name" => "view-leads-report", "description" => "Ver Relatório de Leads"]);
@@ -50,11 +51,11 @@ class A_AclSeeder extends Seeder
 		Permission::create(["group" => "Marketing", "name" => "edit-email", "description" => "Editar Emails"]);
 		Permission::create(["group" => "Marketing", "name" => "destroy-email", "description" => "Excluir Emails"]);
 
-		Permission::create(["group" => "Automação", "name" => "viewlist-automation", "description" => "Ver Listagem de Automações"]);
-		Permission::create(["group" => "Automação", "name" => "create-automation", "description" => "Cadastrar Automações"]);
-		Permission::create(["group" => "Automação", "name" => "edit-automation", "description" => "Editar Automações"]);
-		Permission::create(["group" => "Automação", "name" => "destroy-automation", "description" => "Excluir Automações"]);
-		Permission::create(["group" => "Automação", "name" => "report-automation", "description" => "Relatório de Automações"]);
+		Permission::create(["group" => "Automações Customizadas", "name" => "viewlist-automation", "description" => "Ver Listagem de Automações Customizadas"]);
+		Permission::create(["group" => "Automações Customizadas", "name" => "create-automation", "description" => "Cadastrar Automações Customizadas"]);
+		Permission::create(["group" => "Automações Customizadas", "name" => "edit-automation", "description" => "Editar Automações Customizadas"]);
+		Permission::create(["group" => "Automações Customizadas", "name" => "destroy-automation", "description" => "Excluir Automações Customizadas"]);
+		Permission::create(["group" => "Automações Customizadas", "name" => "report-automation", "description" => "Relatório de Automações Customizadas"]);
 
 		Permission::create(["group" => "Rating", "name" => "config-rating-behavior", "description" => "Alterar Configuração de Regra de Rating"]);
 	}
@@ -67,6 +68,7 @@ class A_AclSeeder extends Seeder
 		Cache::flush('spatie.role.cache');
 		$role = Role::create(["name" => "super-admin", "description" => "Super Administrador", "tenant_id" => 1]);
 		$role = Role::create(["name" => "admin", "Description" => "Administrador", "tenant_id" => 1]);
+		$role = Role::create(["name" => "acl_teste", "Description" => "acl_teste", "tenant_id" => 1]);
 		$role->givePermissionTo(Permission::all());
 		$role = Role::create(["name" => "operador", "Description" => "Operador", "tenant_id" => 1]);
 		$role->givePermissionTo(Permission::where(function ($q) {

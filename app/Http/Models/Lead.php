@@ -290,9 +290,12 @@ class Lead extends DefaultModel
 	{
 		return @$this->schedule  ? Carbon::create($this->schedule)->format("d/m/Y - H:i:s") : false;
 	}
+
+
 	// getters
 
 	// setters
+
 	public function setTriesAttribute($value)
 	{
 		setModelDataValue($this, "tries", $value);
@@ -418,6 +421,11 @@ class Lead extends DefaultModel
 	public function polo()
 	{
 		return $this->belongsTo(Polo::class);
+	}
+
+	public function automation_sent_emails()
+	{
+		return $this->hasMany(AutomationSentEmail::class);
 	}
 	// relations
 }

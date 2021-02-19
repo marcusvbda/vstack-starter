@@ -81,7 +81,8 @@ class D_LeadsSeeder extends Seeder
 					"api_user_id" => @$old_lead->observacoes == 'via RD Station' ? $this->user_api->id : null,
 					"user_id" => @$old_lead->observacoes != 'via RD Station' ? 1 : null,
 					"lead_substatus_id" => $status,
-					"created_at" => @$old_lead->created_at
+					"created_at" => @$old_lead->created_at,
+					"updated_at" => @$old_lead->updated_at,
 				]);
 			}
 		}

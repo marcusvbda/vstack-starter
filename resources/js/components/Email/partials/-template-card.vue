@@ -40,9 +40,6 @@ export default {
             window.location.href = url
         },
     },
-    mounted() {
-        console.log(this.template)
-    },
 }
 </script>
 <style lang="scss" scoped>

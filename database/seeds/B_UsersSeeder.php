@@ -17,6 +17,7 @@ class B_UsersSeeder extends Seeder
 		$this->createTenant();
 		$this->createPolos();
 		$this->createUsers();
+		$this->createUsersTest();
 		DB::statement('SET AUTOCOMMIT=1;');
 		DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 		DB::statement('COMMIT;');
@@ -73,5 +74,19 @@ class B_UsersSeeder extends Seeder
 				}
 			}
 		}
+	}
+
+	private function createUsersTest()
+	{
+		$user = new User();
+		$user->name = "Vinicius Bassalobre";
+		$user->email = "bassalobre.vinicius@gmail.com";
+		$user->password = "senhateste";
+		$user->tenant_id = $this->tenant->id;
+		$user->polo_id = 1;
+		$user->save();
+		$polo_ids = Polo::pluck("id")->toArray();
+		$user->polos()->sync($polo_ids);
+		$user->assignRole("acl_teste");
 	}
 }
