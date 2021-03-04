@@ -31,7 +31,7 @@
                                                                 v-model="rating_rules[key]"
                                                                 show-score
                                                                 text-color="#ff9900"
-                                                                :max="10"
+                                                                :max="20"
                                                                 score-template="{value} ponto(s)"
                                                             />
                                                         </h1>

@@ -11282,7 +11282,7 @@ a {
 .navbar .navbar-nav .nav-item {
   margin: 0 5px;
   position: relative;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   padding-top: 11px;
   padding-bottom: 10px;
@@ -11491,5 +11491,21 @@ a.el-button:hover {
 .form-control {
   color: #606266;
   font-size: 14px;
+}
+
+.image-list-preview {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.image-list-preview .image {
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  border: 1px solid #bdc0c2;
+  margin: 0 1px;
 }
 

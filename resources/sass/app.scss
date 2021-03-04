@@ -23,7 +23,7 @@ a {
         .nav-item {
             margin: 0 5px;
             position: relative;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 600;
             padding-top: 11px;
             &.hover-color {
@@ -234,4 +234,19 @@ a {
 .form-control {
     color: #606266;
     font-size: 14px;
+}
+
+.image-list-preview {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    .image {
+        cursor: pointer;
+        width: 60px;
+        height: 60px;
+        border-radius: 100%;
+        border: 1px solid #bdc0c2;
+        margin: 0 1px;
+    }
 }

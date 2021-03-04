@@ -99,3 +99,12 @@ function setModelDataValue($self, $field, $value)
 {
 	$self->data = (object)array_merge(@$self->data ? (array) $self->data : [], [$field => $value]);
 }
+
+function getEnabledIcon($enabled = false)
+{
+	$icons = [
+		true => '🟢',
+		false => '🔴',
+	];
+	return @$icons[$enabled] ?? '🟡';
+}

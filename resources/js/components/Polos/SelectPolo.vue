@@ -2,7 +2,7 @@
     <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
             <a @click.prevent="showPolosList" class="nav-link" href="#">
-                <span class="badge badge-default pt-1 px-2">{{ polo_name }}</span>
+                <span class="badge badge-default py-1 px-2">{{ polo_name }}</span>
             </a>
         </li>
         <select-dialog ref="select-polo" title="Selecione o polo que deseja logar" btn_text="Selecionar" @selected="selectPolo" :default="logged_id" />
