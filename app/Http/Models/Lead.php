@@ -7,15 +7,19 @@ use App\User;
 use App\Http\Models\Scopes\{OrderByScope, PoloScope};
 use Auth;
 use Carbon\Carbon;
+use App\Http\Models\Traits\HasCustomFields;
 
 class Lead extends DefaultModel
 {
+	use HasCustomFields;
+	public $resource_id = "leads";
 	protected $table = "leads";
 	// public $cascadeDeletes = [];
 	// public $restrictDeletes = [""];
 
 	public $casts = [
 		"data" => "object",
+		"custom_fields" => "object",
 	];
 
 	public $appends = [
@@ -41,6 +45,13 @@ class Lead extends DefaultModel
 					$model->lead_substatus_id = LeadSubStatus::value("has_interest")->id;
 				} else {
 					$model->lead_substatus_id = LeadSubStatus::value("new_contact")->id;
+				}
+			}
+		});
+		static::created(function ($model) {
+			if ($model->data->email) {
+				foreach (CustomAutomation::where("data->trigger", "store")->where("data->lead_status_id", $model->status->id)->get() as $automation) {
+					$automation->execute(Lead::findOrFail($model->id));
 				}
 			}
 		});
@@ -137,9 +148,14 @@ class Lead extends DefaultModel
 		return $this->substatus->name;
 	}
 
+	public function getEmailAttribute()
+	{
+		return $this->data->email;
+	}
+
 	public function getEmailUrlAttribute()
 	{
-		return "<email-url type='email' value='{$this->data->email}'>{$this->data->email}</email-url>";
+		return "<email-url type='email' value='{$this->email}'>{$this->email}</email-url>";
 	}
 
 	public function getPhonesUrlAttribute()
@@ -229,11 +245,6 @@ class Lead extends DefaultModel
 	public function getPhoneNumberAttribute()
 	{
 		return @$this->data->phones[1];
-	}
-
-	public function getEmailAttribute()
-	{
-		return @$this->data->email;
 	}
 
 	public function getObsAttribute()

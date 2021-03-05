@@ -4,6 +4,7 @@ namespace App\Http\Models;
 
 use marcusvbda\vstack\Models\DefaultModel;
 use Arr;
+use marcusvbda\vstack\Services\SendMail;
 
 class CustomAutomation extends DefaultModel
 {
@@ -87,5 +88,29 @@ class CustomAutomation extends DefaultModel
 			if (Arr::get($x, "value") == $index) return $x;
 		});
 		return Arr::get(current($found), "label");
+	}
+
+
+	public function execute($lead)
+	{
+		$lead_id = $lead->id;
+		$automation_id = $this->id;
+		dispatch(function () use ($lead_id, $automation_id) {
+			$lead = Lead::findOrFail($lead_id);
+			$automation = CustomAutomation::findOrFail($automation_id);
+			$email_template = $automation->email_template;
+			$body = Arr::get($email_template->body, "body");
+			$subject = $email_template->subject;
+			SendMail::to($lead->email, $subject, $body);
+			$email_content = [
+				"subject" => $email_template->subject,
+				"body" => $email_template->body,
+			];
+			$sent = new \App\Http\Models\AutomationSentEmail;
+			$sent->custom_automation_id = $automation->id;
+			$sent->email_content = $email_content;
+			$sent->lead_id = $lead_id;
+			$sent->save();
+		})->onQueue("automation-queued-email");
 	}
 }

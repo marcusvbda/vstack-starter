@@ -3,14 +3,14 @@
 namespace App\Http\Resources;
 
 use marcusvbda\vstack\Resource;
-use App\Http\Models\Lead;
+use App\Http\Models\{Lead, CustomField};
 use App\Http\Filters\Leads\{
 	LeadsByName,
 	LeadsByCreatedDate,
 	LeadsByStatus,
 	LeadsBySubStatus
 };
-use App\Http\Filters\FilterByTags;
+use App\Http\Filters\{FilterByTags, FilterByCustomFields};
 use App\Http\Actions\Leads\{
 	LeadTransfer,
 };
@@ -22,6 +22,7 @@ use marcusvbda\vstack\Fields\{
 
 class Leads extends Resource
 {
+
 	public $model = Lead::class;
 	public $_filters = [];
 
@@ -34,6 +35,9 @@ class Leads extends Resource
 			new LeadsBySubStatus(),
 			new FilterByTags(Lead::class)
 		];
+		foreach (CustomField::where("resource", "leads")->where("make_filter", true)->get() as $field) {
+			$this->_filters[] = new FilterByCustomFields($field);
+		}
 		parent::__construct();
 	}
 
@@ -71,6 +75,9 @@ class Leads extends Resource
 		$columns["email_url"] = ["label" => "Email", "sortable_index" => "data->email"];
 		$columns["f_rating"] = ["label" => "Classificação", "sortable" => false];
 		$columns["f_complete_created"] = ["label" => "Data", "sortable_index" => "created_at"];
+		foreach (CustomField::where("resource", "leads")->where("show_in_list", true)->get() as $field) {
+			$columns[$field->field] = ["label" => $field->name, "sortable_index" => "custom_fields->" . $field->field];
+		}
 		return $columns;
 	}
 
@@ -117,7 +124,7 @@ class Leads extends Resource
 
 	public function export_columns()
 	{
-		return [
+		$fields = [
 			"code" => ["label" => "Código"],
 			"name" => ["label" => "Nome"],
 			"f_status" => ["label" => "Status"],
@@ -131,6 +138,10 @@ class Leads extends Resource
 				return formatDate($row->created_at);
 			}],
 		];
+		foreach (CustomField::where("resource", "leads")->where("show_in_report", true)->get() as $field) {
+			$fields[$field->field] = ["label" => $field->name];
+		}
+		return $fields;
 	}
 
 	public function filters()
@@ -147,8 +158,8 @@ class Leads extends Resource
 
 	public function fields()
 	{
-		return [
-			new Card("Identificação", [
+		$fields = [
+			"Identificação" => [
 				new Text([
 					"label" => "Nome Completo",
 					// "description" => "lorem ipsum lorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsumlorem ipsum",
@@ -172,8 +183,8 @@ class Leads extends Resource
 					"rows" => 10,
 					"rules" => ["max:255"]
 				]),
-			]),
-			new Card("Contato", [
+			],
+			"Contato" => [
 				new Text([
 					"label" => "Email",
 					"field" => "email",
@@ -191,8 +202,8 @@ class Leads extends Resource
 					"mask" => ["(##) ####-####", "(##) #####-####"],
 					"rules" => ["max:255"]
 				]),
-			]),
-			new Card("Localidade", [
+			],
+			"Localidade" => [
 				new Text([
 					"label" => "Cep",
 					"field" => "zipcode",
@@ -219,8 +230,8 @@ class Leads extends Resource
 					"field" => "complementary",
 					"rules" => ["max:255"]
 				]),
-			]),
-			new Card("Extras", [
+			],
+			"Extras" => [
 				new TextArea([
 					"label" => "Comentários",
 					"field" => "comment",
@@ -233,8 +244,14 @@ class Leads extends Resource
 					"rows" => 10,
 					"rules" => ["max:255"]
 				]),
-			]),
+			],
 		];
+
+		$cards = [];
+		foreach (withCustomFields("leads", $fields) as $key => $value) {
+			$cards[] = new Card($key, $value);
+		}
+		return $cards;
 	}
 
 	public function useTags()

@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Http\Models\{CustomAutomation, Lead, AutomationSentEmail};
-use Arr;
-use marcusvbda\vstack\Services\SendMail;
+use App\Http\Models\{CustomAutomation, Lead};
+
+use Carbon\Carbon;
 
 class runCustomAutomation extends Command
 {
@@ -19,7 +19,7 @@ class runCustomAutomation extends Command
 
 	public function handle()
 	{
-		foreach (CustomAutomation::get() as $automation) {
+		foreach (CustomAutomation::whereNotIn("data->trigger", ["store", "conversion", "schedule"])->get() as $automation) {
 			$this->executeAutomation($automation);
 		}
 	}
@@ -30,39 +30,13 @@ class runCustomAutomation extends Command
 		$status = $automation->status;
 		$leads = $this->getLeads($automation, $status, $trigger);
 		foreach ($leads as $lead) {
-			$last_automation_execution = $lead->last_automation_execution;
-			if (!$last_automation_execution) {
-				$this->runAutomation($automation, $lead);
-				continue;
-			}
-			dd("Outro last_automation_execution", $lead->data);
+			$automation->execute($lead);
 		}
 	}
 
-	private function runAutomation($automation, $lead)
+	private function getNextDate($qty_days)
 	{
-		$email_template = $automation->email_template;
-		$body = Arr::get($email_template->body, "body");
-		$subject = $email_template->subject;
-		SendMail::to($lead->email, $subject, $body);
-		$this->logExecution($lead, $automation, $email_template);
-	}
-
-	private function logExecution($lead, $automation, $email_template)
-	{
-		$email_content = [
-			"subject" => $email_template->subject,
-			"body" => $email_template->body,
-		];
-		$lead_id = $lead->id;
-		$automation_id = $automation->id;
-		dispatch(function () use ($lead_id, $automation_id, $email_content) {
-			$sent = new \App\Http\Models\AutomationSentEmail;
-			$sent->custom_automation_id = $automation_id;
-			$sent->email_content = $email_content;
-			$sent->lead_id = $lead_id;
-			$sent->save();
-		})->onQueue("automation-queued-email");
+		return Carbon::now()->addDays($qty_days);
 	}
 
 	private function getLeads($automation, $status, $trigger)
@@ -72,9 +46,14 @@ class runCustomAutomation extends Command
 			->where("updated_at", ">=", $automation->created_at)
 			->where("data->email", "!=", "null")
 			->whereDoesntHave("automation_sent_emails", function ($q) use ($trigger) {
+				$qty_days = [
+					"five_days" => 5,
+					"fifteen_days" => 15,
+					"third_days" => 30,
+				];
 				$q->whereHas("custom_automation", function ($q)  use ($trigger) {
 					$q->where("data->trigger", $trigger);
-				});
+				})->whereDate("created_at", ">", $this->getNextDate($qty_days[$trigger]));
 			})->where("created_at", ">=", $automation->created_at)->get();
 	}
 }

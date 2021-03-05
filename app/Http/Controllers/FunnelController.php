@@ -11,7 +11,8 @@ use App\Http\Models\{
 	Lead,
 	LeadAnswer,
 	Objection,
-	LeadSubstatus
+	LeadSubstatus,
+	CustomAutomation
 };
 use Carbon\Carbon;
 use Auth;
@@ -73,7 +74,7 @@ class FunnelController extends Controller
 		$type = ContactType::findOrfail($request["type_id"]);
 		$objection = Objection::find($request["objection_id"]);
 		$new_status = $this->getNewStatus($answer);
-		if ($answer->need_schedule) $lead->schedule = Carbon::create($request["schedule"]);
+		$this->sendAutomationEmail($lead, "schedule");
 
 		$lead = $this->logConversions($lead, $now, $user, $new_status);
 		$lead = $this->logTries($lead, $now, $user, $type, @$objection->description, @$request["other_objection"], @$request['obs']);
@@ -81,13 +82,24 @@ class FunnelController extends Controller
 		$lead->lead_substatus_id = $new_status->id;
 
 		if ($answer->need_objection) {
-			$objection = $objection;
+			$objection = $schedule;
 			$lead->objection = $objection->description;
 			$lead->other_objection = @$request["other_objection"];
 		}
+
 		$lead->save();
 		Messages::send("success", "Contato Salvo");
+		$this->sendAutomationEmail($lead, "conversion");
 		return ["success" => true, "route" => "/admin/funil-de-conversao" . @$request["back_query"]];
+	}
+
+	private function sendAutomationEmail($lead, $trigger)
+	{
+		if ($lead->email) {
+			foreach (CustomAutomation::where("data->trigger", $trigger)->where("data->lead_status_id", $lead->status->id)->get() as $automation) {
+				$automation->execute($lead);
+			}
+		}
 	}
 
 	private function logTries($lead, $now, $user, $type, $objection, $other_objection, $obs)

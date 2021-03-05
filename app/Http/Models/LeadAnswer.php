@@ -28,7 +28,7 @@ class LeadAnswer extends DefaultModel
 
 	public function getNeedScheduleAttribute()
 	{
-		return $this->behavior === 'need_schedule';
+		return in_array($this->behavior, ['need_schedule', 'need_schedule_test']);
 	}
 
 	public function getNeedObjectionAttribute()

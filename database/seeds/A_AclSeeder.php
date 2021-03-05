@@ -25,6 +25,11 @@ class A_AclSeeder extends Seeder
 	{
 		DB::table("permissions")->truncate();
 		Cache::flush('spatie.permission.cache');
+		Permission::create(["group" => "Leads", "name" => "viewlist-customfields", "description" => "Ver Listagem de Campos Customizados"]);
+		Permission::create(["group" => "Leads", "name" => "create-customfields", "description" => "Cadastrar Campos Customizados"]);
+		Permission::create(["group" => "Leads", "name" => "edit-customfields", "description" => "Editar Campos Customizados"]);
+		Permission::create(["group" => "Leads", "name" => "destroy-customfields", "description" => "Excluir Campos Customizados"]);
+
 		Permission::create(["group" => "Leads", "name" => "viewlist-leads", "description" => "Ver Listagem de Leads"]);
 		Permission::create(["group" => "Leads", "name" => "create-leads", "description" => "Cadastrar Leads"]);
 		Permission::create(["group" => "Leads", "name" => "edit-leads", "description" => "Editar Leads"]);

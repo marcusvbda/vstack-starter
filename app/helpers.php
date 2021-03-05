@@ -108,3 +108,32 @@ function getEnabledIcon($enabled = false)
 	];
 	return @$icons[$enabled] ?? '🟡';
 }
+
+
+function withCustomFields($resource, $fields)
+{
+	foreach (\App\Http\Models\CustomField::where("resource", $resource)->get() as $custom_field) {
+		$field = null;
+		switch ($custom_field->type) {
+			case "select":
+				$field = new \marcusvbda\vstack\Fields\BelongsTo([
+					"label" => $custom_field->name,
+					"description" => $custom_field->description,
+					"field" => $custom_field->field,
+					"options" =>  $custom_field->options,
+					"required" => $custom_field->required
+				]);
+				break;
+			case "text":
+				$field = new \marcusvbda\vstack\Fields\Text([
+					"label" => $custom_field->name,
+					"description" => $custom_field->description,
+					"field" => $custom_field->field,
+					"required" => $custom_field->required
+				]);
+				break;
+		}
+		$fields[$custom_field->card][] = $field;
+	}
+	return $fields;
+}

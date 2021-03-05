@@ -22,6 +22,12 @@ $is_super_admin = $user->isSuperAdmin();
 $is_admin = $user->hasRole(["admin"]);
 $is_admin_or_super_admin = $user->hasRole(["admin","super-admin"]);
 $polo = $user->polo;
+
+function getMenuClass($permission,$array_current=[]) {
+	$class = "dropdown-item ".currentClass($array_current);
+	if(!hasPermissionTo($permission)) $class.= " disabled ";
+	return $class;
+}
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
 	<a class="navbar-brand py-0" href="/admin">
@@ -35,13 +41,14 @@ $polo = $user->polo;
 			<li class="nav-item {{ currentClass(['/admin']) }}">
 				<a class="nav-link" href="/admin"><i class="el-icon-data-line mr-2"></i>CRM Dashboard <span class="sr-only">(current)</span></a>
 			</li>
-			<li class="nav-item dropdown {{ currentClass(['/admin/leads/*','/admin/funil-de-conversao/*']) }}">
+			<li class="nav-item dropdown {{ currentClass(['/admin/leads/*','/admin/campos-customizados/*','/admin/funil-de-conversao/*']) }}">
 				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					<i class="el-icon-attract mr-2"></i>Oportunidades
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item @if(!hasPermissionTo('viewlist-leads')) disabled @endif {{ currentClass(['/admin/leads/*'])  }}" href="/admin/leads" data-label="Base de Leads">Leads</a>
-					<a class="dropdown-item @if(!hasPermissionTo('edit-leads')) disabled @endif {{ currentClass(['/admin/funil-de-conversao/*'])  }}" href="/admin/funil-de-conversao" data-label="Esteira de Produção">Funil de Conversão</a>
+					<a class="{{ getMenuClass('viewlist-leads',['/admin/leads/*']) }}" href="/admin/leads" data-label="Base de Leads">Leads</a>
+					<a class="{{ getMenuClass('viewlist-customfields',['/admin/campos-customizados/*']) }}" href="/admin/campos-customizados">Campos Customizados</a>
+					<a class="{{ getMenuClass('edit-leads',['/admin/funil-de-conversao/*']) }}" href="/admin/funil-de-conversao" data-label="Esteira de Produção">Funil de Conversão</a>
 				</div>
 			</li>
 			<li class="nav-item dropdown {{ currentClass(['/admin/emails/*','/admin/campanhas/*','/admin/captacao/*','/admin/automacoes-customizadas/*']) }}">
@@ -49,10 +56,10 @@ $polo = $user->polo;
 					<i class="el-icon-s-flag mr-2"></i>Marketing
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item @if(!hasPermissionTo('viewlist-email')) disabled @endif {{ currentClass(['/admin/emails/*'])  }}" href="/admin/emails" data-label="Pré-Definição de Emails">Emails</a>
-					<a class="dropdown-item @if(!hasPermissionTo('viewlist-campaign')) disabled @endif {{ currentClass(['/admin/campanhas/*'])  }}" href="/admin/campanhas" data-label="Campanhas de Marketing">Campanhas</a>
-					<a class="dropdown-item @if(!hasPermissionTo('viewlist-capture')) disabled @endif {{ currentClass(['/admin/captacao/*'])  }}" href="/admin/captacao" data-label="Captação de Leads">Captação</a>
-					<a class="dropdown-item @if(!hasPermissionTo('viewlist-automation')) disabled @endif {{ currentClass(['/admin/automacoes-customizadas/*'])  }}" href="/admin/automacoes-customizadas" data-label="Automação de Campanha Customizada">Automações Customizadas</a>
+					<a class="{{ getMenuClass('viewlist-email',['/admin/emails/*']) }}"  href="/admin/emails" data-label="Pré-Definição de Emails">Emails</a>
+					<a  class="{{ getMenuClass('viewlist-campaign',['/admin/campanhas/*']) }}"  href="/admin/campanhas" data-label="Campanhas de Marketing">Campanhas</a>
+					<a  class="{{ getMenuClass('viewlist-capture',['/admin/captacao/*']) }}" href="/admin/captacao" data-label="Captação de Leads">Captação</a>
+					<a  class="{{ getMenuClass('viewlist-automation',['/admin/automacoes-customizadas/*']) }}" href="/admin/automacoes-customizadas" data-label="Automação de Campanha Customizada">Automações Customizadas</a>
 				</div>
 			</li>
 			<li class="nav-item dropdown {{ currentClass(['/admin/relatorios/*']) }}">
@@ -60,10 +67,10 @@ $polo = $user->polo;
 					<i class="el-icon-data-analysis mr-2"></i>Relatórios
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item @if(!hasPermissionTo('view-leads-report')) disabled @endif {{ currentClass(['/admin/relatorios/leads/*'])  }}" href="/admin/relatorios/leads" data-label="Relatório de Leads">Leads</a>
-					<a class="dropdown-item @if(!hasPermissionTo('campaign-report')) disabled @endif {{ currentClass(['/admin/relatorios/campanhas/*'])  }}" href="/admin/relatorios/campanhas" data-label="Relatório de Campanhas">Campanha</a>
-					<a class="dropdown-item @if(!hasPermissionTo('capture-report')) disabled @endif {{ currentClass(['/admin/relatorios/captacao/*'])  }}" href="/admin/relatorios/captacao" data-label="Relatório de Captação">Captação</a>
-					<a class="dropdown-item @if(!hasPermissionTo('report-automation')) disabled @endif {{ currentClass(['/admin/relatorios/automacoes-customizadas/*'])  }}" href="/admin/relatorios/automacoes-customizadas" data-label="Relatório de Automações Customizadas">Automação</a>
+					<a class="{{ getMenuClass('view-leads-report',['/admin/relatorios/leads/*']) }}" href="/admin/relatorios/leads" data-label="Relatório de Leads">Leads</a>
+					<a class="{{ getMenuClass('campaign-report',['/admin/relatorios/campanhas/*']) }}" href="/admin/relatorios/campanhas" data-label="Relatório de Campanhas">Campanha</a>
+					<a class="{{ getMenuClass('capture-report',['/admin/relatorios/captacao/*']) }}" href="/admin/relatorios/captacao" data-label="Relatório de Captação">Captação</a>
+					<a class="{{ getMenuClass('report-automation',['/admin/relatorios/automacoes-customizadas/*']) }}" href="/admin/relatorios/automacoes-customizadas" data-label="Relatório de Automações Customizadas">Automação</a>
 				</div>
 			</li>
 			<li class="nav-item dropdown {{ currentClass(['/admin/resposta-contatos/*','/admin/tipos-contato/*','/admin/respostas-contato/*','/admin/regra-classificacao/*','/admin/objecoes/*']) }}">
@@ -71,10 +78,10 @@ $polo = $user->polo;
 					<i class="el-icon-bangzhu mr-2"></i>Extras
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item @if(!hasPermissionTo('viewlist-objections')) disabled @endif {{ currentClass(['/admin/objecoes/*'])  }}" href="/admin/objecoes" data-label="Objeções de respostas negativas">Objeções de Contato</a>
-					<a class="dropdown-item @if(!hasPermissionTo('viewlist-contacttype')) disabled @endif {{ currentClass(['/admin/tipos-contato/*'])  }}" href="/admin/tipos-contato" data-label="Formar que o lead foi contato">Tipos de Contato</a>
-					<a class="dropdown-item @if(!hasPermissionTo('viewlist-leadanswer')) disabled @endif {{ currentClass(['/admin/respostas-contato/*'])  }}" href="/admin/respostas-contato" data-label="Contatos com Lead">Respostas de Contato</a>
-					<a class="dropdown-item @if(!hasPermissionTo('config-rating-behavior')) disabled @endif {{ currentClass(['/admin/regra-classificacao/*'])  }}" href="/admin/regra-classificacao" data-label="Regra de Rating de Lead">Regra de Classificação</a>
+					<a class="{{ getMenuClass('viewlist-objections',['/admin/objecoes/*']) }}" href="/admin/objecoes" data-label="Objeções de respostas negativas">Objeções de Contato</a>
+					<a class="{{ getMenuClass('viewlist-contacttype',['/admin/tipos-contato/*']) }}" href="/admin/tipos-contato" data-label="Formar que o lead foi contato">Tipos de Contato</a>
+					<a  class="{{ getMenuClass('viewlist-leadanswer',['/admin/respostas-contato/*']) }}" href="/admin/respostas-contato" data-label="Contatos com Lead">Respostas de Contato</a>
+					<a class="{{ getMenuClass('config-rating-behavior',['/admin/regra-classificacao/*']) }}" href="/admin/regra-classificacao" data-label="Regra de Rating de Lead">Regra de Classificação</a>
 				</div>
 			</li>
 		</ul>
