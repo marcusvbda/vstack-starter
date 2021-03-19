@@ -11275,6 +11275,11 @@ a {
   color: #0074d9;
 }
 
+#auth.row {
+  width: 100%;
+  overflow-x: hidden !important;
+}
+
 .navbar {
   box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.5);
 }
