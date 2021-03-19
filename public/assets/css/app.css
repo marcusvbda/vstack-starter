@@ -11406,6 +11406,46 @@ a.el-button:hover {
   text-decoration: unset;
 }
 
+.slide-enter-active {
+  transition: all 0.2s ease;
+}
+
+.slide-leave-active {
+  transition: all 0.2s;
+  transform: translateY(20px);
+}
+
+.slide-enter,
+.slide-leave-to {
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+.no-radius {
+  border-radius: unset !important;
+}
+
+.form-control {
+  color: #606266;
+  font-size: 14px;
+}
+
+.image-list-preview {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.image-list-preview .image {
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  border: 1px solid #bdc0c2;
+  margin: 0 1px;
+}
+
 .status-color.Oportunidade {
   color: #c7c939;
 }
@@ -11467,45 +11507,5 @@ a.el-button:hover {
 .modern-scroll::-webkit-scrollbar {
   width: 10px;
   height: 10px;
-}
-
-.slide-enter-active {
-  transition: all 0.2s ease;
-}
-
-.slide-leave-active {
-  transition: all 0.2s;
-  transform: translateY(20px);
-}
-
-.slide-enter,
-.slide-leave-to {
-  transform: translateY(20px);
-  opacity: 0;
-}
-
-.no-radius {
-  border-radius: unset !important;
-}
-
-.form-control {
-  color: #606266;
-  font-size: 14px;
-}
-
-.image-list-preview {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.image-list-preview .image {
-  cursor: pointer;
-  width: 60px;
-  height: 60px;
-  border-radius: 100%;
-  border: 1px solid #bdc0c2;
-  margin: 0 1px;
 }
 
