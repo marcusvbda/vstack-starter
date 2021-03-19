@@ -2,7 +2,7 @@
     <div class="row" id="auth">
         <div class="col-6 d-none d-md-block left-side">
             <div class="d-flex container flex-column d-flex align-items-center justify-content-center">
-                <img src="/assets/images/auth/login.png" class="w-100" />
+                <img src="/assets/images/auth/signin.png" class="w-100" />
             </div>
         </div>
         <div class="col-md-6 col-sm-12 right-side" v-loading="loading" element-loading-text="Verificando credenciais ...">
