@@ -13,7 +13,6 @@ use App\Http\Models\{Email, EmailTemplate};
 class Emails extends Resource
 {
 	public $model = Email::class;
-	public $_filters = [];
 
 	public function label()
 	{

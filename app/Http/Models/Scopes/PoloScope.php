@@ -10,18 +10,24 @@ use Auth;
 class PoloScope implements Scope
 {
 	private $polo = null;
+	private $has_global = null;
 	private $table = "";
 
-	public function __construct($table)
+	public function __construct($table, $has_global = false)
 	{
 		$this->table = $table;
+		$this->has_global = $has_global;
 		if (Auth::check()) $this->polo = Auth::user()->polo;
 	}
 
 	public function apply(Builder $builder, Model $model)
 	{
 		if (@$this->polo->id) {
-			@$builder->where($this->table . ".polo_id", $this->polo->id);
+			@$builder->where(function ($q) {
+				$column = $this->table . ".polo_id";
+				$q->where($column, $this->polo->id);
+				if ($this->has_global)	$q->orWhereNull($column);
+			});
 		}
 	}
 }

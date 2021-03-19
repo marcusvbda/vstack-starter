@@ -63,6 +63,12 @@ class A_AclSeeder extends Seeder
 		Permission::create(["group" => "Automações Customizadas", "name" => "report-automation", "description" => "Relatório de Automações Customizadas"]);
 
 		Permission::create(["group" => "Rating", "name" => "config-rating-behavior", "description" => "Alterar Configuração de Regra de Rating"]);
+
+		Permission::create(["group" => "Campanhas", "name" => "viewlist-campaigns", "description" => "Ver Listagem de Campanhas"]);
+		Permission::create(["group" => "Campanhas", "name" => "create-campaigns", "description" => "Cadastrar Campanhas"]);
+		Permission::create(["group" => "Campanhas", "name" => "edit-campaigns", "description" => "Editar Campanhas"]);
+		Permission::create(["group" => "Campanhas", "name" => "destroy-campaigns", "description" => "Excluir Campanhas"]);
+		Permission::create(["group" => "Campanhas", "name" => "report-campaigns", "description" => "Relatório de Campanhas"]);
 	}
 
 	private function createRoles()

@@ -57,7 +57,7 @@ function getMenuClass($permission,$array_current=[]) {
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="{{ getMenuClass('viewlist-email',['/admin/emails/*']) }}"  href="/admin/emails" data-label="Pré-Definição de Emails">Emails</a>
-					<a  class="{{ getMenuClass('viewlist-campaign',['/admin/campanhas/*']) }}"  href="/admin/campanhas" data-label="Campanhas de Marketing">Campanhas</a>
+					<a  class="{{ getMenuClass('viewlist-campaigns',['/admin/campanhas/*']) }}"  href="/admin/campanhas" data-label="Campanhas de Marketing">Campanhas</a>
 					<a  class="{{ getMenuClass('viewlist-capture',['/admin/captacao/*']) }}" href="/admin/captacao" data-label="Captação de Leads">Captação</a>
 					<a  class="{{ getMenuClass('viewlist-automation',['/admin/automacoes-customizadas/*']) }}" href="/admin/automacoes-customizadas" data-label="Automação de Campanha Customizada">Automações Customizadas</a>
 				</div>
@@ -68,9 +68,9 @@ function getMenuClass($permission,$array_current=[]) {
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="{{ getMenuClass('view-leads-report',['/admin/relatorios/leads/*']) }}" href="/admin/relatorios/leads" data-label="Relatório de Leads">Leads</a>
-					<a class="{{ getMenuClass('campaign-report',['/admin/relatorios/campanhas/*']) }}" href="/admin/relatorios/campanhas" data-label="Relatório de Campanhas">Campanha</a>
+					<a class="{{ getMenuClass('report-campaigns',['/admin/relatorios/campanhas/*']) }}" href="/admin/relatorios/campanhas" data-label="Relatório de Campanhas">Campanha</a>
 					<a class="{{ getMenuClass('capture-report',['/admin/relatorios/captacao/*']) }}" href="/admin/relatorios/captacao" data-label="Relatório de Captação">Captação</a>
-					<a class="{{ getMenuClass('report-automation',['/admin/relatorios/automacoes-customizadas/*']) }}" href="/admin/relatorios/automacoes-customizadas" data-label="Relatório de Automações Customizadas">Automação</a>
+					<a class="{{ getMenuClass('report-automation',['/admin/relatorios/automacoes-customizadas/*']) }}" href="/admin/relatorios/automacoes-customizadas" data-label="Relatório de Automações">Automação</a>
 				</div>
 			</li>
 			<li class="nav-item dropdown {{ currentClass(['/admin/resposta-contatos/*','/admin/tipos-contato/*','/admin/respostas-contato/*','/admin/regra-classificacao/*','/admin/objecoes/*']) }}">
