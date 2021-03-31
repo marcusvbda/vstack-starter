@@ -31,7 +31,7 @@ function getMenuClass($permission,$array_current=[]) {
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
 	<a class="navbar-brand py-0" href="/admin">
-		<text-logo size="30" />
+		<text-logo size="30" app_name="{{ config('app.name') }}" />
 	</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	  <span class="navbar-toggler-icon"></span>

@@ -7,7 +7,7 @@
         </div>
         <div class="col-md-6 col-sm-12 right-side" v-loading="loading" element-loading-text="Verificando credenciais ...">
             <div class="container d-flex flex-column justify-content-center">
-                <text-logo />
+                <text-logo :app_name="app_name" />
                 <b>Login</b>
                 <small>Bem Vindo de volta! Efetue o login para continuar</small>
                 <form v-on:submit.prevent="checkUser">
@@ -31,6 +31,7 @@
 </template>
 <<script>
 export default {
+	props : ["app_name"],
 	data() {
 		return {
 			loading : false,

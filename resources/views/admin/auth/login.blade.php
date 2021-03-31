@@ -1,5 +1,8 @@
 @extends("templates.default")
 @section('title',"Login")
 @section('body')
-	<auth-login></auth-login>
+	<auth-login 
+		app_name="{{ config('app.name') }}"
+	>
+	</auth-login>
 @endsection

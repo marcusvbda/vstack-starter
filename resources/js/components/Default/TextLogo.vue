@@ -1,9 +1,13 @@
 <template>
-    <h1 class="logo" :style="{ fontSize: `${size}px` }"><b></b>Leads<b></b></h1>
+    <h1 class="logo" :style="{ fontSize: `${size}px` }">{{ app_name }}</h1>
 </template>
 <script>
 export default {
     props: {
+        app_name: {
+            type: String,
+            default: '',
+        },
         size: {
             type: String,
             default: '60',
