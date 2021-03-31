@@ -50,11 +50,11 @@ class FunnelController extends Controller
 		return $resource;
 	}
 
-	public function convert($id)
+	public function convert($code)
 	{
 		$resource = ResourcesHelpers::find("leads");
 		if (!$resource->canUpdate()) abort(403);
-		$lead = $resource->model->findOrFail($id);
+		$lead = $resource->model->findByCodeOrFail($id);
 		// dd($lead->automation_sent_emails);
 		$lead->load(["substatus", "substatus.status"]);
 		$types = ContactType::get();
@@ -63,11 +63,11 @@ class FunnelController extends Controller
 		return view("admin.leads.funnel.convert", compact('resource', 'lead', 'types', 'answers', 'objections'));
 	}
 
-	public function finishConvert($id, Request $request)
+	public function finishConvert($code, Request $request)
 	{
 		$resource = ResourcesHelpers::find("leads");
 		if (!$resource->canUpdate()) abort(403);
-		$lead = Lead::findOrFail($id);
+		$lead = Lead::findByCodeOrFail($code);
 		$now =  Carbon::now();
 		$user = Auth::user();
 		$answer = LeadAnswer::findOrFail($request["answer_id"]);

@@ -47,17 +47,17 @@ class UsersController extends Controller
 		return ["success" => true];
 	}
 
-	public function resendInvite($id, Request $request)
+	public function resendInvite($code, Request $request)
 	{
-		$invite = UserInvite::findOrFail($id);
+		$invite = UserInvite::findByCodeOrFail($code);
 		$this->inviteEmail($invite);
 		Messages::send("success", "Convite de usuário reenviado para o email <b>" . $invite->email . "</b>");
 		return redirect(redirect()->back()->getTargetUrl());
 	}
 
-	public function cancelInvite($id, Request $request)
+	public function cancelInvite($code, Request $request)
 	{
-		$invite = UserInvite::findOrFail($id);
+		$invite = UserInvite::findByCodeOrFail($code);
 		$invite->delete();
 		Messages::send("success", "Convite do usuário <b>" . $invite->email . "</b> cancelado com sucesso");
 		return redirect(redirect()->back()->getTargetUrl());

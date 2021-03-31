@@ -32,9 +32,10 @@ class Campanhas extends Resource
 	public function table()
 	{
 		$columns = [];
-		$columns["code"] = ["label" => "Código", "sortable_index" => "id", "size" => "100px"];
+		$columns["f_code"] = ["label" => "Código", "sortable_index" => "id", "size" => "100px"];
 		$columns["name"] = ["label" => "Nome"];
-		// $columns["subject"] = ["label" => "Assunto"];
+		$columns["duration"] = ["label" => "Validade", "sortable" => false];
+		$columns["f_coverage"] = ["label" => "Abrangencia", "sortable" => false];
 		return $columns;
 	}
 
