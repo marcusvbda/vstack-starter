@@ -10,13 +10,6 @@ use Cache;
 
 class RolesController extends Controller
 {
-	private function getGroupedPermissions()
-	{
-		$groups = Permission::orderBy("description")->groupBy("group")->pluck("group")->toArray();
-		foreach ($groups as $group) $values[$group] = Permission::whereGroup($group)->get()->chunk(4);
-		return $values;
-	}
-
 	public function store(Request $request)
 	{
 		$resource = ResourcesHelpers::find($request["resource_id"]);
