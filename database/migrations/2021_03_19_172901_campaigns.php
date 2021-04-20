@@ -14,7 +14,7 @@ class Campaigns extends Migration
 			$table->engine = 'InnoDB';
 			$table->bigIncrements('id');
 			$table->string('name');
-			$table->string('query_filters')->nullable();
+			$table->jsonb('query_filters')->nullable();
 			$table->boolean('protected')->default(false);
 			$table->timestamp('duedate')->nullable();
 			$table->unsignedBigInteger('tenant_id');

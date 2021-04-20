@@ -7,7 +7,7 @@
         </div>
         <div class="col-md-6 col-sm-12 right-side" v-loading="loading" element-loading-text="Verificando credenciais">
             <div class="container d-flex flex-column justify-content-center">
-                <text-logo :app_name="app_name" />
+                <text-logo />
                 <b>Renove sua senha</b>
                 <small>Digite a nova senha e a confirme para renovar</small>
                 <form v-on:submit.prevent="submit">
@@ -30,7 +30,7 @@
 </template>
 <<script>
 export default {
-	props : ["token","app_name"],
+	props : ["token"],
 	data() {
 		return {
 			loading : false,

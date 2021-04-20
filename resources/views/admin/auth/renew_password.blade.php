@@ -3,7 +3,6 @@
 @section('body')
 	<renew-password
 		token="{{ $token }}"
-		app_name="{{ config('app.name') }}"
 	>
 	</renew-password>
 @endsection

@@ -10,12 +10,12 @@
 	</nav>
 @endsection
 @section('content')
-<?php 
+@php
     $user = Auth::user(); 
     $is_superadmin = $user->hasRole(["super-admin"]);
 	$tenant = (@$_GET["tenant_id"] && $is_superadmin) ? \App\Http\Models\Tenant::findOrFail($_GET["tenant_id"]) : $user->tenant;
 	$is_head = $user->polo->data->head
-?>
+@endphp
 <dashboard-content
 	title="Mostradores e Desempenho"
 	default_filter="_this_month_"

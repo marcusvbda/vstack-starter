@@ -1,8 +1,15 @@
 <?php
 
+use App\Http\Mutators\{
+	ExtraConfigData
+};
+
 return [
 	"default_upload_route" => "/admin/upload",
 	"resource_export_extension" => "xlsx",
+	"extra_javascript_global_variables" => [
+		ExtraConfigData::class
+	],
 	// "timezone" => "+00:00",
 	"timezones" => [
 		'Pacific/Midway'       => "-11:00",

@@ -5,15 +5,17 @@ namespace App\Http\Models;
 use marcusvbda\vstack\Models\DefaultModel;
 use App\Http\Models\Scopes\{OrderByScope, PoloScope};
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class Campaign extends DefaultModel
 {
 	protected $table = "campaigns";
 
-	public $appends = ["code"];
+	public $appends = ["code", "processed_filters"];
 	public $dates = ["created_at", "deleted_at", "updated_at", "duedate", "coverage", "active"];
 	public $casts = [
-		"protected" => "boolean"
+		"protected" => "boolean",
+		"query_filters" => "json"
 	];
 
 	public static function boot()
@@ -73,5 +75,33 @@ class Campaign extends DefaultModel
 	{
 		$coverage = @$this->coverage;
 		return $coverage == 'unique' ? "Apenas este polo" : "Todos os polos";
+	}
+
+	public function getProcessedFiltersAttribute()
+	{
+		$_request = new Request();
+		$_request->setMethod('POST');
+		$filters = ((array) @$this->query_filters ?? []);
+		$processed_filters = [];
+		foreach (array_keys($filters) as $key) {
+			$index = str_replace("filter_", "", $key);
+			if ($index == "created_at") {
+				$dates = array_map(function ($x) {
+					return Carbon::create($x)->format("d/m/Y");
+				}, $filters[$key]);
+				$processed_filters[$index] = implode(",", $dates);
+			} else {
+				$processed_filters[$index] = $filters[$key];
+			}
+		}
+		return $processed_filters;
+	}
+
+	public function getQueryFiltersRequestTypeAttribute()
+	{
+		$_request = new Request();
+		$_request->setMethod('POST');
+		$_request->request->add($this->processed_filters);
+		return $_request;
 	}
 }

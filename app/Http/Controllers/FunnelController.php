@@ -54,7 +54,7 @@ class FunnelController extends Controller
 	{
 		$resource = ResourcesHelpers::find("leads");
 		if (!$resource->canUpdate()) abort(403);
-		$lead = $resource->model->findByCodeOrFail($id);
+		$lead = $resource->model->findByCodeOrFail($code);
 		// dd($lead->automation_sent_emails);
 		$lead->load(["substatus", "substatus.status"]);
 		$types = ContactType::get();
