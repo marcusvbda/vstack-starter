@@ -7,8 +7,10 @@
                 </h4>
             </div>
         </div>
-        <div v-loading="loading_list">
-            {{ list }}
+        <div v-loading="loading_list" class="row">
+            <div class="col-md-4 col-sm-12 mb-3" v-for="(lead, l) in list.data" :key="l">
+                <lead-card class="mb-2 h-100" :lead_id="lead.id" />
+            </div>
         </div>
     </div>
 </template>
@@ -19,6 +21,9 @@ export default {
             loading_list: true,
             current_page: 1,
         }
+    },
+    components: {
+        'lead-card': require('../../../Leads/-lead-card.vue').default,
     },
     computed: {
         campaign() {

@@ -26,7 +26,7 @@
         <transition name="slide">
             <div class="no-border list-content modern-scroll" v-if="visible">
                 <template v-if="!loading">
-                    <lead-card v-for="(lead, i) in leads.data" :key="i" :lead="lead" />
+                    <lead-card v-for="(lead, i) in leads.data" :key="i" :lead_id="lead.id" />
                 </template>
             </div>
         </transition>
@@ -43,7 +43,8 @@ export default {
     },
     components: {
         'counter-number': require('vue-number-scroll').default,
-        'lead-card': require('./-lead-card.vue').default,
+        // 'lead-card': require('./-lead-card.vue').default,
+        'lead-card': require('../../Leads/-lead-card.vue').default,
     },
     computed: {
         leads() {
