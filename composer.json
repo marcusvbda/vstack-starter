@@ -10,7 +10,6 @@
     "require": {
         "php": "^7.2",
         "activecampaign/api-php": "^2.0",
-        "cagartner/correios-consulta": "0.1.*",
         "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.5",

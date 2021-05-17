@@ -81,6 +81,19 @@ class Leads extends Resource
 		return $columns;
 	}
 
+	// public function tableAfterRow($row)
+	// {
+	// 	return "portal teste";
+	// }
+
+	public function actions()
+	{
+		return [
+			new LeadTransfer()
+		];
+	}
+
+
 	public function canCreate()
 	{
 		return hasPermissionTo("create-leads");
@@ -147,13 +160,6 @@ class Leads extends Resource
 	public function filters()
 	{
 		return $this->_filters;
-	}
-
-	public function actions()
-	{
-		return [
-			new LeadTransfer()
-		];
 	}
 
 	public function fields()

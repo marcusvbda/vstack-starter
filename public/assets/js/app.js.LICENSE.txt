@@ -18,11 +18,31 @@
  */
 
 /*!
+ * CSSPlugin 3.6.1
+ * https://greensock.com
+ *
+ * Copyright 2008-2021, GreenSock. All rights reserved.
+ * Subject to the terms at https://greensock.com/standard-license or for
+ * Club GreenSock members, the agreement issued with that membership.
+ * @author: Jack Doyle, jack@greensock.com
+*/
+
+/*!
  * Chart.js v2.9.4
  * https://www.chartjs.org
  * (c) 2020 Chart.js Contributors
  * Released under the MIT License
  */
+
+/*!
+ * GSAP 3.6.1
+ * https://greensock.com
+ *
+ * @license Copyright 2008-2021, GreenSock. All rights reserved.
+ * Subject to the terms at https://greensock.com/standard-license or for
+ * Club GreenSock members, the agreement issued with that membership.
+ * @author: Jack Doyle, jack@greensock.com
+*/
 
 /*!
  * Pusher JavaScript Library v5.1.1
@@ -31,6 +51,16 @@
  * Copyright 2017, Pusher
  * Released under the MIT licence.
  */
+
+/*!
+ * ScrollTrigger 3.6.1
+ * https://greensock.com
+ *
+ * @license Copyright 2008-2021, GreenSock. All rights reserved.
+ * Subject to the terms at https://greensock.com/standard-license or for
+ * Club GreenSock members, the agreement issued with that membership.
+ * @author: Jack Doyle, jack@greensock.com
+*/
 
 /*!
  * The buffer module from node.js, for the browser.
@@ -217,6 +247,17 @@
  * vuex v3.6.0
  * (c) 2020 Evan You
  * @license MIT
+ */
+
+/*! 
+  * portal-vue © Thorsten Lünborg, 2019 
+  * 
+  * Version: 2.1.7
+  * 
+  * LICENCE: MIT 
+  * 
+  * https://github.com/linusborg/portal-vue
+  * 
  */
 
 /*! grapesjs - 0.16.34 */

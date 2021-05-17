@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use marcusvbda\vstack\Resource;
 use Auth;
-use App\Http\Filters\User\UsersByTenant;
+use App\Http\Filters\Users\UsersByTenant;
 use ResourcesHelpers;
 
 class Usuarios extends Resource

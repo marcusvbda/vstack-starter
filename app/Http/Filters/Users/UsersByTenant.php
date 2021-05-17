@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Filters\User;
+namespace App\Http\Filters\Users;
 
 use  marcusvbda\vstack\Filter;
 use App\Http\Models\Tenant;

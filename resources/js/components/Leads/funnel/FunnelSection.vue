@@ -1,7 +1,7 @@
 <template>
     <div class="d-flex flex-column">
         <div class="col-md-7 col-sm-12 px-0">
-            <label> Total de Leads : <counter-number :start="0" :end="total" :times="10" :speed="50" /> </label>
+            <label> Total de Leads : {{ animated_showing_total }} </label>
             <el-select v-model="selected_status" multiple placeholder="Selecione os status que deseja visualizar" class="w-100">
                 <el-option v-for="s in ordered_status" :key="s.id" :label="s.name" :value="s.id" />
             </el-select>
@@ -18,15 +18,23 @@ export default {
     props: ['status', 'get_params', 'can_edit', 'use_tags', 'resource_id'],
     store: funnelStore,
     components: {
-        'counter-number': require('vue-number-scroll').default,
         'funnel-status-col': require('./-funnel-status-col.vue').default,
     },
     data() {
         return {
             selected_status: [],
+            showing_total: 0,
         }
     },
+    watch: {
+        total(newValue) {
+            this.$gsap.to(this.$data, { duration: 0.5, showing_total: newValue })
+        },
+    },
     computed: {
+        animated_showing_total() {
+            return this.showing_total.toFixed(0)
+        },
         ordered_status() {
             return _.orderBy(this.status, 'seq', 'asc')
         },

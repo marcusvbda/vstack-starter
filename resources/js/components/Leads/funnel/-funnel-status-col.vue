@@ -3,7 +3,7 @@
         <div :class="`status-color-bgtop ${status.name} card col-header no-border d-flex flex-column py-2 mb-1`" v-loading="loading">
             <div class="p-2 col-header">
                 <b :class="`d-flex flex-row align-items-center status-color ${status.name} justify-content-center mb-2 title`" @click="visible = !visible">
-                    {{ status.name }} <counter-number class="ml-2" :start="0" :end="qty" :times="10" :speed="50" />
+                    {{ status.name }} {{ animated_showing_total }}
                     <span :class="`status-color ${status.name} ${toggle_icon} ml-3`" />
                 </b>
                 <template v-if="visible">
@@ -39,14 +39,22 @@ export default {
         return {
             visible: false,
             loading: false,
+            showing_total: 0,
         }
     },
+    watch: {
+        qty(newValue) {
+            console.log(newValue)
+            this.$gsap.to(this.$data, { duration: 0.5, showing_total: newValue })
+        },
+    },
     components: {
-        'counter-number': require('vue-number-scroll').default,
-        // 'lead-card': require('./-lead-card.vue').default,
         'lead-card': require('../../Leads/-lead-card.vue').default,
     },
     computed: {
+        animated_showing_total() {
+            return this.showing_total.toFixed(0)
+        },
         leads() {
             return this.$store.state.status_leads[this.status.id]
         },

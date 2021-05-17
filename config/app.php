@@ -170,7 +170,6 @@ return [
 		marcusvbda\vstack\vStackServiceProvider::class,
 		Jenssegers\Agent\AgentServiceProvider::class,
 		SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
-		Cagartner\CorreiosConsulta\ServiceProvider::class,
 		App\Providers\GuzzleClientServiceProvider::class,
 		Maatwebsite\Excel\ExcelServiceProvider::class,
 	],
@@ -224,8 +223,7 @@ return [
 		'Validator' => Illuminate\Support\Facades\Validator::class,
 		'View' => Illuminate\Support\Facades\View::class,
 		'Agent' => Jenssegers\Agent\Facades\Agent::class,
-		'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
-		'Correios'    => Cagartner\CorreiosConsulta\Facade::class
+		'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
 	],
 
 ];
