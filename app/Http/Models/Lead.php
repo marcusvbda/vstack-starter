@@ -175,17 +175,6 @@ class Lead extends DefaultModel
 		return formatDate($created);
 	}
 
-	public function getFCompleteCreatedAttribute()
-	{
-		$created = $this->created_at;
-		$formated = $this->f_created_at;
-		$diff = $created->diffForHumans();
-		return "
-		<div class='d-flex flex-column'>
-			<b>{$formated}</b>
-			<small>{$diff}</small>
-		</div>";
-	}
 	public function getOriginAttribute()
 	{
 		return $this->api_user_id ? ApiUser::findOrFail($this->api_user_id)->name : User::findOrFail($this->user_id)->name;

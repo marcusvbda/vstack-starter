@@ -74,7 +74,7 @@ class Leads extends Resource
 		$columns["name"] = ["label" => "Nome", "sortable_index" => "data->name"];
 		$columns["email_url"] = ["label" => "Email", "sortable_index" => "data->email"];
 		$columns["f_rating"] = ["label" => "Classificação", "sortable" => false];
-		$columns["f_complete_created"] = ["label" => "Data", "sortable_index" => "created_at"];
+		$columns["f_updated_at_badge"] = ["label" => "Data", "sortable_index" => "created_at"];
 		foreach (CustomField::where("resource", "leads")->where("show_in_list", true)->get() as $field) {
 			$columns[$field->field] = ["label" => $field->name, "sortable_index" => "custom_fields->" . $field->field];
 		}
