@@ -97,7 +97,7 @@ export default {
             background-color: white;
             .container {
                 height: 100%;
-                padding: 0 180px;
+                max-width: 500px;
                 .title {
                     color: #001737;
                     font-weight: 500;

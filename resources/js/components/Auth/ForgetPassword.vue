@@ -1,5 +1,5 @@
 <template>
-    <div class="row" id="auth">
+    <div class="row" id="auth" data-aos="fade-down">
         <div class="col-6 d-none d-md-block left-side">
             <div class="d-flex container flex-column d-flex align-items-center justify-content-center">
                 <img src="/assets/images/auth/forgot_password.png" class="w-100" />
@@ -69,7 +69,7 @@ export default {
             background-color: white;
             .container {
                 height: 100%;
-                padding: 0 180px;
+                max-width: 500px;
                 .title {
                     color: #001737;
                     font-weight: 500;

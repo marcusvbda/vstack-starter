@@ -87,7 +87,8 @@ function formatId($value, $prefix = "#")
 
 function formatDate($date, $format = "d/m/Y - H:i:s")
 {
-	return $date->format($format);
+	if (!$date) return null;
+	return @$date->format($format);
 }
 
 function queryBetweenDates($column, $dates)

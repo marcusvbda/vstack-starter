@@ -17,6 +17,7 @@
 	$is_head = $user->polo->data->head
 @endphp
 <dashboard-content
+	data-aos="fade-down"
 	title="Mostradores e Desempenho"
 	default_filter="_this_month_"
 	user_id="{{ $user->id }}"
