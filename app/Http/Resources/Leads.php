@@ -135,7 +135,7 @@ class Leads extends Resource
 	}
 
 
-	public function export_columns()
+	public function export_columns($cx)
 	{
 		$fields = [
 			"code" => ["label" => "Código"],

@@ -83,7 +83,7 @@ class Emails extends Resource
 		return false;
 	}
 
-	public function export_columns()
+	public function export_columns($cx)
 	{
 		return [
 			"code" => ["label" => "Código"],
