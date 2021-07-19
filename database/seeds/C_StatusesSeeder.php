@@ -2,8 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Http\Models\{
-	LeadStatus,
-	LeadSubstatus
+	Status,
 };
 
 class C_StatusesSeeder extends Seeder
@@ -20,87 +19,41 @@ class C_StatusesSeeder extends Seeder
 
 	private function createStatuses()
 	{
-		LeadSubstatus::truncate();
-		LeadStatus::truncate();
-		$unqualified = LeadStatus::create([
-			"seq"  => 0,
-			"value" => "unqualified",
-			"name" => "Não Qualificado",
-		]);
-		$unqualified->addSubtatus([
+		Status::truncate();
+		Status::create([
 			"seq"  => 0,
 			"value" => "canceled",
 			"name" => "Cancelado",
 		]);
-
-
-		$waiting = LeadStatus::create([
-			"seq"  => 1,
-			"value" => "waiting",
-			"name" => "Aguardando",
-		]);
-		$waiting->addSubtatus([
-			"seq"  => 0,
-			"value" => "new_contact",
-			"name" => "Aguardando Contato",
-		]);
-		$waiting->addSubtatus([
+		Status::create([
 			"seq"  => 1,
 			"value" => "schedule",
 			"name" => "Contato Agendado",
 		]);
-		$waiting->addSubtatus([
-			"seq"  => 1,
-			"value" => "waiting_with_objection",
-			"name" => "Aguardando Com Objeçao",
-		]);
-		$waiting->addSubtatus([
-			"seq"  => 1,
-			"value" => "possible_non_qualified",
-			"name" => "Possivelmente Não Qualificado",
-		]);
-
-		$oportunity = LeadStatus::create([
+		Status::create([
 			"seq"  => 2,
-			"value" => "oportunity",
-			"name" => "Oportunidade",
+			"value" => "waiting",
+			"name" => "Aguardando",
 		]);
-		$oportunity->addSubtatus([
-			"seq"  => 0,
-			"value" => "has_interest",
-			"name" => "Interessado",
-		]);
-		$oportunity->addSubtatus([
-			"seq"  => 0,
-			"value" => "has_interest_with_objection",
-			"name" => "Possivelmente Interessado",
-		]);
-
-		$qualified = LeadStatus::create([
+		Status::create([
 			"seq"  => 3,
-			"value" => "qualified",
-			"name" => "Qualificado",
+			"value" => "objection",
+			"name" => "Com Objeçao",
 		]);
-		$qualified->addSubtatus([
-			"seq"  => 0,
-			"value" => "test",
+		Status::create([
+			"seq"  => 4,
+			"value" => "schedule_test",
 			"name" => "Vestibular Agendado",
 		]);
-
-		$customer = LeadStatus::create([
-			"seq"  => 4,
-			"value" => "customer",
-			"name" => "Convertido",
-		]);
-		$customer->addSubtatus([
-			"seq"  => 0,
-			"value" => "test_done",
+		Status::create([
+			"seq"  => 5,
+			"value" => "schedule_done",
 			"name" => "Vestibular Realizado",
 		]);
-		$customer->addSubtatus([
-			"seq"  => 1,
-			"value" => "registration_done",
-			"name" => "Matricula Realizada",
+		Status::create([
+			"seq"  => 6,
+			"value" => "finished",
+			"name" => "Matriculado",
 		]);
 	}
 }

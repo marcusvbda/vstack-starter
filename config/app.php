@@ -169,7 +169,6 @@ return [
 		App\Providers\RouteServiceProvider::class,
 		marcusvbda\vstack\vStackServiceProvider::class,
 		Jenssegers\Agent\AgentServiceProvider::class,
-		SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
 		App\Providers\GuzzleClientServiceProvider::class,
 		Maatwebsite\Excel\ExcelServiceProvider::class,
 	],

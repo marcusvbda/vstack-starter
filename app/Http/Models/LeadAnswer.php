@@ -5,6 +5,7 @@ namespace App\Http\Models;
 use marcusvbda\vstack\Models\DefaultModel;
 use Arr;
 
+
 class LeadAnswer extends DefaultModel
 {
 	protected $table = "lead_answers";

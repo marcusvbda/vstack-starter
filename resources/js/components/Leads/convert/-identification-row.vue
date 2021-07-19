@@ -74,14 +74,6 @@
                                 </td>
                                 <td>
                                     <div class="d-flex flex-column">
-                                        <b class="f-12 text-muted">Sub Status</b>
-                                        <span class="f-12">
-                                            {{ lead.f_substatus ? lead.f_substatus : undefined_text }}
-                                        </span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="d-flex flex-column">
                                         <b class="f-12 text-muted">Encontrar no Google</b>
                                         <span class="f-12">
                                             <a class="link" :href="`https://www.google.com.br/search?q=${lead.name}`" target="_BLANK"> Encontrar no Google </a>

@@ -15,7 +15,7 @@
 <script>
 import leadStore from '~/stores/lead'
 export default {
-    props: ['lead', 'use_tags', 'resource_id', 'types', 'answers', 'objections'],
+    props: ['lead', 'use_tags', 'resource_id', 'answers', 'objections'],
     store: leadStore,
     components: {
         'identification-row': require('./-identification-row').default,
@@ -26,9 +26,9 @@ export default {
         this.$store.commit('setUseTags', this.use_tags)
         this.$store.commit('setResourceId', this.resource_id)
         this.$store.commit('setLead', this.lead)
-        this.$store.commit('setTypes', this.types)
-        this.$store.commit('setAnswers', this.answers)
-        this.$store.commit('setObjections', this.objections)
+        this.$store.dispatch('getTypes')
+        this.$store.dispatch('getAnswers')
+        this.$store.dispatch('getObjections')
     },
 }
 </script>

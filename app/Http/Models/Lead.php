@@ -7,11 +7,9 @@ use App\User;
 use App\Http\Models\Scopes\{OrderByScope, PoloScope};
 use Auth;
 use Carbon\Carbon;
-use App\Http\Models\Traits\HasCustomFields;
 
 class Lead extends DefaultModel
 {
-	use HasCustomFields;
 	public $resource_id = "leads";
 	protected $table = "leads";
 	// public $cascadeDeletes = [];
@@ -23,7 +21,7 @@ class Lead extends DefaultModel
 	];
 
 	public $appends = [
-		"code", "name", "f_status", "f_substatus", "email", "profession", "f_last_conversion", "cellphone_number",
+		"code", "name", "f_status", "email", "profession", "f_last_conversion", "cellphone_number",
 		"phone_number", "obs", "f_created_at", "objection", "comment", "interest", "f_status_badge",
 		"f_birthdate", "age", "f_last_conversion_date", "api_ref_token", "other_objection", "conversions",
 		"tries", "lead_api", "f_rating", "f_schedule"
@@ -40,17 +38,13 @@ class Lead extends DefaultModel
 				if (!@$model->user_id) $model->user_id = $user->id;
 				if (!@$model->polo_id && $user->polo_id) $model->polo_id = $user->polo_id;
 			}
-			if (!@$model->lead_substatus_id) {
-				if ($model->interest) {
-					$model->lead_substatus_id = LeadSubStatus::value("has_interest")->id;
-				} else {
-					$model->lead_substatus_id = LeadSubStatus::value("new_contact")->id;
-				}
+			if (!@$model->status_id) {
+				$model->status_id = Status::value("waiting")->id;
 			}
 		});
 		static::created(function ($model) {
 			if ($model->data->email) {
-				foreach (CustomAutomation::where("data->trigger", "store")->where("data->lead_status_id", $model->status->id)->get() as $automation) {
+				foreach (CustomAutomation::where("data->trigger", "store")->where("data->status_id", $model->status_id)->get() as $automation) {
 					$automation->execute(Lead::findOrFail($model->id));
 				}
 			}
@@ -110,42 +104,18 @@ class Lead extends DefaultModel
 
 	public function getFStatusBadgeAttribute()
 	{
-		$status = $this->substatus->status->name;
+		$status = $this->status->name;
 		return "<small class='status-color {$status}'>{$status}</small>";
 	}
 
-	public function getBtnConversionAttribute()
+	public function status()
 	{
-		$code = $this->code;
-		$status = $this->f_status_badge;
-		$f_substatus = $this->substatus->name;
-		return "
-			<div class='d-flex flex-column align-items-center justify-content-center'>
-				{$status}
-				<a href='/admin/funil-de-conversao/{$code}/converter' class='el-button el-button--default el-button--small is-round my-2'>Converter</a>
-				<small>{$f_substatus}</small>
-			</div>
-		";
-	}
-
-	public function getStatusAttribute()
-	{
-		return $this->substatus->status;
-	}
-
-	public function substatus()
-	{
-		return $this->belongsTo(LeadSubstatus::class, "lead_substatus_id");
+		return $this->belongsTo(Status::class, "status_id");
 	}
 
 	public function getFStatusAttribute()
 	{
 		return $this->status->name;
-	}
-
-	public function getFSubStatusAttribute()
-	{
-		return $this->substatus->name;
 	}
 
 	public function getEmailAttribute()

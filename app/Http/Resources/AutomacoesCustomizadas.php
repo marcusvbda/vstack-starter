@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use marcusvbda\vstack\Resource;
-use App\Http\Models\{LeadStatus, CustomAutomation, Email};
+use App\Http\Models\{Status, CustomAutomation, Email};
 use marcusvbda\vstack\Fields\{
 	Card,
 	Text,
@@ -101,7 +101,7 @@ class AutomacoesCustomizadas extends Resource
 
 	public function fields()
 	{
-		return [
+		$fields = [
 			new Card("Identificação", [
 				new Text([
 					"label" => "Nome",
@@ -114,9 +114,9 @@ class AutomacoesCustomizadas extends Resource
 				new Radio([
 					"label" => "Status",
 					"description" => "Para quais status de lead o gatilho será acionado",
-					"field" => "lead_status_id",
+					"field" => "status_id",
 					"required" => true,
-					"options" => LeadStatus::selectRaw("id as value,name as label")->get()
+					"options" => Status::selectRaw("id as value,name as label")->get()
 				]),
 				new Radio([
 					"label" => "Gatilho",
@@ -132,9 +132,10 @@ class AutomacoesCustomizadas extends Resource
 					"description" => "Qual modelo de email deverá ser enviado quando esta automação for acionada",
 					"field" => "email_template_id",
 					"required" => true,
-					"model" => Email::class
+					"options" => Email::selectRaw("id as value,name as label")->get()
 				]),
 			])
 		];
+		return $fields;
 	}
 }

@@ -256,14 +256,14 @@ export default {
             return this.$store.state.lead
         },
         is_not_qualified() {
-            return this.lead.substatus.status.value == 'unqualified'
+            return this.lead.status.value == 'canceled'
         },
     },
     methods: {
         confirmContact() {
             let loading = this.$loading({ text: 'Finalizando contato ...' })
             this.$http
-                .post(window.location.pathname, { ...this.form_new_contact, back_query: window.location.search })
+                .post(`${window.location.pathname}/convertion`, { ...this.form_new_contact, back_query: window.location.search })
                 .then(({ data }) => {
                     if (data.success && data.route) {
                         window.location.href = data.route

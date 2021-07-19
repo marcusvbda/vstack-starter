@@ -3,14 +3,13 @@
 namespace App\Http\Resources;
 
 use marcusvbda\vstack\Resource;
-use App\Http\Models\{Lead, CustomField};
+use App\Http\Models\{Lead};
 use App\Http\Filters\Leads\{
 	LeadsByName,
 	LeadsByCreatedDate,
 	LeadsByStatus,
-	LeadsBySubStatus
 };
-use App\Http\Filters\{FilterByTags, FilterByCustomFields};
+use App\Http\Filters\{FilterByTags};
 use App\Http\Actions\Leads\{
 	LeadTransfer,
 };
@@ -32,12 +31,8 @@ class Leads extends Resource
 			new LeadsByCreatedDate(),
 			new LeadsByName(),
 			new LeadsByStatus(),
-			new LeadsBySubStatus(),
 			new FilterByTags(Lead::class)
 		];
-		foreach (CustomField::where("resource", "leads")->where("make_filter", true)->get() as $field) {
-			$this->_filters[] = new FilterByCustomFields($field);
-		}
 		parent::__construct();
 	}
 
@@ -70,14 +65,10 @@ class Leads extends Resource
 	{
 		$columns = [];
 		$columns["code"] = ["label" => "Código", "sortable_index" => "id", "size" => "100px"];
-		$columns["btn_conversion"] = ["label" => "", "sortable" => false, "size" => "300px"];
 		$columns["name"] = ["label" => "Nome", "sortable_index" => "data->name"];
 		$columns["email_url"] = ["label" => "Email", "sortable_index" => "data->email"];
 		$columns["f_rating"] = ["label" => "Classificação", "sortable" => false];
 		$columns["f_updated_at_badge"] = ["label" => "Data", "sortable_index" => "created_at"];
-		foreach (CustomField::where("resource", "leads")->where("show_in_list", true)->get() as $field) {
-			$columns[$field->field] = ["label" => $field->name, "sortable_index" => "custom_fields->" . $field->field];
-		}
 		return $columns;
 	}
 
@@ -116,7 +107,7 @@ class Leads extends Resource
 
 	public function canView()
 	{
-		return false;
+		return hasPermissionTo("edit-leads");
 	}
 
 	public function canViewReport()
@@ -151,9 +142,6 @@ class Leads extends Resource
 				return formatDate($row->created_at);
 			}],
 		];
-		foreach (CustomField::where("resource", "leads")->where("show_in_report", true)->get() as $field) {
-			$fields[$field->field] = ["label" => $field->name];
-		}
 		return $fields;
 	}
 
@@ -254,14 +242,16 @@ class Leads extends Resource
 		];
 
 		$cards = [];
-		foreach (withCustomFields("leads", $fields) as $key => $value) {
-			$cards[] = new Card($key, $value);
-		}
 		return $cards;
 	}
 
 	public function useTags()
 	{
 		return true;
+	}
+
+	public function viewBlade()
+	{
+		return "admin.leads.convert";
 	}
 }

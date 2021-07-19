@@ -20,10 +20,10 @@ class CreateLeads extends Migration
 			$table->bigIncrements('id');
 			$table->jsonb('data');
 			$table->jsonb('custom_fields');
-			$table->unsignedBigInteger('lead_substatus_id');
-			$table->foreign('lead_substatus_id')
+			$table->unsignedBigInteger('status_id');
+			$table->foreign('status_id')
 				->references('id')
-				->on('lead_substatuses');
+				->on('statuses');
 			$table->unsignedBigInteger('api_user_id')->nullable();
 			$table->foreign('api_user_id')
 				->references('id')

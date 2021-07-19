@@ -28,9 +28,9 @@ class CustomAutomation extends DefaultModel
 		setModelDataValue($this, "trigger", $value);
 	}
 
-	public function setLeadStatusIdAttribute($value)
+	public function setStatusIdAttribute($value)
 	{
-		setModelDataValue($this, "lead_status_id", $value);
+		setModelDataValue($this, "status_id", $value);
 	}
 
 	public function setEmailTemplateIdAttribute($value)
@@ -51,9 +51,9 @@ class CustomAutomation extends DefaultModel
 		return Arr::get($this->data, "trigger");
 	}
 
-	public function getLeadStatusIdAttribute()
+	public function getStatusIdAttribute()
 	{
-		return Arr::get($this->data, "lead_status_id");
+		return Arr::get($this->data, "status_id");
 	}
 
 	public function getFTriggerAttribute()
@@ -73,7 +73,7 @@ class CustomAutomation extends DefaultModel
 
 	public function getStatusAttribute()
 	{
-		return LeadStatus::find($this->lead_status_id);
+		return Status::find($this->status_id);
 	}
 
 	public function getStatusNameAttribute()
