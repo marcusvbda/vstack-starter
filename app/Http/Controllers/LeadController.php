@@ -59,16 +59,16 @@ class LeadController extends Controller
 
 	private function getNewStatus($answer)
 	{
-		// if ($answer->need_objection && $answer->is_neutral) return  LeadSubstatus::value("waiting_with_objection");
-		// if ($answer->need_schedule && $answer->is_neutral) return  LeadSubstatus::value("schedule");
+		if ($answer->need_objection && $answer->is_neutral) return  Status::value("neutral_with_objection");
+		if ($answer->need_schedule && $answer->is_neutral) return  Status::value("neutral");
 
-		// if ($answer->need_objection && $answer->is_positive) return  LeadSubstatus::value("has_interest_with_objection");
-		// if ($answer->need_schedule && $answer->is_positive) return  LeadSubstatus::value("has_interest");
+		if ($answer->need_objection && $answer->is_positive) return  Status::value("interest_with_objection");
+		if ($answer->need_schedule && $answer->is_positive) return  Status::value("interest");
 
-		// if ($answer->need_objection && $answer->is_negative) return  LeadSubstatus::value("canceled");
-		// if ($answer->need_schedule && $answer->is_negative) return  LeadSubstatus::value("possible_non_qualified");
+		if ($answer->need_objection && $answer->is_negative) return  Status::value("canceled");
+		if ($answer->need_schedule && $answer->is_negative) return  Status::value("schedule");
 
-		// if ($answer->need_test) return  LeadSubstatus::value("test");
+		if ($answer->need_test) return  Status::value("schedule_test");
 
 		return  Status::value("waiting");
 	}

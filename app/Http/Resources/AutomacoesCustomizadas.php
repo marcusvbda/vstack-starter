@@ -132,7 +132,7 @@ class AutomacoesCustomizadas extends Resource
 					"description" => "Qual modelo de email deverá ser enviado quando esta automação for acionada",
 					"field" => "email_template_id",
 					"required" => true,
-					"options" => Email::selectRaw("id as value,name as label")->get()
+					"model" => Email::class
 				]),
 			])
 		];

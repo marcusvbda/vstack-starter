@@ -11,6 +11,8 @@ use marcusvbda\vstack\Fields\{
 };
 use App\Http\Models\Role;
 use App\Http\Models\Permission;
+use marcusvbda\vstack\Services\Messages;
+use Cache;
 
 class GruposDeAcesso extends Resource
 {
@@ -140,5 +142,33 @@ class GruposDeAcesso extends Resource
         <div class="alert alert-warning" role="alert">
             <strong>Atenção ! </strong>Esta é a listagem de <b>Grupos de Acesso</b>, contendo todos os grupos, exceto o administrador.
         </div>';
+	}
+
+	public function storeMethod($id, $data)
+	{
+		$target = @$id ? $this->getModelInstance()->findOrFail($id) : $this->getModelInstance();
+		$target->description  = $data["data"]["description"];
+		$target->save();
+		Messages::send("success", "Registro salvo com sucesso !!");
+		if (request("clicked_btn") == "save") {
+			$route = route('resource.edit', ["resource" => $this->id, "code" => $target->code]);
+		} else {
+			$route = route('resource.index', ["resource" => $this->id]);
+		}
+
+		$permissions = request()->except(["id", "description", "resource_id", "clicked_btn"]);
+
+		$new_permissions = [];
+		foreach ($permissions as $key => $value) {
+			if ($value) {
+				$new_permissions[] = str_replace("_", "-", $key);
+			}
+		}
+
+		$target->syncPermissions($new_permissions);
+		Messages::send("success", "Grupo de Acesso salvo com sucesso");
+		Cache::flush('spatie.permission.cache');
+		Cache::flush('spatie.role.cache');
+		return ["success" => true, "route" => $route, "model" => $target];
 	}
 }

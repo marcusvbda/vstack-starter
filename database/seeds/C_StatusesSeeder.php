@@ -20,38 +20,64 @@ class C_StatusesSeeder extends Seeder
 	private function createStatuses()
 	{
 		Status::truncate();
+		$counter = 0;
 		Status::create([
-			"seq"  => 0,
+			"seq"  => ++$counter,
 			"value" => "canceled",
 			"name" => "Cancelado",
 		]);
 		Status::create([
-			"seq"  => 1,
+			"seq"  => ++$counter,
 			"value" => "schedule",
 			"name" => "Contato Agendado",
 		]);
 		Status::create([
-			"seq"  => 2,
+			"seq"  => ++$counter,
 			"value" => "waiting",
 			"name" => "Aguardando",
 		]);
 		Status::create([
-			"seq"  => 3,
+			"seq"  => ++$counter,
+			"value" => "neutral",
+			"name" => "Neutro",
+		]);
+		Status::create([
+			"seq"  => ++$counter,
+			"value" => "neutral_with_objection",
+			"name" => "Neutro com Objeção",
+		]);
+		Status::create([
+			"seq"  => ++$counter,
+			"value" => "interest",
+			"name" => "Interessado",
+		]);
+		Status::create([
+			"seq"  => ++$counter,
+			"value" => "interest_with_objection",
+			"name" => "Interessado com Objeção",
+		]);
+		Status::create([
+			"seq"  => ++$counter,
 			"value" => "objection",
 			"name" => "Com Objeçao",
 		]);
 		Status::create([
-			"seq"  => 4,
+			"seq"  => ++$counter,
+			"value" => "objection",
+			"name" => "Com Objeçao",
+		]);
+		Status::create([
+			"seq"  => ++$counter,
 			"value" => "schedule_test",
 			"name" => "Vestibular Agendado",
 		]);
 		Status::create([
-			"seq"  => 5,
+			"seq"  => ++$counter,
 			"value" => "schedule_done",
 			"name" => "Vestibular Realizado",
 		]);
 		Status::create([
-			"seq"  => 6,
+			"seq"  => ++$counter,
 			"value" => "finished",
 			"name" => "Matriculado",
 		]);

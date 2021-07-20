@@ -11,10 +11,16 @@ export function showError({ state }, error = "") {
 }
 
 export function getPolos({ commit, dispatch }, user_id) {
-	return api.post(`${window.location.pathname}/polos`, { user_id }).then(({ data }) => {
-		commit("setPolos", data)
-	}).catch(er => {
-		console.log(er)
+	api.post('/vstack/json-api', {
+		model: '\\App\\Http\\Models\\User',
+		includes: ['polos'],
+		filters: {
+			where: [
+				['id', '=', user_id],
+			]
+		}
+	}).then(({ data }) => {
+		commit("setPolos", data[0].polos)
 	})
 }
 

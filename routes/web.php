@@ -11,13 +11,11 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::group(['prefix' => "admin"], function () {
 		require "partials/dashboard.php";
 		require "partials/users.php";
-		require "partials/roles.php";
 		require "partials/polos.php";
 		require "partials/dates.php";
 		require "partials/leads.php";
 		require "partials/notifications.php";
 		require "partials/rating.php";
-		require "partials/emails.php";
 	});
 });
 

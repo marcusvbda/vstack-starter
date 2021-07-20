@@ -87,6 +87,6 @@ class B_UsersSeeder extends Seeder
 		$user->save();
 		$polo_ids = Polo::pluck("id")->toArray();
 		$user->polos()->sync($polo_ids);
-		$user->assignRole("acl_teste");
+		$user->assignRole("admin");
 	}
 }

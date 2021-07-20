@@ -64,7 +64,6 @@ function getMenuClass($permission,$array_current=[]) {
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
 					<a class="{{ getMenuClass('view-leads-report',['/admin/relatorios/leads/*']) }}" href="/admin/relatorios/leads" data-label="Relatório de Leads">Leads</a>
-					<a class="{{ getMenuClass('capture-report',['/admin/relatorios/captacao/*']) }}" href="/admin/relatorios/captacao" data-label="Relatório de Captação">Captação</a>
 					<a class="{{ getMenuClass('report-automation',['/admin/relatorios/automacoes-customizadas/*']) }}" href="/admin/relatorios/automacoes-customizadas" data-label="Relatório de Automações">Automação</a>
 				</div>
 			</li>

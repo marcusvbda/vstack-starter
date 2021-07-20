@@ -242,6 +242,9 @@ class Leads extends Resource
 		];
 
 		$cards = [];
+		foreach ($fields as $key => $value) {
+			$cards[] = new Card($key, $value);
+		}
 		return $cards;
 	}
 

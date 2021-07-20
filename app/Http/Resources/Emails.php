@@ -114,12 +114,12 @@ class Emails extends Resource
 					"field" => "subject",
 					"rules" => ["required", "max:255"]
 				]),
-				new HtmlEditor([
-					"label" => "Corpo do Email",
-					"field" => "body",
-					"mode" => "newsletter",
-					"default" => $default
-				]),
+				// new HtmlEditor([
+				// 	"label" => "Corpo do Email",
+				// 	"field" => "body",
+				// 	"mode" => "newsletter",
+				// 	"default" => $default
+				// ]),
 			]),
 		];
 	}
@@ -132,5 +132,14 @@ class Emails extends Resource
 	public function beforeEditSlot()
 	{
 		return view('admin.emails.crud_alert')->render();
+	}
+
+	public function createMethod($params, $data)
+	{
+		if (!@request()->has("template")) {
+			$templates = EmailTemplate::get();
+			return view("admin.emails.select_templates", compact("templates"));
+		}
+		return parent::createMethod($params, $data);
 	}
 }

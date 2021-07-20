@@ -20,15 +20,18 @@ export default {
         showPolosList() {
             let loading = this.$loading({ text: 'Carregando Polos ...' })
             this.$http
-                .post('/admin/polos', { user_id: this.user_id })
+                .post('/vstack/json-api', {
+                    model: '\\App\\User',
+                    includes: ['polos'],
+                    filters: {
+                        where: [['id', '=', this.user_id]],
+                    },
+                })
                 .then(({ data }) => {
                     let select_polo = this.$refs['select-polo']
-                    select_polo.options = data.map((x) => ({ key: x.id, label: x.name }))
+                    select_polo.options = data[0].polos.map((x) => ({ key: x.id, label: x.name }))
                     select_polo.open()
                     loading.close()
-                })
-                .catch((err) => {
-                    console.log(err)
                 })
         },
         selectPolo(polo) {
