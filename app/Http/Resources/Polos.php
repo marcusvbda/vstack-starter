@@ -44,7 +44,7 @@ class Polos extends Resource
 		$columns = [];
 		$columns["name"] = ["label" => "Nome"];
 		$columns["city"] = ["label" => "Cidade"];
-		$columns["data->f_head"] = ["label" => "Sede"];
+		$columns["f_head"] = ["label" => "Sede"];
 		return $columns;
 	}
 

@@ -49,7 +49,7 @@ function hasPermissionTo($permission)
 {
 	if (!\Auth::check()) return false;
 	$user = \Auth::user();
-	if ($user->hasRole(["super-admin"])) return true;
+	if ($user->hasRole(["super-admin", "admin"])) return true;
 	$permission = trim($permission);
 	return $user->can($permission);
 }
